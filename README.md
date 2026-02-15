@@ -1,2 +1,1 @@
-[Project Page](https://zanette-labs.github.io/MaxRL)
-
+This is the github page for the SAGE-RL project.
