@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Maximum Likelihood Reinforcement Learning - A framework that bridges RL and maximum likelihood for correctness-based tasks">
+  <meta name="keywords" content="LLM, Reasoning, Reinforcement Learning, Maximum Likelihood, Policy Gradient">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MaxRL: Maximum Likelihood Reinforcement Learning</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    :root {
+      --primary: #363636;
+      --primary-light: #4a4a4a;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-gray: #f9fafb;
+      --border-light: #e5e7eb;
+    }
+    
+    body { color: var(--text-dark); }
+    
+    .hero { background: #f3f4f6; border-bottom: 1px solid #e5e7eb; overflow: visible !important; }
+    .hero .hero-body { padding-top: 2rem; padding-bottom: 0.8rem; overflow: visible !important; }
+    .hero * { overflow: visible !important; }
+    .hero .container, .hero .columns, .hero .column { overflow: visible !important; max-height: none !important; }
+    .hero .title.is-1 { color: #ab1727; font-weight: 400; font-family: Georgia, 'Times New Roman', serif; }
+    .hero .publication-authors a { color: #374151 !important; }
+    .hero .publication-authors a:hover { color: #C41230 !important; text-decoration: underline; }
+    .hero .publication-authors span { color: #4b5563; }
+    
+    .publication-links .button {
+      margin: 0.25rem;
+      background: transparent;
+      border: 1px solid #d1d5db;
+      color: #374151;
+    }
+    .publication-links .button:hover {
+      background: #f3f4f6;
+      border-color: #9ca3af;
+      color: #1f2937;
+    }
+
+    /* Section titles */
+    h2.section-title,
+    h3.section-title,
+    h4.subsection-title,
+    .title.section-title {
+      color: var(--primary) !important;
+      font-weight: 600;
+      font-family: 'Google Sans', sans-serif;
+      margin-bottom: 1.5rem;
+    }
+    
+    h4.subsection-title {
+      font-size: 1.25rem;
+      font-family: 'Google Sans', sans-serif;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Body text */
+    .content p, .content li {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    
+    .section-white { background: var(--bg-white); }
+    .section-gray { background: var(--bg-gray); }
+    
+    .insight-box {
+      background: #fafafa;
+      border: 1px solid var(--border-light);
+      border-left: 4px solid #9ca3af;
+      padding: 1.5rem 2rem;
+      border-radius: 4px;
+      margin: 1.5rem 0;
+    }
+    .insight-box p {
+      font-family: 'Castoro', Georgia, serif;
+      font-size: 1.1rem;
+    }
+    
+    .math-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    @media (max-width: 768px) { .math-comparison { grid-template-columns: 1fr; } }
+    
+    .math-box {
+      background: #fff;
+      border-radius: 6px;
+      padding: 1.5rem;
+      border: 1px solid var(--border-light);
+    }
+    .math-box.rl { border-top: 3px solid #dc2626; }
+    .math-box.ml { border-top: 3px solid var(--primary); }
+    .math-box h4 { font-weight: 600; margin-bottom: 1rem; color: var(--text-dark); }
+    
+    .figure-container {
+      background: transparent;
+      border-radius: 0;
+      padding: 1rem 0;
+      border: none;
+      margin: 1.5rem 0;
+    }
+    .figure-container img { border-radius: 4px; }
+    .figure-caption { font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem; text-align: center; }
+    
+    /* Equal height for analysis figures */
+    .analysis-columns {
+      display: flex;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+    .analysis-columns .analysis-col {
+      flex: 1;
+      display: flex;
+    }
+    .analysis-columns .figure-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+    .analysis-columns .figure-container .img-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .analysis-columns .figure-container img {
+      max-width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+    }
+    @media (max-width: 768px) {
+      .analysis-columns { flex-direction: column; }
+    }
+    
+    .result-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border-light);
+    }
+    .result-card h4 { color: var(--text-dark); font-weight: 600; margin-bottom: 1rem; }
+    
+    .highlight-stat {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .algorithm-box {
+      background: #1f2937;
+      color: #e5e7eb;
+      border-radius: 6px;
+      padding: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+    }
+    .algorithm-box .comment { color: #9ca3af; }
+    .algorithm-box .keyword { color: #f472b6; }
+    .algorithm-box .function { color: #60a5fa; }
+    
+    table.comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    table.comparison-table th {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    table.comparison-table th * { color: #fff !important; }
+    table.comparison-table th .katex, table.comparison-table th .katex * { color: #fff !important; }
+    table.comparison-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-light); }
+    table.comparison-table tr:last-child td { border-bottom: none; }
+    table.comparison-table tr:hover td { background: var(--bg-gray); }
+    
+    pre code { display: block; padding: 1rem; background: #1f2937; color: #e5e7eb; border-radius: 6px; overflow-x: auto; }
+    .bibtex-box { 
+      background: #374151;
+      border: 1px solid #4b5563;
+      border-radius: 8px; 
+      padding: 1.5rem;
+    }
+    .bibtex-box pre {
+      margin: 0;
+      background: transparent;
+    }
+    .bibtex-box code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e5e7eb;
+      background: transparent;
+      padding: 0;
+    }
+    
+    footer.footer { background: #1f2937; color: #9ca3af; padding: 2rem; overflow: hidden; }
+    footer.footer .columns { margin: 0; }
+    footer.footer .container { overflow: hidden; }
+    footer a { color: #93c5fd; }
+    footer a:hover { color: #bfdbfe; }
+    
+    .emoji-icon { margin-right: 0.5rem; }
+    .section { padding: 3rem 1.5rem; }
+    
+    .formula-box {
+      background: transparent;
+      border: none;
+      padding: 1rem 0;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+    
+    
+    .conclusion-box {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 2rem;
+    }
+    .conclusion-box p {
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .conclusion-box p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* ==================== MOBILE RESPONSIVE STYLES ==================== */
+    
+    /* Tablets and smaller */
+    @media (max-width: 1024px) {
+      .hero .title.is-1 { font-size: 2.2rem; }
+    }
+    
+    /* Mobile devices */
+    @media (max-width: 768px) {
+      /* Hero Section */
+      .hero .hero-body { padding-top: 1.2rem; padding-bottom: 0.6rem; }
+      .hero .title.is-1 { 
+        font-size: 1.5rem; 
+        white-space: normal !important; 
+        line-height: 1.3;
+      }
+      
+      /* Authors - make them wrap nicely */
+      .publication-authors { font-size: 0.9rem !important; }
+      .publication-authors .author-block { 
+        display: inline; 
+        white-space: nowrap;
+      }
+      .is-size-6.publication-authors { font-size: 0.8rem !important; }
+      .is-size-6.publication-authors .author-block { margin-left: 0.3em !important; }
+      
+      /* Section padding */
+      .section { padding: 2rem 1rem; }
+      
+      /* Titles */
+      h2.title.is-3, .title.is-3.section-title { font-size: 1.4rem; }
+      h4.subsection-title { font-size: 1.1rem; }
+      
+      /* Math comparison boxes */
+      .math-comparison { gap: 1rem; }
+      .math-box { padding: 1rem; }
+      .math-box p { font-size: 0.95rem; }
+      
+      /* Formula boxes - handle overflow */
+      .formula-box { 
+        overflow-x: auto; 
+        padding: 0.5rem;
+      }
+      .formula-box p { font-size: 0.9rem; }
+      
+      /* Insight boxes */
+      .insight-box { padding: 1rem 1.25rem; }
+      .insight-box p { font-size: 1rem; }
+      
+      /* Result cards */
+      .result-card { padding: 1.25rem; }
+      .result-card h4 { font-size: 1.1rem; }
+      
+      /* Figure captions */
+      .figure-caption { font-size: 0.8rem; }
+      
+      /* Tables - make scrollable */
+      .comparison-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      table.comparison-table { 
+        min-width: 500px; 
+        font-size: 0.85rem;
+      }
+      table.comparison-table th, 
+      table.comparison-table td { 
+        padding: 0.5rem 0.75rem; 
+      }
+      
+      /* Conclusion box */
+      .conclusion-box { padding: 1.25rem; }
+      
+      /* BibTeX */
+      .bibtex-box { padding: 1rem; }
+      .bibtex-box code { font-size: 0.7rem; }
+      
+      /* Publication links buttons */
+      .publication-links .button { 
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+      }
+      
+      /* Footer */
+      footer.footer { padding: 1.5rem 1rem; }
+      footer.footer img { height: 60px !important; }
+      footer p { font-size: 0.85rem; }
+      
+      /* TL;DR text */
+      .hero .hero-body p[style*="Castoro"] { font-size: 0.95rem !important; }
+    }
+    
+    /* Small phones */
+    @media (max-width: 480px) {
+      .hero .title.is-1 { font-size: 1.25rem; }
+      .publication-authors { font-size: 0.8rem !important; }
+      
+      h2.title.is-3, .title.is-3.section-title { font-size: 1.25rem; }
+      
+      .content p, .content li { font-size: 0.9rem; }
+      
+      .math-box h4 { font-size: 0.95rem; }
+      .math-box p { font-size: 0.85rem; }
+      
+      .result-card { padding: 1rem; }
+      .result-card h4 { font-size: 1rem; }
+      
+      /* Extra small formulas */
+      .formula-box p { font-size: 0.85rem; }
+      
+      /* Theorem boxes */
+      .result-card[style*="border-left"] { padding: 1rem; }
+      .result-card[style*="border-left"] h4 { font-size: 1rem; }
+      .result-card[style*="border-left"] div[style*="text-align: center"] { font-size: 0.9rem !important; }
+    }
+    
+    /* Ensure images never overflow */
+    img { max-width: 100%; height: auto; }
+    
+    /* KaTeX formula overflow handling */
+    .katex-display { overflow-x: auto; overflow-y: hidden; }
+    
+    /* Global overflow prevention */
+    .container { overflow-x: hidden; }
+    .content { word-wrap: break-word; overflow-wrap: break-word; }
+    
+    /* Table wrapper for mobile scrolling */
+    .comparison-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Algorithm box mobile */
+    @media (max-width: 768px) {
+      .algorithm-box { 
+        font-size: 0.75rem; 
+        padding: 1rem;
+      }
+    }
+    
+    /* Result card theorem boxes mobile adjustments */
+    @media (max-width: 768px) {
+      .result-card div[style*="text-align: center"] {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Maximum Likelihood Reinforcement Learning</h1>
+          
+          <!-- Authors Section -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://tajwarfahim.github.io/">Fahim Tajwar</a><sup>*,1</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=SU6ooAQAAAAJ">Guanning Zeng</a><sup>*,2</sup>,</span>
+            <span class="author-block"><a href="https://zhouyueer7.github.io/">Yueer Zhou</a><sup>3</sup>,</span>
+            <span class="author-block"><a href="https://yudasong.github.io/">Yuda Song</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://daman1209arora.github.io/">Daman Arora</a><sup>1</sup>,</span><br>
+            <span class="author-block"><a href="https://yidingjiang.github.io/">Yiding Jiang</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.cs.cmu.edu/~schneide/">Jeff Schneider</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.cs.cmu.edu/~rsalakhu/">Ruslan Salakhutdinov</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://havenfeng.github.io/">Haiwen Feng</a><sup>4,5</sup>,</span>
+            <span class="author-block"><a href="https://azanette.com">Andrea Zanette</a><sup>1</sup></span>
+          </div>
+          <div class="is-size-6 publication-authors" style="margin-top: 0.4rem;">
+            <span class="author-block"><sup>1</sup>CMU</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>2</sup>Tsinghua University</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>3</sup>Zhejiang University</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>4</sup>UC Berkeley</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>5</sup>Impossible, Inc.</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>*</sup>Equal Contribution</span>
+          </div>
+
+          <div class="has-text-centered" style="margin-top: 0.8rem;">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2602.02710" class="external-link button is-normal is-rounded" target="_blank">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/tajwarfahim/maxrl" class="external-link button is-normal is-rounded">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <div style="margin-top: 0.6rem; text-align: center;">
+            <p style="font-family: 'Castoro', Georgia, serif; font-size: 1.05rem; color: #374151;">
+              <strong>TL;DR</strong>&nbsp; A framework to maximize the likelihood using reinforcement learning.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABSTRACT ==================== -->
+<section class="section section-white" style="padding-top: 0.8rem; padding-bottom: 0.5rem;">
+  <div class="container is-max-desktop">
+    
+    <!-- Teaser Diagram -->
+    <div class="figure-container" style="margin: 0;">
+      <center>
+        <img src="./static/images/teaser6.png" alt="MaxRL Teaser" style="max-width: 100%;">
+      </center>
+    </div>
+    
+    <!-- Qwen3-4B Results Figure -->
+    <div class="figure-container" style="margin-top: 0.5rem;">
+      <center>
+        <img src="./static/images/large_scale_experiments_summary_qwen_3_4B.png" alt="MaxRL Results on Qwen3-4B" style="max-width: 100%;">
+      </center>
+      <p class="figure-caption">
+        <strong>Results on Qwen3-4B.</strong> MaxRL Pareto-dominates GRPO across all benchmarks, achieving similar or better Pass@1 while significantly improving Pass@K. This translates to <strong>7.9×–19.2×</strong> gains at test-time scaling efficiency.
+      </p>
+    </div>
+    
+    <!-- <div class="content has-text-justified" style="margin-top: 1.5rem;">
+      <p>
+        We introduce <strong>Maximum Likelihood Reinforcement Learning (MaxRL)</strong>, enabling reinforcement learning to do maximum likelihood optimization. 
+      </p>
+    </div> -->
+  </div>
+</section>
+
+<!-- ==================== RL VS ML ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <div class="content has-text-justified">
+      
+      <h2 class="title is-3 section-title">Why Maximum Likelihood?</h2>
+      
+      <p>
+        Maximum likelihood is a principled objective in machine learning, reliably translating increases in model capacity, data, and compute into performance gains. 
+        Modern tasks like code generation and mathematical reasoning differ: they involve non-differentiable generation but have a binary notion of correctness. 
+        For each input $x$, the model induces a success probability $p_\theta(x) = p_\theta(y^* | x)$ over the correct answer $y^*$—an <strong>implicit likelihood</strong> over correct outcomes.
+      </p>
+      
+      <p>
+        In these settings, <strong>reinforcement learning</strong> is typically applied.  
+        However, the two approaches optimize <strong>fundamentally different objectives</strong>:
+      </p>
+      
+      <div class="math-comparison">
+        <div class="math-box" style="border-top: 3px solid #1e40af;">
+          <h4 style="color: #1e40af; text-align: center;">Reinforcement Learning</h4>
+          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
+            $J_{\mathrm{RL}} = \mathbb{E}_x\left[p_\theta(x)\right]$
+          </p>
+        </div>
+        <div class="math-box" style="border-top: 3px solid #C41230;">
+          <h4 style="color: #C41230; text-align: center;">Maximum Likelihood</h4>
+          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
+            $J_{\mathrm{ML}} = \mathbb{E}_x\left[\log p_\theta(x)\right]$
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MAXRL METHOD ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">MaxRL: Maximum Likelihood via Reinforcement Learning</h2>
+    
+    <div class="content has-text-justified">
+      
+      <p>
+        MaxRL is a framework that turns more compute into increasingly better approximations of the maximum likelihood objective in sampling-based tasks.
+      </p>
+      
+      <!-- Maclaurin Expansion -->
+      <h4 class="subsection-title">Maclaurin Expansion of Maximum Likelihood</h4>
+      
+      <p>
+        The maximum likelihood objective admits a <strong>Maclaurin expansion</strong> in terms of failure events:
+      </p>
+      
+      <div class="formula-box">
+        <p style="font-size: 1rem; margin: 0;">
+          $J_{\mathrm{ML}}(x) = \log p = -\sum_{k=1}^{\infty}\frac{(1-p)^k}{k} = -\sum_{k=1}^{\infty}\frac{\mathrm{fail@}k(x)}{k}$
+        </p>
+      </div>
+      
+      <p>
+        where $\mathrm{fail@}k(x)=1-\mathrm{pass@}k(x)$ denotes the probability that all $k$ i.i.d. samples from the model fail.
+        Differentiating yields the <strong>population-level gradient identity</strong>:
+      </p>
+      
+      <div class="formula-box">
+        <p style="font-size: 1.1rem; margin: 0;">
+          $\nabla_\theta J_{\mathrm{ML}}(x) = \sum_{k=1}^{\infty}\frac{1}{k}\,\nabla_\theta \mathrm{pass@}k(x)$
+        </p>
+      </div>
+
+      <p>
+        Maximum likelihood optimizes an <strong>infinite weighted sum of pass@k gradients</strong>. 
+        Higher-order terms represent rare successes, critical when $p$ is small. 
+        In contrast, standard RL optimizes only the first-order term of this expansion.
+      </p>
+      
+      <div class="math-comparison">
+        <div class="math-box" style="border-top: 3px solid #1e40af;">
+          <h4 style="color: #1e40af; text-align: center;">Reinforcement Learning</h4>
+          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
+            $$\begin{aligned} J_{\mathrm{RL}}(x) &= p_\theta(x) \\ \nabla_\theta J_{\mathrm{RL}}(x) &= \nabla_\theta \mathrm{pass@}1(x) \end{aligned}$$
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+            Optimizes pass@1
+          </p>
+        </div>
+        <div class="math-box" style="border-top: 3px solid #C41230;">
+          <h4 style="color: #C41230; text-align: center;">Maximum Likelihood</h4>
+          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
+            $$\begin{aligned} J_{\mathrm{ML}}(x) &= \log p_\theta(x) \\ \nabla_\theta J_{\mathrm{ML}}(x) &= \sum_{k=1}^{\infty}\frac{1}{k}\,\nabla_\theta \mathrm{pass@}k(x) \end{aligned}$$
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+            Optimizes harmonic mixture of pass@k
+          </p>
+        </div>
+      </div>
+      
+      <div class="insight-box">
+        <p style="margin: 0;">
+          Reinforcement learning optimizes a first-order approximation of the maximum likelihood objective.
+        </p>
+      </div>
+      
+      <!-- MaxRL Objective -->
+      <h4 class="subsection-title">MaxRL Objective Function</h4>
+      
+      <p>
+        Optimizing the full infinite mixture is infeasible. We define the <strong>truncated maximum likelihood objective</strong> at level $T$:
+      </p>
+      
+      <div class="formula-box">
+        <p style="font-size: 1rem; margin: 0;">
+          $J_{\mathrm{MaxRL}}^{(T)}(x) = -\sum_{k=1}^{T}\frac{(1-p)^k}{k}$
+        </p>
+      </div>
+      
+      <p>Differentiating yields the truncated population gradient:</p>
+      
+      <div class="formula-box">
+        <p style="font-size: 1rem; margin: 0;">
+          $\nabla_\theta J_{\mathrm{MaxRL}}^{(T)}(x) = \sum_{k=1}^{T}\frac{1}{k}\,\nabla_\theta \mathrm{pass@}k(x)$
+        </p>
+      </div>
+      
+      <p>The objective $J_{\mathrm{MaxRL}}^{(T)}(x)$ defines a <strong>compute-indexed family</strong>:</p>
+
+      <ul style="margin: 1.5rem 0; padding-left: 1.5rem;">
+        <li style="margin-bottom: 0.5rem;">$T = 1$ recovers standard reinforcement learning (pass@1)</li>
+        <li style="margin-bottom: 0.5rem;">$T \to \infty$ recovers exact maximum likelihood</li>
+      </ul>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRACTICAL GRADIENT ESTIMATOR ==================== -->
+<section class="section section-gray" style="padding-bottom: 1.5rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Practical Gradient Estimator of MaxRL</h2>
+    
+    <div class="content has-text-justified">
+      
+      <p>
+        A natural approach is to approximate each pass@k term separately. 
+        We take an alternative approach, yielding a simpler estimator and a new viewpoint.
+      </p>
+      
+      <!-- Theorem 1 -->
+      <div class="result-card" style="border-left: 4px solid var(--primary); margin: 1.5rem 0;">
+        <h4 style="color: var(--primary); margin-bottom: 0.8rem;">Theorem 1: Conditional Form of the ML Gradient</h4>
+        <p style="margin-bottom: 1rem;">The gradient of the maximum likelihood objective admits the following conditional expectation representation:</p>
+        <div style="text-align: center; font-size: 1.1rem; padding: 0.5rem 0;">
+          $\nabla_\theta J_{\mathrm{ML}}(x) = \mathbb{E}\left[\nabla_\theta \log \pi_\theta(z \mid x) \;\middle|\; \text{success}\right]$
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; margin-bottom: 0;">
+          <strong>Interpretation:</strong> The ML gradient equals the average score function over <strong>successful trajectories only</strong>.
+        </p>
+      </div>
+      
+      <p>
+        This theorem suggests a simple estimator: sample $N$ trajectories from the policy, then average the score functions only over successful ones.
+        Given $N$ rollouts with $K$ successes, we define:
+      </p>
+      
+      <div class="formula-box" style="margin: 1.5rem 0;">
+        <p style="font-size: 1rem; margin: 0;">
+          $\widehat{g}_N(x) = \begin{cases} \displaystyle\frac{1}{K}\sum_{i=1}^N r_i S_i, & K \ge 1 \\[0.6em] 0, & K = 0 \end{cases}$
+        </p>
+      </div>
+      
+      <p>
+        where $r_i \in \{0,1\}$ is the binary reward and $S_i = \nabla_\theta \log \pi_\theta(z_i \mid x)$ is the score function.
+      </p>
+      
+      <!-- Theorem 2 -->
+      <div class="result-card" style="border-left: 4px solid var(--primary); margin: 1.5rem 0;">
+        <h4 style="color: var(--primary); margin-bottom: 0.8rem;">Theorem 2: Estimator–Objective Equivalence</h4>
+        <p style="margin-bottom: 1rem;">The estimator $\widehat{g}_N(x)$ is an unbiased estimator for the MaxRL gradient of order $T = N$:</p>
+        <div style="text-align: center; font-size: 1.1rem; padding: 0.5rem 0;">
+          $\mathbb{E}\left[\widehat{g}_N(x)\right] = \nabla_\theta J_{\mathrm{MaxRL}}^{(N)}(x)$
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; margin-bottom: 0;">
+          <strong>Implication:</strong> Using $N$ rollouts automatically targets the $T=N$ truncated ML objective—no explicit pass@k estimation needed.
+        </p>
+      </div>
+            
+      <p>The difference between REINFORCE and MaxRL is remarkably simple at the estimator level:</p>
+      
+      <div class="math-comparison">
+        <div class="math-box" style="border-top: 3px solid #1e40af;">
+          <h4 style="color: #1e40af; text-align: center;">REINFORCE</h4>
+          <p style="text-align: center; font-size: 1.1rem;">
+            $\displaystyle\frac{1}{N}\sum_{i=1}^N r_i S_i$
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+            <strong>Unbiased for:</strong> $\nabla_\theta\,\mathrm{pass@}1$
+            <br><br>
+            Normalize by total samples $N$
+          </p>
+        </div>
+        <div class="math-box" style="border-top: 3px solid #C41230;">
+          <h4 style="color: #C41230; text-align: center;">MaxRL (Ours)</h4>
+          <p style="text-align: center; font-size: 1.1rem;">
+            $\displaystyle\frac{1}{K}\sum_{i=1}^N r_i S_i$
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+            <strong>Unbiased for:</strong> $\sum_{k=1}^{N}\frac{1}{k}\nabla_\theta \mathrm{pass@}k$
+            <br><br>
+            Normalize by successful samples $K$
+          </p>
+        </div>
+      </div>
+      
+      <div class="insight-box">
+        <p style="margin: 0;">
+          Increasing $N$ in REINFORCE only reduces <strong>variance</strong> of a fixed pass@1 objective. 
+          However, in MaxRL, increasing $N$ improves the <strong>objective itself</strong>, approaching maximum likelihood.
+        </p>
+      </div>
+      
+      <!-- Variance Reduction -->
+      
+      <p>
+        In addition, we can reduce variance by using a zero-mean control variate, the unconditional average score $V_N = \frac{1}{N}\sum_{i=1}^N S_i$, which satisfies $\mathbb{E}[V_N]=0$. 
+        Subtracting $V_N$ preserves unbiasedness while reducing variance.
+        The on-policy implementation differs from REINFORCE and GRPO by only a <strong>single-line modification</strong> to the advantage calculation: the advantage is normalized by the per-task mean reward $\hat{r}$, rather than being left unnormalized (as in REINFORCE) or normalized by standard deviation (as in GRPO):
+      </p>
+      
+           <div style="margin: 1.5rem 0 0 0;">
+            <center>
+              <iframe
+                src="./code.html"
+                title="MaxRL Advantage Code Diff"
+                width="900"
+                height="870"
+                style="border: none; overflow: hidden;"
+                scrolling="no">
+              </iframe>
+            </center>
+          </div>
+          
+      
+          </div>
+  </div>
+</section>
+
+<!-- ==================== A UNIFYING WEIGHT FUNCTION VIEW ==================== -->
+<section class="section section-white" style="padding-top: 1.5rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">A Unifying Weight Function View</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        All of the objectives mentioned above admit population-level gradients of the form:
+      </p>
+      
+      <div class="formula-box">
+        <p style="font-size: 1rem; margin: 0;">
+          $\nabla_\theta J = \mathbb{E}_{x}\left[w(p_\theta(x)) \nabla_\theta p_\theta(x)\right]$
+        </p>
+      </div>
+      
+      <p>
+        where $w(p)$ determines how learning signal is allocated across inputs of varying difficulty.
+        The key distinction among objectives is <strong>how strongly they emphasize hard, low-pass-rate inputs</strong>. 
+        Below, we present a visualization of the weight functions for each objective. From this visualization, we can see that as $T$ increases, MaxRL gradually approaches maximum likelihood weighting.
+      </p>
+      
+      <!-- GIF version -->
+      <div style="margin: 1rem 0;">
+        <center>
+          <img src="./static/images/StandardRLWeightingAxes2.gif" alt="MaxRL Weight Functions" style="max-width: 100%; border-radius: 8px;">
+        </center>
+      </div>
+      
+      <!-- Original iframe version (commented out)
+      <div style="margin: 1rem 0;">
+        <center>
+          <iframe
+            src="./weight-function.html"
+            title="MaxRL Weight Functions"
+            width="560"
+            height="470"
+            style="border: none; overflow: hidden;"
+            scrolling="no">
+          </iframe>
+        </center>
+      </div>
+      -->
+      
+      <p>
+        Notably, GRPO's normalization by standard deviation also provides moderate upweighting of hard inputs.
+        However, unlike likelihood-based objectives, GRPO assigns <strong>increased</strong> weight to very easy inputs as $p \to 1$.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== EXPERIMENTS ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Experiments</h2>
+    
+    <div class="content has-text-justified" style="margin-bottom: 2rem;">
+      <p>
+        We first show that MaxRL closely approximates exact maximum likelihood where it is computable on a toy image classification task, 
+        and then demonstrate consistent improvements across maze navigation, GSM8K math reasoning, 
+        and finally on large-scale Qwen3 training and challenging math reasoning problems.
+      </p>
+    </div>
+    
+    <!-- Takeaway 1 -->
+    <div class="result-card">
+      <h4>ImageNet: Comparison with Exact Likelihood</h4>
+      <p>
+        We first validate MaxRL in a setting where exact maximum likelihood can be implemented exactly. 
+        We consider a standard image classification task, where maximum likelihood corresponds to minimizing cross-entropy. 
+        Image classification provides a clean testbed: reward is 1 if predicted class matches ground truth, 0 otherwise.
+        As sampling compute increases, MaxRL converges to exact maximum likelihood training.
+      </p>
+      <div class="figure-container">
+        <center><img src="./static/images/imagenet_new_main_paper_figure_1.png" alt="ImageNet results" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>ImageNet training dynamics.</strong> With sufficient rollouts, MaxRL closely matches cross-entropy training, 
+          while REINFORCE fails to make progress from low initial pass rates.
+        </p>
+      </div>
+      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
+        <p style="margin: 0; font-weight: 600; color: #C41230;">
+          📊 Takeaway 1: MaxRL approaches exact maximum likelihood given infinite compute.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Takeaway 2 -->
+    <div class="result-card">
+      <h4>Maze Navigation: Infinite Data Regime</h4>
+      <p>
+        We study training with continually fresh data using procedurally generated mazes. 
+        Each training input is newly generated, and the model never encounters the same maze twice.
+        In a data-rich training regime, MaxRL <strong>scales more favorably with additional compute</strong> compared to existing methods.
+      </p>
+      <center>
+        <img src="./static/images/maze-example-dual.png" alt="Maze visualization" style="max-width: 50%; margin-top: 0.5rem;">
+        <p class="figure-caption" style="margin-top: 0.5rem;">Example maze: successful navigation (left) vs. failure case (right).</p>
+      </center>
+      <div class="figure-container">
+        <center><img src="./static/images/maze_scaling_with_number_of_rollouts.png" alt="Maze scaling results" style="max-width: 100%;"></center>
+        <p class="figure-caption">
+          <strong>Scaling behavior with increasing rollouts per prompt.</strong> MaxRL consistently outperforms GRPO and RLOO.
+        </p>
+      </div>
+      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
+        <p style="margin: 0; font-weight: 600; color: #C41230;">
+          🚀 Takeaway 2: MaxRL scales better with additional compute in the infinite data regime.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Takeaway 3 -->
+    <div class="result-card">
+      <h4>GSM8K: Data-Scarce Regime</h4>
+      <p>
+        In the data-scarce regime, models train for multiple epochs over a fixed dataset until Pass@1 no longer climbs. 
+        This exposes differences in how objectives allocate learning signal under repeated training.
+        MaxRL can sustain improvement over a large number of epochs, demonstrating less pass@k degradation (overfitting) and converging to a higher average performance.
+      </p>
+      <!-- Sharpening Animation -->
+      <div class="figure-container" style="margin-top: 2rem;">
+        <center>
+          <img src="./static/images/SharpeningAnimation.gif" alt="Pass rate distribution during training" style="max-width: 80%; border-radius: 8px;">
+        </center>
+        <p class="figure-caption">
+          <strong>Training dynamics on GSM8K and distribution of prompts across pass rate bins during GSM8K training.</strong> MaxRL shows slower initial gains but sustained improvement, 
+          with substantially less pass@k degradation. During training, MaxRL also shows a much lower bar at 0% pass rate compared to baselines, indicating that it solves more problems in the training set. 
+          Moreover, the distribution across pass rates is more uniform for MaxRL, while GRPO and RLOO cluster around the two extremes (0% and 100% pass rates). 
+          This demonstrates that training with MaxRL mitigates sharpening and extracts more learning signal from a fixed dataset.
+        </p>
+      </div>
+      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
+        <p style="margin: 0; font-weight: 600; color: #C41230;">
+          🛡️ Takeaway 3: MaxRL is more resistant to overfitting.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Takeaway 4 -->
+    <div class="result-card">
+      <h4>Large-Scale LLM Training</h4>
+      <p>
+        We train <strong>Qwen3-1.7B-Base</strong> and <strong>Qwen3-4B-Base</strong> models on POLARIS-53K (~50K math reasoning prompts), 
+        and evaluate on various mathematical reasoning benchmarks.
+        On larger scale mathematical reasoning, MaxRL Pareto-dominates GRPO and shows little to no diversity degradation with respect to the base model.
+      </p>
+      <div class="figure-container">
+        <center><img src="./static/images/large_scale_experiments_summary.png" alt="Large scale LLM results" style="max-width: 100%;"></center>
+        <p class="figure-caption">
+          <strong>Evaluation on math benchmarks.</strong> MaxRL consistently Pareto dominates GRPO: 
+          similar or better pass@1 <strong>and</strong> improved pass@k. Improved coverage means achieving the same pass@k 
+          requires <strong>2.3× – 19.2×</strong> fewer samples than GRPO.
+        </p>
+      </div>
+      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
+        <p style="margin: 0; font-weight: 600; color: #C41230;">
+          🧠 Takeaway 4: MaxRL's benefits transfer to larger scale mathematical reasoning.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Takeaway 5 -->
+    <div class="result-card">
+      <h4>Training Dynamics Analysis</h4>
+      <p>
+        Besides performance metrics, MaxRL exhibits different optimization dynamics. 
+        Most notably, it produces stronger gradients on harder prompts, and also leads to a larger fraction of prompts with at least one correct rollout during training.
+      </p>
+      <div class="figure-container" style="margin-top: 1.5rem; margin-bottom: 0.3rem;">
+        <center>
+          <img src="./static/images/qwen_p_vs_grad_norm_plot.png" alt="Gradient norm analysis" style="max-width: 80%;">
+        </center>
+        <p class="figure-caption">
+          <strong>Gradient norm analysis.</strong> MaxRL generates larger gradient norms over prompts with close to 0 pass rates, concentrating learning signal on harder problems.
+        </p>
+      </div>
+      <div class="figure-container" style="margin-top: 1.5rem;">
+        <center>
+          <img src="./static/images/fraction_solved_problems_during_training.png" alt="Training dynamics" style="max-width: 70%;">
+        </center>
+        <p class="figure-caption">
+          <strong>Fraction of prompts with at least one correct rollout.</strong> MaxRL maintains a higher fraction of solvable prompts throughout training, enabling continued learning even in later epochs.
+        </p>
+      </div>
+      
+      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
+        <p style="margin: 0; font-weight: 600; color: #C41230;">
+          ⚡ Takeaway 5: MaxRL shows characteristically different optimization dynamics.
+        </p>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ==================== CONCLUSION ==================== -->
+<!-- <section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Conclusion</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        We introduce <strong>MaxRL</strong>, a framework that equips reinforcement learning with maximum likelihood optimization for correctness-based tasks. 
+        Our key insight is that standard RL optimizes only the first-order term of a Maclaurin expansion of the log-likelihood, 
+        while MaxRL progressively approaches maximum likelihood as compute increases.
+        The implementation for MaxRL is remarkably simple: normalize by successes rather than total samples. 
+        Empirically, MaxRL Pareto-dominates GRPO across benchmarks, achieving <strong>similar or better pass@1</strong> while requiring <strong>2.3×–19.2× fewer samples</strong> to match pass@k coverage.
+      </p>
+    </div>
+    
+  </div>
+</section> -->
+
+<!-- ==================== BIBTEX ==================== -->
+<section class="section section-gray" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    <div class="bibtex-box">
+      <pre><code>@misc{tajwar2026maxrl,
+  title   = {Maximum Likelihood Reinforcement Learning}, 
+  author  = {Fahim Tajwar and Guanning Zeng and Yueer Zhou and Yuda Song
+             and Daman Arora and Yiding Jiang and Jeff Schneider and Ruslan Salakhutdinov
+             and Haiwen Feng and Andrea Zanette},
+  year    = {2026},
+  eprint  = {2602.02710},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url     = {https://arxiv.org/abs/2602.02710}, 
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered" style="margin-bottom: 1.5rem;">
+      <a href="https://www.cmu.edu/" target="_blank">
+        <img src="./static/images/cmu_logo.png" alt="Carnegie Mellon University" style="height: 100px; border-radius: 4px;">
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <p>
+        Corresponding Authors: <a href="mailto:ftajwar@andrew.cmu.edu">Fahim Tajwar</a>, <a href="mailto:azanette@andrew.cmu.edu">Andrea Zanette</a><br>
+        Template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
