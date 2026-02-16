@@ -465,12 +465,26 @@
                   <span>arXiv</span>
                 </a>
               </span>
-              <span class="link-block">
-                <a href="#" onclick="alert('Please contact huang_zx@buaa.edu.cn'); return false;" class="external-link button is-normal is-rounded">
-                  <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code</span>
-                </a>
-              </span>
+
+              <!-- contact us for code -->
+            <!-- 在 HTML 中添加模态框结构 -->
+            <div id="customAlert" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);">
+                <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 300px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <div style="font-weight: bold; margin-bottom: 15px; color: #ab1727;">Contact Information</div>
+                <div style="margin-bottom: 20px;">Please contact huang_zx@buaa.edu.cn</div>
+                <button onclick="document.getElementById('customAlert').style.display='none'" style="background-color: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">OK</button>
+                </div>
+            </div>
+            
+            <!-- 修改 Code 按钮 -->
+            <span class="link-block"> 
+                <a href="#" onclick="document.getElementById('customAlert').style.display='block'; return false;" class="external-link button is-normal is-rounded"> 
+                <span class="icon"><i class="fab fa-github"></i></span> 
+                <span>Code</span> 
+                </a> 
+            </span>
+
+
               <span class="link-block">
                 <a href="https://arxiv.org/pdf/2602.08354v1" class="external-link button is-normal is-rounded" target="_blank">
                   <span class="icon"><i class="ai ai-pdf"></i></span>
