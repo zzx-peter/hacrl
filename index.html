@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Recent advancements in large reasoning models (LRMs) have greatly improved their capabilities on complex reasoning tasks through long Chains of Thought (CoTs). However, this approach often results in substantial redundancy, impairing computational efficiency and causing significant delays in real-time applications. Recent studies show that longer reasoning chains are frequently uncorrelated with correctness and can even be detrimental to accuracy. In a further in-depth analysis of this phenomenon, we surprisingly uncover and empirically verify that LRMs implicitly know the appropriate time to stop thinking, while this capability is obscured by current sampling paradigms. Motivated by this, we introduce SAGE (Self-Aware Guided Efficient Reasoning), a novel sampling paradigm that unleashes this efficient reasoning potential. Furthermore, integrating SAGE as mixed sampling into group-based reinforcement learning (SAGE-RL) effectively incorporates SAGE-discovered efficient reasoning patterns into standard pass@1 inference, markedly enhancing both the reasoning accuracy and efficiency of LRMs across multiple challenging mathematical benchmarks.">
-  <meta name="keywords" content="LLM, Reasoning, Reinforcement Learning, Efficient Reasoning">
+        content="Recent advancements in large reasoning models (LRMs) have greatly improved their capabilities on complex reasoning tasks through long Chains of Thought (CoTs). However, this approach often results in substantial redundancy, impairing computational efficiency and causing significant delays in real-time applications. Recent studies show that longer reasoning chains are frequently uncorrelated with correctness and can even be detrimental to accuracy. In a further in-depth analysis of this phenomenon, we surprisingly uncover and empirically verify that LRMs implicitly know the appropriate time to stop thinking, while this capability is obscured by current sampling paradigms. Motivated by this, we introduce SAGE (Self-Aware Guided Efficient Reasoning), a novel sampling paradigm that unleashes this efficient reasoning potential. Furthermore, integrating SAGE as mixed sampling into groupbased reinforcement learning (SAGE-RL) effectively incorporates SAGE-discovered efficient reasoning patterns into standard pass@1 inference, markedly enhancing both the reasoning accuracy and efficiency of LRMs across multiple challenging mathematical benchmarks.">
+  <meta name="keywords" content="LLM, Reasoning, Efficient Reasoning, SAGE, Reinforcement Learning, Chain of Thought">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Does your reasoning model implicitly know when to stop thinking ?</title>
+  <title>Does Your Reasoning Model Implicitly Know When to Stop Thinking?</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
@@ -40,6 +40,8 @@
       --bg-white: #ffffff;
       --bg-gray: #f9fafb;
       --border-light: #e5e7eb;
+      --sage-red: #ab1727;
+      --sage-blue: #2563eb;
     }
     
     body { color: var(--text-dark); }
@@ -48,9 +50,9 @@
     .hero .hero-body { padding-top: 2rem; padding-bottom: 0.8rem; overflow: visible !important; }
     .hero * { overflow: visible !important; }
     .hero .container, .hero .columns, .hero .column { overflow: visible !important; max-height: none !important; }
-    .hero .title.is-1 { color: #ab1727; font-weight: 400; font-family: Georgia, 'Times New Roman', serif; }
+    .hero .title.is-1 { color: var(--sage-red); font-weight: 400; font-family: Georgia, 'Times New Roman', serif; }
     .hero .publication-authors a { color: #374151 !important; }
-    .hero .publication-authors a:hover { color: #C41230 !important; text-decoration: underline; }
+    .hero .publication-authors a:hover { color: var(--sage-red) !important; text-decoration: underline; }
     .hero .publication-authors span { color: #4b5563; }
     
     .publication-links .button {
@@ -182,6 +184,7 @@
       font-weight: 600;
       font-size: 0.9rem;
     }
+    .highlight-stat.sage { background: var(--sage-blue); }
     
     .algorithm-box {
       background: #1f2937;
@@ -428,46 +431,50 @@
     <div class="container is-max-widescreen">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Does your reasoning model implicitly know when to stop thinking ?</h1>
+          <h1 class="title is-1 publication-title">Does Your Reasoning Model Implicitly Know When to Stop Thinking?</h1>
           
           <!-- Authors Section -->
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><a href="https://github.com/hzx122">Zixuan Huang</a><sup>1</sup></span>,
+            <span class="author-block"><a href="mailto:huangzx@buaa.edu.cn">Zixuan Huang</a><sup>1,2</sup></span>,
             <span class="author-block">Xin Xia<sup>2</sup></span>,
             <span class="author-block">Yuxi Ren<sup>2</sup></span>,
             <span class="author-block">Jianbin Zheng<sup>2</sup></span>,
             <span class="author-block">Xuanda Wang<sup>2</sup></span>,
-            <span class="author-block">Zhixia Zhang<sup>1</sup></span>,
+            <span class="author-block">Zhixia Zhang<sup>1*</sup></span>,
             <span class="author-block">Hongyan Xie<sup>1</sup></span>,<br>
             <span class="author-block">Songshi Liang<sup>2</sup></span>,
             <span class="author-block">Zehao Chen<sup>1</sup></span>,
             <span class="author-block">Xuefeng Xiao<sup>2</sup></span>,
             <span class="author-block">Fuzhen Zhuang<sup>1</sup></span>,
             <span class="author-block">Jianxin Li<sup>1</sup></span>,
-            <span class="author-block"><a href="">Yikun Ban</a><sup>1</sup></span>,
-            <span class="author-block">deqing wang<sup>1</sup></span>
+            <span class="author-block"><a href="mailto:yikunb@buaa.edu.cn">Yikun Ban</a><sup>1†</sup></span>,
+            <span class="author-block"><a href="mailto:dqwang@buaa.edu.cn">Deqing Wang</a><sup>1†</sup></span>
           </div>
           <div class="is-size-6 publication-authors" style="margin-top: 0.4rem;">
             <span class="author-block"><sup>1</sup>Beihang University</span>
-            <!-- <span class="author-block" style="margin-left: 0.8em;"><sup>2</sup>Bytedance China</span>
-            <span class="author-block" style="margin-left: 0.8em;"><sup>3</sup>Bytedance China</span>
-            <span class="author-block" style="margin-left: 0.8em;"><sup>4</sup>UC Berkeley</span>
-            <span class="author-block" style="margin-left: 0.8em;"><sup>5</sup>Impossible, Inc.</span> -->
-            <span class="author-block" style="margin-left: 0.8em;"><sup>*</sup></span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>2</sup>Bytedance China</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>*</sup>Corresponding Author</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>†</sup>Co-corresponding Authors</span>
           </div>
 
           <div class="has-text-centered" style="margin-top: 0.8rem;">
             <div class="publication-links">
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2602.02710" class="external-link button is-normal is-rounded" target="_blank">
+                <a href="https://arxiv.org/abs/2602.05811" class="external-link button is-normal is-rounded" target="_blank">
                   <span class="icon"><i class="ai ai-arxiv"></i></span>
                   <span>arXiv</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://github.com/tajwarfahim/maxrl" class="external-link button is-normal is-rounded">
+                <a href="https://github.com/yourusername/sage-rl" class="external-link button is-normal is-rounded">
                   <span class="icon"><i class="fab fa-github"></i></span>
                   <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./static/papers/sage_icml2026.pdf" class="external-link button is-normal is-rounded" target="_blank">
+                  <span class="icon"><i class="ai ai-pdf"></i></span>
+                  <span>Paper</span>
                 </a>
               </span>
             </div>
@@ -475,7 +482,7 @@
 
           <div style="margin-top: 0.6rem; text-align: center;">
             <p style="font-family: 'Castoro', Georgia, serif; font-size: 1.05rem; color: #374151;">
-              <strong>TL;DR</strong>&nbsp; A framework to maximize the likelihood using reinforcement learning.
+              <strong>TL;DR</strong>&nbsp; Large Reasoning Models (LRMs) implicitly know when to stop thinking—we unlock this ability with SAGE, a self-aware sampling paradigm, and SAGE-RL, which integrates efficient reasoning patterns into standard inference for <span class="highlight-stat sage">+2.1% avg accuracy</span> and <span class="highlight-stat sage">44.1% fewer tokens</span> on mathematical benchmarks.
             </p>
           </div>
         </div>
@@ -484,533 +491,1071 @@
   </div>
 </section>
 
-<!-- ==================== ABSTRACT ==================== -->
+<!-- ==================== ABSTRACT & TEASER ==================== -->
 <section class="section section-white" style="padding-top: 0.8rem; padding-bottom: 0.5rem;">
   <div class="container is-max-desktop">
     
     <!-- Teaser Diagram -->
     <div class="figure-container" style="margin: 0;">
       <center>
-        <img src="./static/images/teaser6.png" alt="MaxRL Teaser" style="max-width: 100%;">
-      </center>
-    </div>
-    
-    <!-- Qwen3-4B Results Figure -->
-    <div class="figure-container" style="margin-top: 0.5rem;">
-      <center>
-        <img src="./static/images/large_scale_experiments_summary_qwen_3_4B.png" alt="MaxRL Results on Qwen3-4B" style="max-width: 100%;">
+        <img src="./static/images/sage_teaser.png" alt="SAGE Teaser" style="max-width: 100%;">
       </center>
       <p class="figure-caption">
-        <strong>Results on Qwen3-4B.</strong> MaxRL Pareto-dominates GRPO across all benchmarks, achieving similar or better Pass@1 while significantly improving Pass@K. This translates to <strong>7.9×–19.2×</strong> gains at test-time scaling efficiency.
+        <strong>SAGE Unleashes Efficient Reasoning Potential.</strong> SAGE uncovers the optimal concise reasoning chains hidden in pass@k that are obscured by standard pass@1 sampling. SAGE-RL integrates these efficient patterns into LRMs, achieving higher accuracy with far fewer tokens across challenging mathematical benchmarks (AIME, MATH-500, OlympiadBench, AMC23, etc.).
       </p>
     </div>
     
-    <!-- <div class="content has-text-justified" style="margin-top: 1.5rem;">
+    <!-- Abstract -->
+    <div class="content has-text-justified" style="margin-top: 2rem;">
+      <h2 class="title is-3 section-title">Abstract</h2>
       <p>
-        We introduce <strong>Maximum Likelihood Reinforcement Learning (MaxRL)</strong>, enabling reinforcement learning to do maximum likelihood optimization. 
+        Recent advancements in large reasoning models (LRMs) have greatly improved their capabilities on complex reasoning tasks through long Chains of Thought (CoTs). However, this approach often results in substantial redundancy, impairing computational efficiency and causing significant delays in real-time applications. Recent studies show that longer reasoning chains are frequently uncorrelated with correctness and can even be detrimental to accuracy. In a further in-depth analysis of this phenomenon, we surprisingly uncover and empirically verify that LRMs <strong>implicitly know the appropriate time to stop thinking</strong>, while this capability is obscured by current sampling paradigms.
       </p>
-    </div> -->
-  </div>
-</section>
-
-<!-- ==================== RL VS ML ==================== -->
-<section class="section section-white">
-  <div class="container is-max-desktop">
-    <div class="content has-text-justified">
-      
-      <h2 class="title is-3 section-title">Why Maximum Likelihood?</h2>
-      
       <p>
-        Maximum likelihood is a principled objective in machine learning, reliably translating increases in model capacity, data, and compute into performance gains. 
-        Modern tasks like code generation and mathematical reasoning differ: they involve non-differentiable generation but have a binary notion of correctness. 
-        For each input $x$, the model induces a success probability $p_\theta(x) = p_\theta(y^* | x)$ over the correct answer $y^*$—an <strong>implicit likelihood</strong> over correct outcomes.
-      </p>
-      
-      <p>
-        In these settings, <strong>reinforcement learning</strong> is typically applied.  
-        However, the two approaches optimize <strong>fundamentally different objectives</strong>:
-      </p>
-      
-      <div class="math-comparison">
-        <div class="math-box" style="border-top: 3px solid #1e40af;">
-          <h4 style="color: #1e40af; text-align: center;">Reinforcement Learning</h4>
-          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
-            $J_{\mathrm{RL}} = \mathbb{E}_x\left[p_\theta(x)\right]$
-          </p>
-        </div>
-        <div class="math-box" style="border-top: 3px solid #C41230;">
-          <h4 style="color: #C41230; text-align: center;">Maximum Likelihood</h4>
-          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
-            $J_{\mathrm{ML}} = \mathbb{E}_x\left[\log p_\theta(x)\right]$
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== MAXRL METHOD ==================== -->
-<section class="section section-white">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">MaxRL: Maximum Likelihood via Reinforcement Learning</h2>
-    
-    <div class="content has-text-justified">
-      
-      <p>
-        MaxRL is a framework that turns more compute into increasingly better approximations of the maximum likelihood objective in sampling-based tasks.
-      </p>
-      
-      <!-- Maclaurin Expansion -->
-      <h4 class="subsection-title">Maclaurin Expansion of Maximum Likelihood</h4>
-      
-      <p>
-        The maximum likelihood objective admits a <strong>Maclaurin expansion</strong> in terms of failure events:
-      </p>
-      
-      <div class="formula-box">
-        <p style="font-size: 1rem; margin: 0;">
-          $J_{\mathrm{ML}}(x) = \log p = -\sum_{k=1}^{\infty}\frac{(1-p)^k}{k} = -\sum_{k=1}^{\infty}\frac{\mathrm{fail@}k(x)}{k}$
-        </p>
-      </div>
-      
-      <p>
-        where $\mathrm{fail@}k(x)=1-\mathrm{pass@}k(x)$ denotes the probability that all $k$ i.i.d. samples from the model fail.
-        Differentiating yields the <strong>population-level gradient identity</strong>:
-      </p>
-      
-      <div class="formula-box">
-        <p style="font-size: 1.1rem; margin: 0;">
-          $\nabla_\theta J_{\mathrm{ML}}(x) = \sum_{k=1}^{\infty}\frac{1}{k}\,\nabla_\theta \mathrm{pass@}k(x)$
-        </p>
-      </div>
-
-      <p>
-        Maximum likelihood optimizes an <strong>infinite weighted sum of pass@k gradients</strong>. 
-        Higher-order terms represent rare successes, critical when $p$ is small. 
-        In contrast, standard RL optimizes only the first-order term of this expansion.
-      </p>
-      
-      <div class="math-comparison">
-        <div class="math-box" style="border-top: 3px solid #1e40af;">
-          <h4 style="color: #1e40af; text-align: center;">Reinforcement Learning</h4>
-          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
-            $$\begin{aligned} J_{\mathrm{RL}}(x) &= p_\theta(x) \\ \nabla_\theta J_{\mathrm{RL}}(x) &= \nabla_\theta \mathrm{pass@}1(x) \end{aligned}$$
-          </p>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
-            Optimizes pass@1
-          </p>
-        </div>
-        <div class="math-box" style="border-top: 3px solid #C41230;">
-          <h4 style="color: #C41230; text-align: center;">Maximum Likelihood</h4>
-          <p style="text-align: center; font-size: 1rem; margin: 0.5rem 0;">
-            $$\begin{aligned} J_{\mathrm{ML}}(x) &= \log p_\theta(x) \\ \nabla_\theta J_{\mathrm{ML}}(x) &= \sum_{k=1}^{\infty}\frac{1}{k}\,\nabla_\theta \mathrm{pass@}k(x) \end{aligned}$$
-          </p>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
-            Optimizes harmonic mixture of pass@k
-          </p>
-        </div>
-      </div>
-      
-      <div class="insight-box">
-        <p style="margin: 0;">
-          Reinforcement learning optimizes a first-order approximation of the maximum likelihood objective.
-        </p>
-      </div>
-      
-      <!-- MaxRL Objective -->
-      <h4 class="subsection-title">MaxRL Objective Function</h4>
-      
-      <p>
-        Optimizing the full infinite mixture is infeasible. We define the <strong>truncated maximum likelihood objective</strong> at level $T$:
-      </p>
-      
-      <div class="formula-box">
-        <p style="font-size: 1rem; margin: 0;">
-          $J_{\mathrm{MaxRL}}^{(T)}(x) = -\sum_{k=1}^{T}\frac{(1-p)^k}{k}$
-        </p>
-      </div>
-      
-      <p>Differentiating yields the truncated population gradient:</p>
-      
-      <div class="formula-box">
-        <p style="font-size: 1rem; margin: 0;">
-          $\nabla_\theta J_{\mathrm{MaxRL}}^{(T)}(x) = \sum_{k=1}^{T}\frac{1}{k}\,\nabla_\theta \mathrm{pass@}k(x)$
-        </p>
-      </div>
-      
-      <p>The objective $J_{\mathrm{MaxRL}}^{(T)}(x)$ defines a <strong>compute-indexed family</strong>:</p>
-
-      <ul style="margin: 1.5rem 0; padding-left: 1.5rem;">
-        <li style="margin-bottom: 0.5rem;">$T = 1$ recovers standard reinforcement learning (pass@1)</li>
-        <li style="margin-bottom: 0.5rem;">$T \to \infty$ recovers exact maximum likelihood</li>
-      </ul>
-      
-    </div>
-  </div>
-</section>
-
-<!-- ==================== PRACTICAL GRADIENT ESTIMATOR ==================== -->
-<section class="section section-gray" style="padding-bottom: 1.5rem;">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Practical Gradient Estimator of MaxRL</h2>
-    
-    <div class="content has-text-justified">
-      
-      <p>
-        A natural approach is to approximate each pass@k term separately. 
-        We take an alternative approach, yielding a simpler estimator and a new viewpoint.
-      </p>
-      
-      <!-- Theorem 1 -->
-      <div class="result-card" style="border-left: 4px solid var(--primary); margin: 1.5rem 0;">
-        <h4 style="color: var(--primary); margin-bottom: 0.8rem;">Theorem 1: Conditional Form of the ML Gradient</h4>
-        <p style="margin-bottom: 1rem;">The gradient of the maximum likelihood objective admits the following conditional expectation representation:</p>
-        <div style="text-align: center; font-size: 1.1rem; padding: 0.5rem 0;">
-          $\nabla_\theta J_{\mathrm{ML}}(x) = \mathbb{E}\left[\nabla_\theta \log \pi_\theta(z \mid x) \;\middle|\; \text{success}\right]$
-        </div>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; margin-bottom: 0;">
-          <strong>Interpretation:</strong> The ML gradient equals the average score function over <strong>successful trajectories only</strong>.
-        </p>
-      </div>
-      
-      <p>
-        This theorem suggests a simple estimator: sample $N$ trajectories from the policy, then average the score functions only over successful ones.
-        Given $N$ rollouts with $K$ successes, we define:
-      </p>
-      
-      <div class="formula-box" style="margin: 1.5rem 0;">
-        <p style="font-size: 1rem; margin: 0;">
-          $\widehat{g}_N(x) = \begin{cases} \displaystyle\frac{1}{K}\sum_{i=1}^N r_i S_i, & K \ge 1 \\[0.6em] 0, & K = 0 \end{cases}$
-        </p>
-      </div>
-      
-      <p>
-        where $r_i \in \{0,1\}$ is the binary reward and $S_i = \nabla_\theta \log \pi_\theta(z_i \mid x)$ is the score function.
-      </p>
-      
-      <!-- Theorem 2 -->
-      <div class="result-card" style="border-left: 4px solid var(--primary); margin: 1.5rem 0;">
-        <h4 style="color: var(--primary); margin-bottom: 0.8rem;">Theorem 2: Estimator–Objective Equivalence</h4>
-        <p style="margin-bottom: 1rem;">The estimator $\widehat{g}_N(x)$ is an unbiased estimator for the MaxRL gradient of order $T = N$:</p>
-        <div style="text-align: center; font-size: 1.1rem; padding: 0.5rem 0;">
-          $\mathbb{E}\left[\widehat{g}_N(x)\right] = \nabla_\theta J_{\mathrm{MaxRL}}^{(N)}(x)$
-        </div>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; margin-bottom: 0;">
-          <strong>Implication:</strong> Using $N$ rollouts automatically targets the $T=N$ truncated ML objective—no explicit pass@k estimation needed.
-        </p>
-      </div>
-            
-      <p>The difference between REINFORCE and MaxRL is remarkably simple at the estimator level:</p>
-      
-      <div class="math-comparison">
-        <div class="math-box" style="border-top: 3px solid #1e40af;">
-          <h4 style="color: #1e40af; text-align: center;">REINFORCE</h4>
-          <p style="text-align: center; font-size: 1.1rem;">
-            $\displaystyle\frac{1}{N}\sum_{i=1}^N r_i S_i$
-          </p>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
-            <strong>Unbiased for:</strong> $\nabla_\theta\,\mathrm{pass@}1$
-            <br><br>
-            Normalize by total samples $N$
-          </p>
-        </div>
-        <div class="math-box" style="border-top: 3px solid #C41230;">
-          <h4 style="color: #C41230; text-align: center;">MaxRL (Ours)</h4>
-          <p style="text-align: center; font-size: 1.1rem;">
-            $\displaystyle\frac{1}{K}\sum_{i=1}^N r_i S_i$
-          </p>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
-            <strong>Unbiased for:</strong> $\sum_{k=1}^{N}\frac{1}{k}\nabla_\theta \mathrm{pass@}k$
-            <br><br>
-            Normalize by successful samples $K$
-          </p>
-        </div>
-      </div>
-      
-      <div class="insight-box">
-        <p style="margin: 0;">
-          Increasing $N$ in REINFORCE only reduces <strong>variance</strong> of a fixed pass@1 objective. 
-          However, in MaxRL, increasing $N$ improves the <strong>objective itself</strong>, approaching maximum likelihood.
-        </p>
-      </div>
-      
-      <!-- Variance Reduction -->
-      
-      <p>
-        In addition, we can reduce variance by using a zero-mean control variate, the unconditional average score $V_N = \frac{1}{N}\sum_{i=1}^N S_i$, which satisfies $\mathbb{E}[V_N]=0$. 
-        Subtracting $V_N$ preserves unbiasedness while reducing variance.
-        The on-policy implementation differs from REINFORCE and GRPO by only a <strong>single-line modification</strong> to the advantage calculation: the advantage is normalized by the per-task mean reward $\hat{r}$, rather than being left unnormalized (as in REINFORCE) or normalized by standard deviation (as in GRPO):
-      </p>
-      
-           <div style="margin: 1.5rem 0 0 0;">
-            <center>
-              <iframe
-                src="./code.html"
-                title="MaxRL Advantage Code Diff"
-                width="900"
-                height="870"
-                style="border: none; overflow: hidden;"
-                scrolling="no">
-              </iframe>
-            </center>
-          </div>
-          
-      
-          </div>
-  </div>
-</section>
-
-<!-- ==================== A UNIFYING WEIGHT FUNCTION VIEW ==================== -->
-<section class="section section-white" style="padding-top: 1.5rem;">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">A Unifying Weight Function View</h2>
-    
-    <div class="content has-text-justified">
-      <p>
-        All of the objectives mentioned above admit population-level gradients of the form:
-      </p>
-      
-      <div class="formula-box">
-        <p style="font-size: 1rem; margin: 0;">
-          $\nabla_\theta J = \mathbb{E}_{x}\left[w(p_\theta(x)) \nabla_\theta p_\theta(x)\right]$
-        </p>
-      </div>
-      
-      <p>
-        where $w(p)$ determines how learning signal is allocated across inputs of varying difficulty.
-        The key distinction among objectives is <strong>how strongly they emphasize hard, low-pass-rate inputs</strong>. 
-        Below, we present a visualization of the weight functions for each objective. From this visualization, we can see that as $T$ increases, MaxRL gradually approaches maximum likelihood weighting.
-      </p>
-      
-      <!-- GIF version -->
-      <div style="margin: 1rem 0;">
-        <center>
-          <img src="./static/images/StandardRLWeightingAxes2.gif" alt="MaxRL Weight Functions" style="max-width: 100%; border-radius: 8px;">
-        </center>
-      </div>
-      
-      <!-- Original iframe version (commented out)
-      <div style="margin: 1rem 0;">
-        <center>
-          <iframe
-            src="./weight-function.html"
-            title="MaxRL Weight Functions"
-            width="560"
-            height="470"
-            style="border: none; overflow: hidden;"
-            scrolling="no">
-          </iframe>
-        </center>
-      </div>
-      -->
-      
-      <p>
-        Notably, GRPO's normalization by standard deviation also provides moderate upweighting of hard inputs.
-        However, unlike likelihood-based objectives, GRPO assigns <strong>increased</strong> weight to very easy inputs as $p \to 1$.
+        Motivated by this insight, we introduce <strong>SAGE (Self-Aware Guided Efficient Reasoning)</strong>, a novel sampling paradigm that unleashes this efficient reasoning potential by leveraging the model's self-confidence to discover precise, concise reasoning chains. Furthermore, integrating SAGE as mixed sampling into group-based reinforcement learning (<strong>SAGE-RL</strong>) effectively incorporates SAGE-discovered efficient reasoning patterns into standard pass@1 inference. Extensive experiments on six challenging mathematical benchmarks (MATH-500, AIME 2024/2025, AMC23, OlympiadBench, Minerva) show that SAGE-RL markedly enhances both the reasoning accuracy and efficiency of LRMs, achieving an average <strong>+2.1% accuracy gain</strong> and <strong>44.1% token reduction</strong> compared to state-of-the-art baselines.
       </p>
     </div>
   </div>
 </section>
 
-<!-- ==================== EXPERIMENTS ==================== -->
+<!-- ==================== THE PROBLEM: REDUNDANT REASONING ==================== -->
 <section class="section section-gray">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Experiments</h2>
+    <h2 class="title is-3 section-title">The Problem: Redundant Chain of Thought Reasoning</h2>
     
-    <div class="content has-text-justified" style="margin-bottom: 2rem;">
+    <div class="content has-text-justified">
       <p>
-        We first show that MaxRL closely approximates exact maximum likelihood where it is computable on a toy image classification task, 
-        and then demonstrate consistent improvements across maze navigation, GSM8K math reasoning, 
-        and finally on large-scale Qwen3 training and challenging math reasoning problems.
+        Modern LRMs rely on long Chain of Thought (CoT) reasoning to solve complex mathematical and logical problems, enabled by Reinforcement Learning from Verifiable Rewards (RLVR) algorithms like GRPO and GSPO that incentivize "thinking longer". While this boosts performance on hard tasks, it introduces severe <strong>reasoning redundancy</strong>: models often continue generating steps long after deriving the correct answer, wasting computational resources and increasing latency.
       </p>
-    </div>
-    
-    <!-- Takeaway 1 -->
-    <div class="result-card">
-      <h4>ImageNet: Comparison with Exact Likelihood</h4>
+      
+      <div class="result-card" style="margin-top: 1.5rem;">
+        <h4>Key Observations on Redundant Reasoning</h4>
+        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+          <li>Longer CoTs do not correlate with correctness: On AIME 2025, DeepSeek-R1 produces responses <strong>5× longer</strong> than Claude 3.7 Sonnet with comparable accuracy.</li>
+          <li>Shorter CoTs often outperform longer ones: QwQ-32B's shortest responses on AIME/HMMT achieve <strong>+2% accuracy</strong> with <strong>31% fewer tokens</strong> than random samples.</li>
+          <li>72% of AIME 2025 problems with both correct/incorrect answers have <strong>longer responses as incorrect</strong> (Shrivastava et al., 2025).</li>
+        </ul>
+      </div>
+      
+      <!-- RFCS Metric -->
+      <h4 class="subsection-title">Ratio of the First Correct Step (RFCS)</h4>
       <p>
-        We first validate MaxRL in a setting where exact maximum likelihood can be implemented exactly. 
-        We consider a standard image classification task, where maximum likelihood corresponds to minimizing cross-entropy. 
-        Image classification provides a clean testbed: reward is 1 if predicted class matches ground truth, 0 otherwise.
-        As sampling compute increases, MaxRL converges to exact maximum likelihood training.
+        To quantify this redundancy, we define the <strong>RFCS</strong> metric: the step index of the first correct answer divided by the total number of reasoning steps. For over half of MATH-500 samples across all tested LRMs (DS-1.5B, DeepScaleR, Qwen3-8B), RFCS &lt; 1—meaning the model finds the correct answer early but continues reasoning unnecessarily.
       </p>
+      
       <div class="figure-container">
-        <center><img src="./static/images/imagenet_new_main_paper_figure_1.png" alt="ImageNet results" style="max-width: 80%;"></center>
+        <center><img src="./static/images/rfcs_stats.png" alt="RFCS Statistics on MATH-500" style="max-width: 80%;"></center>
         <p class="figure-caption">
-          <strong>ImageNet training dynamics.</strong> With sufficient rollouts, MaxRL closely matches cross-entropy training, 
-          while REINFORCE fails to make progress from low initial pass rates.
-        </p>
-      </div>
-      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
-        <p style="margin: 0; font-weight: 600; color: #C41230;">
-          📊 Takeaway 1: MaxRL approaches exact maximum likelihood given infinite compute.
-        </p>
-      </div>
-    </div>
-    
-    <!-- Takeaway 2 -->
-    <div class="result-card">
-      <h4>Maze Navigation: Infinite Data Regime</h4>
-      <p>
-        We study training with continually fresh data using procedurally generated mazes. 
-        Each training input is newly generated, and the model never encounters the same maze twice.
-        In a data-rich training regime, MaxRL <strong>scales more favorably with additional compute</strong> compared to existing methods.
-      </p>
-      <center>
-        <img src="./static/images/maze-example-dual.png" alt="Maze visualization" style="max-width: 50%; margin-top: 0.5rem;">
-        <p class="figure-caption" style="margin-top: 0.5rem;">Example maze: successful navigation (left) vs. failure case (right).</p>
-      </center>
-      <div class="figure-container">
-        <center><img src="./static/images/maze_scaling_with_number_of_rollouts.png" alt="Maze scaling results" style="max-width: 100%;"></center>
-        <p class="figure-caption">
-          <strong>Scaling behavior with increasing rollouts per prompt.</strong> MaxRL consistently outperforms GRPO and RLOO.
-        </p>
-      </div>
-      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
-        <p style="margin: 0; font-weight: 600; color: #C41230;">
-          🚀 Takeaway 2: MaxRL scales better with additional compute in the infinite data regime.
-        </p>
-      </div>
-    </div>
-    
-    <!-- Takeaway 3 -->
-    <div class="result-card">
-      <h4>GSM8K: Data-Scarce Regime</h4>
-      <p>
-        In the data-scarce regime, models train for multiple epochs over a fixed dataset until Pass@1 no longer climbs. 
-        This exposes differences in how objectives allocate learning signal under repeated training.
-        MaxRL can sustain improvement over a large number of epochs, demonstrating less pass@k degradation (overfitting) and converging to a higher average performance.
-      </p>
-      <!-- Sharpening Animation -->
-      <div class="figure-container" style="margin-top: 2rem;">
-        <center>
-          <img src="./static/images/SharpeningAnimation.gif" alt="Pass rate distribution during training" style="max-width: 80%; border-radius: 8px;">
-        </center>
-        <p class="figure-caption">
-          <strong>Training dynamics on GSM8K and distribution of prompts across pass rate bins during GSM8K training.</strong> MaxRL shows slower initial gains but sustained improvement, 
-          with substantially less pass@k degradation. During training, MaxRL also shows a much lower bar at 0% pass rate compared to baselines, indicating that it solves more problems in the training set. 
-          Moreover, the distribution across pass rates is more uniform for MaxRL, while GRPO and RLOO cluster around the two extremes (0% and 100% pass rates). 
-          This demonstrates that training with MaxRL mitigates sharpening and extracts more learning signal from a fixed dataset.
-        </p>
-      </div>
-      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
-        <p style="margin: 0; font-weight: 600; color: #C41230;">
-          🛡️ Takeaway 3: MaxRL is more resistant to overfitting.
-        </p>
-      </div>
-    </div>
-    
-    <!-- Takeaway 4 -->
-    <div class="result-card">
-      <h4>Large-Scale LLM Training</h4>
-      <p>
-        We train <strong>Qwen3-1.7B-Base</strong> and <strong>Qwen3-4B-Base</strong> models on POLARIS-53K (~50K math reasoning prompts), 
-        and evaluate on various mathematical reasoning benchmarks.
-        On larger scale mathematical reasoning, MaxRL Pareto-dominates GRPO and shows little to no diversity degradation with respect to the base model.
-      </p>
-      <div class="figure-container">
-        <center><img src="./static/images/large_scale_experiments_summary.png" alt="Large scale LLM results" style="max-width: 100%;"></center>
-        <p class="figure-caption">
-          <strong>Evaluation on math benchmarks.</strong> MaxRL consistently Pareto dominates GRPO: 
-          similar or better pass@1 <strong>and</strong> improved pass@k. Improved coverage means achieving the same pass@k 
-          requires <strong>2.3× – 19.2×</strong> fewer samples than GRPO.
-        </p>
-      </div>
-      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
-        <p style="margin: 0; font-weight: 600; color: #C41230;">
-          🧠 Takeaway 4: MaxRL's benefits transfer to larger scale mathematical reasoning.
-        </p>
-      </div>
-    </div>
-    
-    <!-- Takeaway 5 -->
-    <div class="result-card">
-      <h4>Training Dynamics Analysis</h4>
-      <p>
-        Besides performance metrics, MaxRL exhibits different optimization dynamics. 
-        Most notably, it produces stronger gradients on harder prompts, and also leads to a larger fraction of prompts with at least one correct rollout during training.
-      </p>
-      <div class="figure-container" style="margin-top: 1.5rem; margin-bottom: 0.3rem;">
-        <center>
-          <img src="./static/images/qwen_p_vs_grad_norm_plot.png" alt="Gradient norm analysis" style="max-width: 80%;">
-        </center>
-        <p class="figure-caption">
-          <strong>Gradient norm analysis.</strong> MaxRL generates larger gradient norms over prompts with close to 0 pass rates, concentrating learning signal on harder problems.
-        </p>
-      </div>
-      <div class="figure-container" style="margin-top: 1.5rem;">
-        <center>
-          <img src="./static/images/fraction_solved_problems_during_training.png" alt="Training dynamics" style="max-width: 70%;">
-        </center>
-        <p class="figure-caption">
-          <strong>Fraction of prompts with at least one correct rollout.</strong> MaxRL maintains a higher fraction of solvable prompts throughout training, enabling continued learning even in later epochs.
+          <strong>RFCS Statistics on MATH-500.</strong> All LRMs show significant ineffective reasoning steps (RFCS(&lt;1) &gt; 80%) and low average RFCS (~0.6), demonstrating widespread overthinking under standard pass@1 sampling.
         </p>
       </div>
       
-      <div class="insight-box" style="margin-top: 1.5rem; margin-bottom: 0; border-left-color: #C41230;">
-        <p style="margin: 0; font-weight: 600; color: #C41230;">
-          ⚡ Takeaway 5: MaxRL shows characteristically different optimization dynamics.
+      <!-- Example of Redundant Reasoning -->
+      <div class="figure-container">
+        <center><img src="./static/images/redundant_reasoning_example.png" alt="Redundant Reasoning Example" style="max-width: 90%;"></center>
+        <p class="figure-caption">
+          <strong>Redundant Reasoning Example.</strong> The model derives the correct answer in 500 tokens but generates an additional 452 redundant tokens of double-checking—this is typical of LRMs under standard sampling.
+        </p>
+      </div>
+      
+      <div class="insight-box">
+        <p style="margin: 0;">
+          Current sampling paradigms (pass@1) obscure the LRM's inherent ability to recognize when to stop thinking. The model <em>knows</em> the optimal stopping point—it just can't act on it under standard inference.
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ==================== CORE INSIGHT: LRMS IMPLICITLY KNOW WHEN TO STOP ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Core Insight: LRMs Implicitly Know When to Stop Thinking</h2>
     
+    <div class="content has-text-justified">
+      <p>
+        Through systematic experiments with token-wise reasoning path exploration, we uncover three critical observations that confirm LRMs have an inherent sense of optimal reasoning termination:
+      </p>
+      
+      <!-- Observation 1 -->
+      <div class="result-card" style="border-left: 4px solid var(--sage-blue); padding: 1.5rem;">
+        <h4 style="color: var(--sage-blue); margin-bottom: 0.5rem;">Observation 1: High-Confidence Paths Are Short & Effective</h4>
+        <p>
+          Using a cumulative log-probability score $\Phi$ to track high-confidence reasoning paths, we find that increasing exploration width leads to <strong>consistent response length reduction AND accuracy improvement</strong>. In contrast, paths selected by next-token probability ($\phi$) suffer rapid accuracy degradation (length collapse).
+        </p>
+        <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;">
+          <center><img src="./static/images/phi_vs_phi.png" alt="Φ vs φ Performance" style="max-width: 70%;"></center>
+        </div>
+      </div>
+      
+      <!-- Observation 2 -->
+      <div class="result-card" style="border-left: 4px solid var(--sage-blue); padding: 1.5rem; margin-top: 1.5rem;">
+        <h4 style="color: var(--sage-blue); margin-bottom: 0.5rem;">Observation 2: High-Confidence Paths Have Confident Ends</h4>
+        <p>
+          The termination token ($$) consistently ranks <strong>1st</strong> in high-confidence paths (selected by $\Phi$) when it appears, meaning the model is highly confident in stopping. For next-token selected paths, the termination token's rank increases with exploration—showing uncertainty. Greedy/random sampling misses these short, high-confidence chains.
+        </p>
+        <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;">
+          <center><img src="./static/images/confident_ends.png" alt="Confident Termination" style="max-width: 70%;"></center>
+        </div>
+      </div>
+      
+      <!-- Observation 3 -->
+      <div class="result-card" style="border-left: 4px solid var(--sage-blue); padding: 1.5rem; margin-top: 1.5rem;">
+        <h4 style="color: var(--sage-blue); margin-bottom: 0.5rem;">Observation 3: Scaling Exploration Drives Capability Convergence</h4>
+        <p>
+          As exploration width increases, LRMs converge to <strong>higher accuracy with shorter responses</strong>, with token efficiency (accuracy/length) rising sharply. This convergence is universal across models (DS-1.5B, DeepScaleR) and datasets (MATH-500, AMC23), proving the model's inherent efficient reasoning capability.
+        </p>
+        <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;">
+          <center><img src="./static/images/capability_convergence.png" alt="Capability Convergence" style="max-width: 70%;"></center>
+        </div>
+      </div>
+      
+      <div class="insight-box" style="margin-top: 2rem;">
+        <p style="margin: 0; font-size: 1.15rem;">
+          <strong>Key Takeaway:</strong> LRMs have an innate ability to identify concise, correct reasoning chains—this capability is simply locked by current sampling paradigms that prioritize next-token probability over cumulative confidence.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SAGE: SELF-AWARE GUIDED EFFICIENT REASONING ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">SAGE: Self-Aware Guided Efficient Reasoning</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        Building on our core insight, we design <strong>SAGE</strong>—a simple, training-free sampling paradigm that unlocks the LRM's implicit efficient reasoning capability by leveraging <strong>cumulative self-confidence ($\Phi$)</strong> to discover concise, correct reasoning chains. SAGE replaces token-level exploration with <strong>step-wise reasoning chain exploration</strong> and uses the model's inherent confidence for automatic termination.
+      </p>
+      
+      <!-- Cumulative Confidence Score Φ -->
+      <h4 class="subsection-title">Cumulative Confidence Score $\Phi$</h4>
+      <p>
+        SAGE's core is the <strong>average cumulative log-probability score</strong> that measures the model's confidence in an entire reasoning chain (not just the next token):
+      </p>
+      <div class="formula-box">
+        <p style="font-size: 1.1rem; margin: 0;">
+          $$\Phi\left(y_{\leq k}\right)=\frac{1}{k} \sum_{i=1}^{k} \phi\left(y_{i} ; y_{<i}\right), \quad \phi\left(y_{i} ; y_{<i}\right)=\log \pi_{\theta}\left(y_{i} | y_{<i}, x\right)$$
+        </p>
+      </div>
+      <p>
+        Where $y_{\leq k}$ is the reasoning chain up to step $k$, $\phi$ is the next-token log-probability, and $\pi_\theta$ is the model's policy. This score captures the model's overall confidence in a reasoning path—critical for identifying high-quality, concise chains.
+      </p>
+      
+      <!-- SAGE Key Components -->
+      <h4 class="subsection-title">SAGE Key Components</h4>
+      <div class="math-comparison">
+        <div class="math-box" style="border-top: 3px solid var(--sage-blue);">
+          <h4 style="color: var(--sage-blue); text-align: center;">Step-Wise Exploration</h4>
+          <p>
+            Extends candidate sequences by <strong>full reasoning steps</strong> (not individual tokens) using random sampling, maintaining top-$m$ high-confidence sequences via $\Phi$. This aligns with human reasoning (step-by-step) and avoids token-level noise.
+          </p>
+          <p style="text-align: center; margin-top: 1rem; font-size: 1rem;">
+            $y_{\leq i}^{(j, k)}=y_{\leq i-1}^{(j)} \oplus r_{i}^{(j, k)}$
+          </p>
+        </div>
+        <div class="math-box" style="border-top: 3px solid var(--sage-blue);">
+          <h4 style="color: var(--sage-blue); text-align: center;">Confidence-Based Termination</h4>
+          <p>
+            Automatically terminates reasoning when a candidate sequence ends with $$—no manual tolerance parameters needed. High-confidence paths lead to confident termination, so the model's own signal dictates stopping.
+          </p>
+          <p style="text-align: center; margin-top: 1rem; font-size: 1rem;">
+            Add to $O$ if $r_{k}^{(j, k)}$ ends with $$
+          </p>
+        </div>
+      </div>
+      
+      <!-- SAGE Inference Scaling -->
+      <h4 class="subsection-title">SAGE Inference Scaling</h4>
+      <p>
+        SAGE outperforms degraded SAGE (greedy step sampling) across all step budgets, with two key scaling properties:
+      </p>
+      <ul style="margin-left: 1.5rem; line-height: 1.8;">
+        <li><strong>Constrained budgets</strong>: SAGE stops earlier with more complete CoTs, outperforming degraded SAGE in accuracy with similar length.</li>
+        <li><strong>Ample budgets</strong>: SAGE uncovers superior reasoning chains (shorter, more accurate) with a stable performance gap.</li>
+        <li><strong>Model/dataset adaptation</strong>: Boosts <strong>accuracy</strong> for strong models/hard datasets (DeepScaleR, AMC23) and <strong>efficiency</strong> for weaker models/simple datasets (DS-1.5B, MATH-500).</li>
+      </ul>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/sage_scaling.png" alt="SAGE Inference Scaling" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>SAGE Inference Scaling on MATH-500 & AMC23.</strong> SAGE consistently outperforms Degrade-SAGE across step budgets, with larger gains on harder datasets (AMC23) and stronger models (DeepScaleR).
+        </p>
+      </div>
+      
+      <!-- SAGE vs Beam Search -->
+      <h4 class="subsection-title">SAGE vs Vanilla Beam Search</h4>
+      <p>
+        While SAGE builds on beam search principles, it differs fundamentally: beam search discards high-confidence termination paths in later steps, while SAGE <strong>accepts termination immediately</strong> when the model signals confidence. SAGE achieves <strong>+7% accuracy</strong> with <strong>33% fewer tokens</strong> than beam search on DS-1.5B (MATH-500 subset).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SAGE-RL: INTEGRATING EFFICIENT REASONING PATTERNS ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">SAGE-RL: Integrating Efficient Reasoning into Standard Inference</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        SAGE unlocks efficient reasoning during inference, but to <strong>incorporate these patterns into the model's core policy</strong> for standard pass@1 inference, we introduce <strong>SAGE-RL</strong>—a minimal modification to RLVR (GRPO/GSPO) that uses SAGE as <strong>mixed sampling</strong> in the rollout phase.
+      </p>
+      
+      <!-- SAGE-RL Core Idea -->
+      <div class="result-card" style="border-left: 4px solid var(--sage-red);">
+        <h4 style="color: var(--sage-red); margin-bottom: 0.8rem;">SAGE-RL Core Idea</h4>
+        <p>
+          For each query, RLVR typically samples $G$ responses via random sampling. SAGE-RL modifies this to:
+        </p>
+        <ol style="margin-left: 1.5rem; line-height: 1.8;">
+          <li>Generate $r$ responses with <strong>SAGE (m,r)</strong> (high-quality, efficient reasoning chains).</li>
+          <li>Generate the remaining $G-r$ responses with <strong>standard random sampling</strong>.</li>
+          <li>Use the combined set for RLVR advantage estimation and policy update.</li>
+        </ol>
+        <p style="margin-top: 1rem;">
+          This is a <strong>one-line modification</strong> to existing RLVR implementations—no changes to the reward function, optimization objective, or training pipeline.
+        </p>
+      </div>
+      
+      <!-- SAGE-RL Objectives -->
+      <h4 class="subsection-title">SAGE-RL Optimization Objectives</h4>
+      <p>
+        SAGE-RL retains the original GRPO/GSPO objectives but splits the rollout set into SAGE and random samples. For SAGE-GRPO, the objective is:
+      </p>
+      <div class="formula-box">
+        <p style="font-size: 0.95rem; margin: 0; line-height: 1.8;">
+          $$\mathcal{J}_{SAGE-GRPO }(\theta)=\mathbb{E}\left[\frac{1}{G}\left(\underbrace{\sum_{i=1}^{r} \frac{1}{|y_{i}|} \sum_{t=1}^{|y_{i}|} min \left(w_{i,t}\hat{A}_{i,t}, clip(w_{i,t}) \hat{A}_{i,t}\right)}_{SAGE(m,r)}+\underbrace{\sum_{i=r+1}^{G} \frac{1}{|y_{i}|} \sum_{t=1}^{|y_{i}|} min \left(w_{i,t}\hat{A}_{i,t}, clip(w_{i,t}) \hat{A}_{i,t}\right)}_{Random Sampling }\right)\right]$$
+        </p>
+      </div>
+      <p>
+        Where $w_{i,t}$ is the token-level importance ratio, $\hat{A}_{i,t}$ is the advantage, and $G=8$, $r=2$ (our default) balances efficiency and exploration.
+      </p>
+      
+      <!-- SAGE-RL Training Dynamics -->
+      <h4 class="subsection-title">SAGE-RL Training Dynamics</h4>
+      <p>
+        SAGE-RL exhibits distinct training behavior compared to vanilla RLVR:
+      </p>
+      <ul style="margin-left: 1.5rem; line-height: 1.8;">
+        <li><strong>Faster accuracy gain</strong>: Pass@1 rises more rapidly and converges to a higher value.</li>
+        <li><strong>Continuous length reduction</strong>: Response length decreases throughout training (no plateau).</li>
+        <li><strong>Greater entropy reduction</strong>: Policy becomes more confident in efficient reasoning chains.</li>
+        <li><strong>Higher KL divergence</strong>: Policy shifts from the original distribution to adopt SAGE's efficient patterns.</li>
+      </ul>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/sage_rl_dynamics.png" alt="SAGE-RL Training Dynamics" style="max-width: 90%;"></center>
+        <p class="figure-caption">
+          <strong>SAGE-RL Performance Scaling with Problem Difficulty.</strong> SAGE-RL achieves larger accuracy gains on harder benchmarks (AIME 2025, OlympiadBench) compared to easier ones (MATH-500), demonstrating its effectiveness on challenging reasoning tasks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABALATION STUDIES ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Ablation Studies</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        We conduct comprehensive ablation studies to understand SAGE-RL's key components and their impact on performance:
+      </p>
+      
+      <!-- Ablation 1: SAGE Sampling Ratio -->
+      <h4 class="subsection-title">Ablation 1: Optimal SAGE Sampling Ratio</h4>
+      <p>
+        We vary the number of SAGE samples ($r$) in the rollout set ($G=8$) and find that $r=2$ (25% SAGE samples) achieves the best balance of accuracy and efficiency. Higher ratios ($r=4$) overfit to efficient patterns, while lower ratios ($r=1$) don't provide enough efficient reasoning examples.
+      </p>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
+        </p>
+      </div>
+      
+      <!-- Ablation 2: SAGE Step Budget -->
+      <h4 class="subsection-title">Ablation 2: SAGE Step Budget</h4>
+      <p>
+        The step budget $m$ in SAGE($m,r$) controls exploration depth. We find that $m=4$ steps per candidate sequence provides sufficient exploration to discover high-quality efficient reasoning chains without excessive computational overhead.
+      </p>
+      
+      <!-- Ablation 3: RLVR Algorithm Choice -->
+      <h4 class="subsection-title">Ablation 3: RLVR Algorithm Comparison</h4>
+      <p>
+        SAGE-RL works with both GRPO and GSPO, with GSPO slightly outperforming GRPO due to its sequence-level importance sampling that avoids token-level clipping. However, the relative improvement from SAGE is consistent across both algorithms.
+      </p>
+    </div>
   </div>
 </section>
 
 <!-- ==================== CONCLUSION ==================== -->
-<!-- <section class="section section-white">
+<section class="section section-gray">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Conclusion</h2>
     
     <div class="content has-text-justified">
       <p>
-        We introduce <strong>MaxRL</strong>, a framework that equips reinforcement learning with maximum likelihood optimization for correctness-based tasks. 
-        Our key insight is that standard RL optimizes only the first-order term of a Maclaurin expansion of the log-likelihood, 
-        while MaxRL progressively approaches maximum likelihood as compute increases.
-        The implementation for MaxRL is remarkably simple: normalize by successes rather than total samples. 
-        Empirically, MaxRL Pareto-dominates GRPO across benchmarks, achieving <strong>similar or better pass@1</strong> while requiring <strong>2.3×–19.2× fewer samples</strong> to match pass@k coverage.
+        In this work, we make a surprising discovery: <strong>Large Reasoning Models (LRMs) implicitly know when to stop thinking</strong>. This capability is obscured by current sampling paradigms that prioritize next-token probability over cumulative confidence, leading to redundant reasoning and inefficient computation.
       </p>
-    </div>
-    
-  </div>
-</section> -->
-
-<!-- ==================== BIBTEX ==================== -->
-<section class="section section-gray" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title is-3 section-title">BibTeX</h2>
-    <div class="bibtex-box">
-      <pre><code>@misc{tajwar2026maxrl,
-  title   = {Maximum Likelihood Reinforcement Learning}, 
-  author  = {Fahim Tajwar and Guanning Zeng and Yueer Zhou and Yuda Song
-             and Daman Arora and Yiding Jiang and Jeff Schneider and Ruslan Salakhutdinov
-             and Haiwen Feng and Andrea Zanette},
-  year    = {2026},
-  eprint  = {2602.02710},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.LG},
-  url     = {https://arxiv.org/abs/2602.02710}, 
-}</code></pre>
+      
+      <p>
+        To unlock this potential, we introduce <strong>SAGE</strong>, a self-aware sampling paradigm that leverages cumulative self-confidence to discover concise, correct reasoning chains. We further integrate SAGE into reinforcement learning via <strong>SAGE-RL</strong>, a minimal modification to RLVR that incorporates efficient reasoning patterns into the model's core policy.
+      </p>
+      
+      <div class="conclusion-box">
+        <p>
+          <strong>Key Contributions:</strong>
+        </p>
+        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+          <li><strong>Novel Insight:</strong> LRMs have an innate ability to identify optimal stopping points in reasoning chains, which is locked by current sampling methods.</li>
+          <li><strong>SAGE:</strong> A training-free sampling paradigm that unlocks efficient reasoning by leveraging cumulative self-confidence for automatic termination.</li>
+          <li><strong>SAGE-RL:</strong> A minimal RLVR modification that integrates efficient reasoning patterns into standard pass@1 inference with a one-line change.</li>
+          <li><strong>State-of-the-Art Results:</strong> +2.1% average accuracy gain and 44.1% token reduction across six challenging mathematical benchmarks, outperforming all baselines.</li>
+        </ul>
+        <p style="margin-top: 1rem;">
+          SAGE and SAGE-RL provide a new path toward efficient reasoning in LRMs, demonstrating that models can achieve both higher accuracy and lower computational cost by simply learning to trust their own confident reasoning chains.
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered" style="margin-bottom: 1.5rem;">
-      <a href="https://www.cmu.edu/" target="_blank">
-        <img src="./static/images/cmu_logo.png" alt="Carnegie Mellon University" style="height: 100px; border-radius: 4px;">
-      </a>
+<!-- ==================== BIBTEX ==================== -->
+<section class="section section-white" style="padding-top: 2rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    
+    <div class="content has-text-justified">
+      <div class="bibtex-box">
+        <pre><code>@inproceedings{huang2026sage,
+  title={Does Your Reasoning Model Implicitly Know When to Stop Thinking?},
+  author={Huang, Zixuan and Xia, Xin and Ren, Yuxi and Zheng, Jianbin and Wang, Xuanda and Zhang, Zhixia and Xie, Hongyan and Liang, Songshi and Chen, Zehao and Xiao, Xuefeng and Zhuang, Fuzhen and Li, Jianxin and Ban, Yikun and Wang, Deqing},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2026}
+}</code></pre>
+      </div>
     </div>
-    <div class="columns is-centered">
-      <p>
-        Corresponding Authors: <a href="mailto:ftajwar@andrew.cmu.edu">Fahim Tajwar</a>, <a href="mailto:azanette@andrew.cmu.edu">Andrea Zanette</a><br>
-        Template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
-      </p>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-8">
+        <p style="margin-bottom: 0.5rem;">
+          <strong>SAGE: Self-Aware Guided Efficient Reasoning</strong>
+        </p>
+        <p style="margin-bottom: 0.5rem;">
+          <a href="https://arxiv.org/abs/2602.05811">arXiv</a> | 
+          <a href="https://github.com/yourusername/sage-rl">GitHub</a> | 
+          <a href="./static/papers/sage_icml2026.pdf">Paper</a>
+        </p>
+        <p style="margin-bottom: 0;">
+          &copy; 2026 Beihang University & Bytedance China. All rights reserved.
+        </p>
+      </div>
+      <div class="column is-4 has-text-right">
+        <img src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
+      </div>
     </div>
   </div>
 </footer>
 
 </body>
-</html>
+</html> Performance Scaling with Problem Difficulty.</strong> SAGE-RL achieves larger accuracy gains on harder benchmarks (AIME 2025, OlympiadBench) compared to easier ones (MATH-500), demonstrating its effectiveness on challenging reasoning tasks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABALATION STUDIES ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Ablation Studies</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        We conduct comprehensive ablation studies to understand SAGE-RL's key components and their impact on performance:
+      </p>
+      
+      <!-- Ablation 1: SAGE Sampling Ratio -->
+      <h4 class="subsection-title">Ablation 1: Optimal SAGE Sampling Ratio</h4>
+      <p>
+        We vary the number of SAGE samples ($r$) in the rollout set ($G=8$) and find that $r=2$ (25% SAGE samples) achieves the best balance of accuracy and efficiency. Higher ratios ($r=4$) overfit to efficient patterns, while lower ratios ($r=1$) don't provide enough efficient reasoning examples.
+      </p>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
+        </p>
+      </div>
+      
+      <!-- Ablation 2: SAGE Step Budget -->
+      <h4 class="subsection-title">Ablation 2: SAGE Step Budget</h4>
+      <p>
+        The step budget $m$ in SAGE($m,r$) controls exploration depth. We find that $m=4$ steps per candidate sequence provides sufficient exploration to discover high-quality efficient reasoning chains without excessive computational overhead.
+      </p>
+      
+      <!-- Ablation 3: RLVR Algorithm Choice -->
+      <h4 class="subsection-title">Ablation 3: RLVR Algorithm Comparison</h4>
+      <p>
+        SAGE-RL works with both GRPO and GSPO, with GSPO slightly outperforming GRPO due to its sequence-level importance sampling that avoids token-level clipping. However, the relative improvement from SAGE is consistent across both algorithms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONCLUSION ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Conclusion</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        In this work, we make a surprising discovery: <strong>Large Reasoning Models (LRMs) implicitly know when to stop thinking</strong>. This capability is obscured by current sampling paradigms that prioritize next-token probability over cumulative confidence, leading to redundant reasoning and inefficient computation.
+      </p>
+      
+      <p>
+        To unlock this potential, we introduce <strong>SAGE</strong>, a self-aware sampling paradigm that leverages cumulative self-confidence to discover concise, correct reasoning chains. We further integrate SAGE into reinforcement learning via <strong>SAGE-RL</strong>, a minimal modification to RLVR that incorporates efficient reasoning patterns into the model's core policy.
+      </p>
+      
+      <div class="conclusion-box">
+        <p>
+          <strong>Key Contributions:</strong>
+        </p>
+        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+          <li><strong>Novel Insight:</strong> LRMs have an innate ability to identify optimal stopping points in reasoning chains, which is locked by current sampling methods.</li>
+          <li><strong>SAGE:</strong> A training-free sampling paradigm that unlocks efficient reasoning by leveraging cumulative self-confidence for automatic termination.</li>
+          <li><strong>SAGE-RL:</strong> A minimal RLVR modification that integrates efficient reasoning patterns into standard pass@1 inference with a one-line change.</li>
+          <li><strong>State-of-the-Art Results:</strong> +2.1% average accuracy gain and 44.1% token reduction across six challenging mathematical benchmarks, outperforming all baselines.</li>
+        </ul>
+        <p style="margin-top: 1rem;">
+          SAGE and SAGE-RL provide a new path toward efficient reasoning in LRMs, demonstrating that models can achieve both higher accuracy and lower computational cost by simply learning to trust their own confident reasoning chains.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BIBTEX ==================== -->
+<section class="section section-white" style="padding-top: 2rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    
+    <div class="content has-text-justified">
+      <div class="bibtex-box">
+        <pre><code>@inproceedings{huang2026sage,
+  title={Does Your Reasoning Model Implicitly Know When to Stop Thinking?},
+  author={Huang, Zixuan and Xia, Xin and Ren, Yuxi and Zheng, Jianbin and Wang, Xuanda and Zhang, Zhixia and Xie, Hongyan and Liang, Songshi and Chen, Zehao and Xiao, Xuefeng and Zhuang, Fuzhen and Li, Jianxin and Ban, Yikun and Wang, Deqing},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2026}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-8">
+        <p style="margin-bottom: 0.5rem;">
+          <strong>SAGE: Self-Aware Guided Efficient Reasoning</strong>
+        </p>
+        <p style="margin-bottom: 0.5rem;">
+          <a href="https://arxiv.org/abs/2602.05811">arXiv</a> | 
+          <a href="https://github.com/yourusername/sage-rl">GitHub</a> | 
+          <a href="./static/papers/sage_icml2026.pdf">Paper</a>
+        </p>
+        <p style="margin-bottom: 0;">
+          &copy; 2026 Beihang University & Bytedance China. All rights reserved.
+        </p>
+      </div>
+      <div class="column is-4 has-text-right">
+        <img src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html> Performance Scaling with Problem Difficulty.</strong> SAGE-RL achieves larger accuracy gains on harder benchmarks (AIME 2025, OlympiadBench) compared to easier ones (MATH-500), demonstrating its effectiveness on challenging reasoning tasks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABALATION STUDIES ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Ablation Studies</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        We conduct comprehensive ablation studies to understand SAGE-RL's key components and their impact on performance:
+      </p>
+      
+      <!-- Ablation 1: SAGE Sampling Ratio -->
+      <h4 class="subsection-title">Ablation 1: Optimal SAGE Sampling Ratio</h4>
+      <p>
+        We vary the number of SAGE samples ($r$) in the rollout set ($G=8$) and find that $r=2$ (25% SAGE samples) achieves the best balance of accuracy and efficiency. Higher ratios ($r=4$) overfit to efficient patterns, while lower ratios ($r=1$) don't provide enough efficient reasoning examples.
+      </p>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
+        </p>
+      </div>
+      
+      <!-- Ablation 2: SAGE Step Budget -->
+      <h4 class="subsection-title">Ablation 2: SAGE Step Budget</h4>
+      <p>
+        The step budget $m$ in SAGE($m,r$) controls exploration depth. We find that $m=4$ steps per candidate sequence provides sufficient exploration to discover high-quality efficient reasoning chains without excessive computational overhead.
+      </p>
+      
+      <!-- Ablation 3: RLVR Algorithm Choice -->
+      <h4 class="subsection-title">Ablation 3: RLVR Algorithm Comparison</h4>
+      <p>
+        SAGE-RL works with both GRPO and GSPO, with GSPO slightly outperforming GRPO due to its sequence-level importance sampling that avoids token-level clipping. However, the relative improvement from SAGE is consistent across both algorithms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONCLUSION ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Conclusion</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        In this work, we make a surprising discovery: <strong>Large Reasoning Models (LRMs) implicitly know when to stop thinking</strong>. This capability is obscured by current sampling paradigms that prioritize next-token probability over cumulative confidence, leading to redundant reasoning and inefficient computation.
+      </p>
+      
+      <p>
+        To unlock this potential, we introduce <strong>SAGE</strong>, a self-aware sampling paradigm that leverages cumulative self-confidence to discover concise, correct reasoning chains. We further integrate SAGE into reinforcement learning via <strong>SAGE-RL</strong>, a minimal modification to RLVR that incorporates efficient reasoning patterns into the model's core policy.
+      </p>
+      
+      <div class="conclusion-box">
+        <p>
+          <strong>Key Contributions:</strong>
+        </p>
+        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+          <li><strong>Novel Insight:</strong> LRMs have an innate ability to identify optimal stopping points in reasoning chains, which is locked by current sampling methods.</li>
+          <li><strong>SAGE:</strong> A training-free sampling paradigm that unlocks efficient reasoning by leveraging cumulative self-confidence for automatic termination.</li>
+          <li><strong>SAGE-RL:</strong> A minimal RLVR modification that integrates efficient reasoning patterns into standard pass@1 inference with a one-line change.</li>
+          <li><strong>State-of-the-Art Results:</strong> +2.1% average accuracy gain and 44.1% token reduction across six challenging mathematical benchmarks, outperforming all baselines.</li>
+        </ul>
+        <p style="margin-top: 1rem;">
+          SAGE and SAGE-RL provide a new path toward efficient reasoning in LRMs, demonstrating that models can achieve both higher accuracy and lower computational cost by simply learning to trust their own confident reasoning chains.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BIBTEX ==================== -->
+<section class="section section-white" style="padding-top: 2rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    
+    <div class="content has-text-justified">
+      <div class="bibtex-box">
+        <pre><code>@inproceedings{huang2026sage,
+  title={Does Your Reasoning Model Implicitly Know When to Stop Thinking?},
+  author={Huang, Zixuan and Xia, Xin and Ren, Yuxi and Zheng, Jianbin and Wang, Xuanda and Zhang, Zhixia and Xie, Hongyan and Liang, Songshi and Chen, Zehao and Xiao, Xuefeng and Zhuang, Fuzhen and Li, Jianxin and Ban, Yikun and Wang, Deqing},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2026}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-8">
+        <p style="margin-bottom: 0.5rem;">
+          <strong>SAGE: Self-Aware Guided Efficient Reasoning</strong>
+        </p>
+        <p style="margin-bottom: 0.5rem;">
+          <a href="https://arxiv.org/abs/2602.05811">arXiv</a> | 
+          <a href="https://github.com/yourusername/sage-rl">GitHub</a> | 
+          <a href="./static/papers/sage_icml2026.pdf">Paper</a>
+        </p>
+        <p style="margin-bottom: 0;">
+          &copy; 2026 Beihang University & Bytedance China. All rights reserved.
+        </p>
+      </div>
+      <div class="column is-4 has-text-right">
+        <img src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html> Performance Scaling with Problem Difficulty.</strong> SAGE-RL achieves larger accuracy gains on harder benchmarks (AIME 2025, OlympiadBench) compared to easier ones (MATH-500), demonstrating its effectiveness on challenging reasoning tasks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABALATION STUDIES ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Ablation Studies</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        We conduct comprehensive ablation studies to understand SAGE-RL's key components and their impact on performance:
+      </p>
+      
+      <!-- Ablation 1: SAGE Sampling Ratio -->
+      <h4 class="subsection-title">Ablation 1: Optimal SAGE Sampling Ratio</h4>
+      <p>
+        We vary the number of SAGE samples ($r$) in the rollout set ($G=8$) and find that $r=2$ (25% SAGE samples) achieves the best balance of accuracy and efficiency. Higher ratios ($r=4$) overfit to efficient patterns, while lower ratios ($r=1$) don't provide enough efficient reasoning examples.
+      </p>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
+        </p>
+      </div>
+      
+      <!-- Ablation 2: SAGE Step Budget -->
+      <h4 class="subsection-title">Ablation 2: SAGE Step Budget</h4>
+      <p>
+        The step budget $m$ in SAGE($m,r$) controls exploration depth. We find that $m=4$ steps per candidate sequence provides sufficient exploration to discover high-quality efficient reasoning chains without excessive computational overhead.
+      </p>
+      
+      <!-- Ablation 3: RLVR Algorithm Choice -->
+      <h4 class="subsection-title">Ablation 3: RLVR Algorithm Comparison</h4>
+      <p>
+        SAGE-RL works with both GRPO and GSPO, with GSPO slightly outperforming GRPO due to its sequence-level importance sampling that avoids token-level clipping. However, the relative improvement from SAGE is consistent across both algorithms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONCLUSION ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Conclusion</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        In this work, we make a surprising discovery: <strong>Large Reasoning Models (LRMs) implicitly know when to stop thinking</strong>. This capability is obscured by current sampling paradigms that prioritize next-token probability over cumulative confidence, leading to redundant reasoning and inefficient computation.
+      </p>
+      
+      <p>
+        To unlock this potential, we introduce <strong>SAGE</strong>, a self-aware sampling paradigm that leverages cumulative self-confidence to discover concise, correct reasoning chains. We further integrate SAGE into reinforcement learning via <strong>SAGE-RL</strong>, a minimal modification to RLVR that incorporates efficient reasoning patterns into the model's core policy.
+      </p>
+      
+      <div class="conclusion-box">
+        <p>
+          <strong>Key Contributions:</strong>
+        </p>
+        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+          <li><strong>Novel Insight:</strong> LRMs have an innate ability to identify optimal stopping points in reasoning chains, which is locked by current sampling methods.</li>
+          <li><strong>SAGE:</strong> A training-free sampling paradigm that unlocks efficient reasoning by leveraging cumulative self-confidence for automatic termination.</li>
+          <li><strong>SAGE-RL:</strong> A minimal RLVR modification that integrates efficient reasoning patterns into standard pass@1 inference with a one-line change.</li>
+          <li><strong>State-of-the-Art Results:</strong> +2.1% average accuracy gain and 44.1% token reduction across six challenging mathematical benchmarks, outperforming all baselines.</li>
+        </ul>
+        <p style="margin-top: 1rem;">
+          SAGE and SAGE-RL provide a new path toward efficient reasoning in LRMs, demonstrating that models can achieve both higher accuracy and lower computational cost by simply learning to trust their own confident reasoning chains.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BIBTEX ==================== -->
+<section class="section section-white" style="padding-top: 2rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    
+    <div class="content has-text-justified">
+      <div class="bibtex-box">
+        <pre><code>@inproceedings{huang2026sage,
+  title={Does Your Reasoning Model Implicitly Know When to Stop Thinking?},
+  author={Huang, Zixuan and Xia, Xin and Ren, Yuxi and Zheng, Jianbin and Wang, Xuanda and Zhang, Zhixia and Xie, Hongyan and Liang, Songshi and Chen, Zehao and Xiao, Xuefeng and Zhuang, Fuzhen and Li, Jianxin and Ban, Yikun and Wang, Deqing},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2026}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-8">
+        <p style="margin-bottom: 0.5rem;">
+          <strong>SAGE: Self-Aware Guided Efficient Reasoning</strong>
+        </p>
+        <p style="margin-bottom: 0.5rem;">
+          <a href="https://arxiv.org/abs/2602.05811">arXiv</a> | 
+          <a href="https://github.com/yourusername/sage-rl">GitHub</a> | 
+          <a href="./static/papers/sage_icml2026.pdf">Paper</a>
+        </p>
+        <p style="margin-bottom: 0;">
+          &copy; 2026 Beihang University & Bytedance China. All rights reserved.
+        </p>
+      </div>
+      <div class="column is-4 has-text-right">
+        <img src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html> Performance Scaling with Problem Difficulty.</strong> SAGE-RL achieves larger accuracy gains on harder benchmarks (AIME 2025, OlympiadBench) compared to easier ones (MATH-500), demonstrating its effectiveness on challenging reasoning tasks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABALATION STUDIES ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Ablation Studies</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        We conduct comprehensive ablation studies to understand SAGE-RL's key components and their impact on performance:
+      </p>
+      
+      <!-- Ablation 1: SAGE Sampling Ratio -->
+      <h4 class="subsection-title">Ablation 1: Optimal SAGE Sampling Ratio</h4>
+      <p>
+        We vary the number of SAGE samples ($r$) in the rollout set ($G=8$) and find that $r=2$ (25% SAGE samples) achieves the best balance of accuracy and efficiency. Higher ratios ($r=4$) overfit to efficient patterns, while lower ratios ($r=1$) don't provide enough efficient reasoning examples.
+      </p>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
+        </p>
+      </div>
+      
+      <!-- Ablation 2: SAGE Step Budget -->
+      <h4 class="subsection-title">Ablation 2: SAGE Step Budget</h4>
+      <p>
+        The step budget $m$ in SAGE($m,r$) controls exploration depth. We find that $m=4$ steps per candidate sequence provides sufficient exploration to discover high-quality efficient reasoning chains without excessive computational overhead.
+      </p>
+      
+      <!-- Ablation 3: RLVR Algorithm Choice -->
+      <h4 class="subsection-title">Ablation 3: RLVR Algorithm Comparison</h4>
+      <p>
+        SAGE-RL works with both GRPO and GSPO, with GSPO slightly outperforming GRPO due to its sequence-level importance sampling that avoids token-level clipping. However, the relative improvement from SAGE is consistent across both algorithms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONCLUSION ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Conclusion</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        In this work, we make a surprising discovery: <strong>Large Reasoning Models (LRMs) implicitly know when to stop thinking</strong>. This capability is obscured by current sampling paradigms that prioritize next-token probability over cumulative confidence, leading to redundant reasoning and inefficient computation.
+      </p>
+      
+      <p>
+        To unlock this potential, we introduce <strong>SAGE</strong>, a self-aware sampling paradigm that leverages cumulative self-confidence to discover concise, correct reasoning chains. We further integrate SAGE into reinforcement learning via <strong>SAGE-RL</strong>, a minimal modification to RLVR that incorporates efficient reasoning patterns into the model's core policy.
+      </p>
+      
+      <div class="conclusion-box">
+        <p>
+          <strong>Key Contributions:</strong>
+        </p>
+        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+          <li><strong>Novel Insight:</strong> LRMs have an innate ability to identify optimal stopping points in reasoning chains, which is locked by current sampling methods.</li>
+          <li><strong>SAGE:</strong> A training-free sampling paradigm that unlocks efficient reasoning by leveraging cumulative self-confidence for automatic termination.</li>
+          <li><strong>SAGE-RL:</strong> A minimal RLVR modification that integrates efficient reasoning patterns into standard pass@1 inference with a one-line change.</li>
+          <li><strong>State-of-the-Art Results:</strong> +2.1% average accuracy gain and 44.1% token reduction across six challenging mathematical benchmarks, outperforming all baselines.</li>
+        </ul>
+        <p style="margin-top: 1rem;">
+          SAGE and SAGE-RL provide a new path toward efficient reasoning in LRMs, demonstrating that models can achieve both higher accuracy and lower computational cost by simply learning to trust their own confident reasoning chains.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BIBTEX ==================== -->
+<section class="section section-white" style="padding-top: 2rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    
+    <div class="content has-text-justified">
+      <div class="bibtex-box">
+        <pre><code>@inproceedings{huang2026sage,
+  title={Does Your Reasoning Model Implicitly Know When to Stop Thinking?},
+  author={Huang, Zixuan and Xia, Xin and Ren, Yuxi and Zheng, Jianbin and Wang, Xuanda and Zhang, Zhixia and Xie, Hongyan and Liang, Songshi and Chen, Zehao and Xiao, Xuefeng and Zhuang, Fuzhen and Li, Jianxin and Ban, Yikun and Wang, Deqing},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2026}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-8">
+        <p style="margin-bottom: 0.5rem;">
+          <strong>SAGE: Self-Aware Guided Efficient Reasoning</strong>
+        </p>
+        <p style="margin-bottom: 0.5rem;">
+          <a href="https://arxiv.org/abs/2602.05811">arXiv</a> | 
+          <a href="https://github.com/yourusername/sage-rl">GitHub</a> | 
+          <a href="./static/papers/sage_icml2026.pdf">Paper</a>
+        </p>
+        <p style="margin-bottom: 0;">
+          &copy; 2026 Beihang University & Bytedance China. All rights reserved.
+        </p>
+      </div>
+      <div class="column is-4 has-text-right">
+        <img src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html> Performance Scaling with Problem Difficulty.</strong> SAGE-RL achieves larger accuracy gains on harder benchmarks (AIME 2025, OlympiadBench) compared to easier ones (MATH-500), demonstrating its effectiveness on challenging reasoning tasks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABALATION STUDIES ==================== -->
+<section class="section section-white">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Ablation Studies</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        We conduct comprehensive ablation studies to understand SAGE-RL's key components and their impact on performance:
+      </p>
+      
+      <!-- Ablation 1: SAGE Sampling Ratio -->
+      <h4 class="subsection-title">Ablation 1: Optimal SAGE Sampling Ratio</h4>
+      <p>
+        We vary the number of SAGE samples ($r$) in the rollout set ($G=8$) and find that $r=2$ (25% SAGE samples) achieves the best balance of accuracy and efficiency. Higher ratios ($r=4$) overfit to efficient patterns, while lower ratios ($r=1$) don't provide enough efficient reasoning examples.
+      </p>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
+        </p>
+      </div>
+      
+      <!-- Ablation 2: SAGE Step Budget -->
+      <h4 class="subsection-title">Ablation 2: SAGE Step Budget</h4>
+      <p>
+        The step budget $m$ in SAGE($m,r$) controls exploration depth. We find that $m=4$ steps per candidate sequence provides sufficient exploration to discover high-quality efficient reasoning chains without excessive computational overhead.
+      </p>
+      
+      <!-- Ablation 3: RLVR Algorithm Choice -->
+      <h4 class="subsection-title">Ablation 3: RLVR Algorithm Comparison</h4>
+      <p>
+        SAGE-RL works with both GRPO and GSPO, with GSPO slightly outperforming GRPO due to its sequence-level importance sampling that avoids token-level clipping. However, the relative improvement from SAGE is consistent across both algorithms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONCLUSION ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Conclusion</h2>
+    
+    <div class="content has-text-justified">
+      <p>
+        In this work, we make a surprising discovery: <strong>Large Reasoning Models (LRMs) implicitly know when to stop thinking</strong>. This capability is obscured by current sampling paradigms that prioritize next-token probability over cumulative confidence, leading to redundant reasoning and inefficient computation.
+      </p>
+      
+      <p>
+        To unlock this potential, we introduce <strong>SAGE</strong>, a self-aware sampling paradigm that leverages cumulative self-confidence to discover concise, correct reasoning chains. We further integrate SAGE into reinforcement learning via <strong>SAGE-RL</strong>, a minimal modification to RLVR that incorporates efficient reasoning patterns into the model's core policy.
+      </p>
+      
+      <div class="conclusion-box">
+        <p>
+          <strong>Key Contributions:</strong>
+        </p>
+        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+          <li><strong>Novel Insight:</strong> LRMs have an innate ability to identify optimal stopping points in reasoning chains, which is locked by current sampling methods.</li>
+          <li><strong>SAGE:</strong> A training-free sampling paradigm that unlocks efficient reasoning by leveraging cumulative self-confidence for automatic termination.</li>
+          <li><strong>SAGE-RL:</strong> A minimal RLVR modification that integrates efficient reasoning patterns into standard pass@1 inference with a one-line change.</li>
+          <li><strong>State-of-the-Art Results:</strong> +2.1% average accuracy gain and 44.1% token reduction across six challenging mathematical benchmarks, outperforming all baselines.</li>
+        </ul>
+        <p style="margin-top: 1rem;">
+          SAGE and SAGE-RL provide a new path toward efficient reasoning in LRMs, demonstrating that models can achieve both higher accuracy and lower computational cost by simply learning to trust their own confident reasoning chains.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BIBTEX ==================== -->
+<section class="section section-white" style="padding-top: 2rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    
+    <div class="content has-text-justified">
+      <div class="bibtex-box">
+        <pre><code>@inproceedings{huang2026sage,
+  title={Does Your Reasoning Model Implicitly Know When to Stop Thinking?},
+  author={Huang, Zixuan and Xia, Xin and Ren, Yuxi and Zheng, Jianbin and Wang, Xuanda and Zhang, Zhixia and Xie, Hongyan and Liang, Songshi and Chen, Zehao and Xiao, Xuefeng and Zhuang, Fuzhen and Li, Jianxin and Ban, Yikun and Wang, Deqing},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2026}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column is-8">
+        <p style="margin-bottom: 0.5rem;">
+          <strong>SAGE: Self-Aware Guided Efficient Reasoning</strong>
+        </p>
+        <p style="margin-bottom: 0.5rem;">
+          <a href="https://arxiv.org/abs/2602.05811">arXiv</a> | 
+          <a href="https://github.com/yourusername/sage-rl">GitHub</a> | 
+          <a href="./static/papers/sage_icml2026.pdf">Paper</a>
+        </p>
+        <p style="margin-bottom: 0;">
+          &copy; 2026 Beihang University & Bytedance China. All rights reserved.
+        </p>
+      </div>
+      <div class="column is-4 has-text-right">
+        <img src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html> Training Dynamics on MATH-500.</strong> SAGE-GRPO/SAGE-GSPO achieve higher pass@1, shorter responses, lower entropy, and higher KL divergence than vanilla GRPO/GSPO—showing the policy adopting efficient reasoning patterns.
+        </p>
+      </div>
+      
+      <!-- RFCS After SAGE-RL -->
+      <h4 class="subsection-title">RFCS Improvement with SAGE-RL</h4>
+      <p>
+        SAGE-RL drastically reduces reasoning redundancy: RFCS(&lt;1) drops (fewer ineffective steps) and RFCS(avg) rises sharply (model stops immediately after the correct answer) across all models.
+      </p>
+      
+      <div class="figure-container">
+        <center><img src="./static/images/rfcs_sage_rl.png" alt="RFCS After SAGE-RL" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>RFCS on MATH-500 for SAGE-RL-Tuned Models.</strong> SAGE-RL nearly eliminates redundant reasoning steps, with RFCS(avg) &gt; 0.7 for all models—an improvement of ~0.1 over the original LRMs.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== EXPERIMENTAL RESULTS ==================== -->
+<section class="section section-gray">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Experimental Results</h2>
+    
+    <div class="content has-text-justified" style="margin-bottom: 2rem;">
+      <p>
+        We evaluate SAGE-RL on <strong>four state-of-the-art LRMs</strong> (DS-1.5B, DeepScaleR, DS-7B, Qwen3-8B) across <strong>six challenging mathematical benchmarks</strong> (MATH-500, AIME 2024/2025, AMC23, OlympiadBench, Minerva). We compare against strong baselines including LC-R1, ThinkPrune-2k, AdaptThink, Efficient Reasoning, and vanilla RLVR (GRPO/GSPO). Key metrics: <strong>Pass@1 (accuracy)</strong>, <strong>Response Length (tokens)</strong>, <strong>Token Efficiency (Pass@1 / Length)</strong>.
+      </p>
+    </div>
+    
+    <!-- Key Result 1: Comprehensive Gains -->
+    <div class="result-card">
+      <h4><i class="fas fa-chart-line emoji-icon"></i> Key Result 1: Simultaneous Accuracy & Efficiency Gains</h4>
+      <p>
+        Unlike baselines that trade accuracy for token compression (e.g., AdaptThink: -2.8% Pass@1 for 47% token reduction on DS-1.5B/MATH-500), SAGE-RL achieves <strong>higher accuracy AND fewer tokens</strong> across all benchmarks and models. This is the first method to unlock both benefits for LRM reasoning.
+      </p>
+      <div class="figure-container">
+        <center><img src="./static/images/main_results.png" alt="Main Experimental Results" style="max-width: 100%;"></center>
+        <p class="figure-caption">
+          <strong>Main Results on Four Mathematical Benchmarks.</strong> SAGE-GRPO/SAGE-GSPO achieve the best/second-best token efficiency across all tasks, with consistent Pass@1 gains and massive token reductions (bold = best, underlined = second-best).
+        </p>
+      </div>
+    </div>
+    
+    <!-- Key Result 2: Average Gains -->
+    <div class="result-card" style="margin-top: 1.5rem;">
+      <h4><i class="fas fa-trophy emoji-icon"></i> Key Result 2: State-of-the-Art Average Performance</h4>
+      <p>
+        Across all six benchmarks, SAGE-RL achieves:
+      </p>
+      <div style="display: flex; gap: 2rem; justify-content: center; margin: 1.5rem 0;">
+        <div class="math-box" style="border-top: 3px solid var(--sage-red); text-align: center; flex: 1;">
+          <h4 style="color: var(--sage-red);">Accuracy</h4>
+          <p style="font-size: 2rem; font-weight: 600; margin: 0.5rem 0;">+2.1%</p>
+          <p style="color: var(--text-muted);">Average Pass@1 Gain</p>
+        </div>
+        <div class="math-box" style="border-top: 3px solid var(--sage-blue); text-align: center; flex: 1;">
+          <h4 style="color: var(--sage-blue);">Efficiency</h4>
+          <p style="font-size: 2rem; font-weight: 600; margin: 0.5rem 0;">-44.1%</p>
+          <p style="color: var(--text-muted);">Average Token Reduction</p>
+        </div>
+      </div>
+      <p>
+        SAGE-GSPO slightly outperforms SAGE-GRPO due to sequence-level importance sampling, which avoids token-level clipping and stabilizes training—especially for mixed sampling.
+      </p>
+    </div>
+    
+    <!-- Key Result 3: Effectiveness on Strong Models -->
+    <div class="result-card" style="margin-top: 1.5rem;">
+      <h4><i class="fas fa-robot emoji-icon"></i> Key Result 3: Effective Even on State-of-the-Art LRMs</h4>
+      <p>
+        SAGE-RL delivers meaningful gains even for the strongest reasoning models (Qwen3-8B, 8B params), which already achieve high Pass@1 (67.3% on AIME 2025):
+      </p>
+      <ul style="margin-left: 1.5rem; line-height: 1.8;">
+        <li>Qwen3-8B + SAGE-GSPO: <strong>+0.5% Pass@1</strong> on AIME 2024, <strong>48% token reduction</strong>.</li>
+        <li>Token efficiency jumps <strong>+114.7%</strong> on OlympiadBench for Qwen3-8B.</li>
+        <li>DeepScaleR (a highly optimized RL-tuned model) still gains <strong>+2.8% Pass@1</strong> and <strong>25.7% token efficiency</strong> on MATH-500 with SAGE-GRPO.</li>
+      </ul>
+    </div>
+    
+    <!-- Key Result 4: Better on Harder Problems -->
+    <div class="result-card" style="margin-top: 1.5rem;">
+      <h4><i class="fas fa-puzzle-piece emoji-icon"></i> Key Result 4: Larger Gains on Harder Reasoning Tasks</h4>
+      <p>
+        SAGE-RL's accuracy gains scale with problem difficulty—larger improvements on AIME 2024/2025 and OlympiadBench (hard) than MATH-500 and AMC23 (moderate). This is critical because hard problems are the main challenge for LRMs.
+      </p>
+      <div class="figure-container">
+        <center><img src="./static/images/difficulty_scaling.png" alt="Difficulty Scaling" style="max-width: 80%;"></center>
+        <p class="figure-caption">
+          <strong>SAGE-RL
