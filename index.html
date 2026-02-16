@@ -498,7 +498,7 @@
     <!-- Teaser Diagram -->
     <div class="figure-container" style="margin: 0;">
       <center>
-        <img src="./static/images/sage_teaser.png" alt="SAGE Teaser" style="max-width: 100%;">
+        <iframe src="./static/images/sage_teaser.png" alt="SAGE Teaser" style="max-width: 100%;"></iframe>
       </center>
       <p class="figure-caption">
         <strong>SAGE Unleashes Efficient Reasoning Potential.</strong> SAGE uncovers the optimal concise reasoning chains hidden in pass@k that are obscured by standard pass@1 sampling. SAGE-RL integrates these efficient patterns into LRMs, achieving higher accuracy with far fewer tokens across challenging mathematical benchmarks (AIME, MATH-500, OlympiadBench, AMC23, etc.).
@@ -544,7 +544,7 @@
       </p>
       
       <div class="figure-container">
-        <center><img src="./static/images/rfcs.pdf" alt="RFCS Statistics on MATH-500" style="max-width: 50%;"></center>
+        <center><iframe src="./static/images/rfcs.pdf" alt="RFCS Statistics on MATH-500" style="max-width: 50%;"></iframe></center>
         <p class="figure-caption">
           <strong>RFCS Statistics on MATH-500.</strong> All LRMs show significant ineffective reasoning steps (RFCS(&lt;1) &gt; 80%) and low average RFCS (~0.6), demonstrating widespread overthinking under standard pass@1 sampling.
         </p>
@@ -552,7 +552,7 @@
       
       <!-- Example of Redundant Reasoning -->
       <div class="figure-container">
-        <center><img src="./static/images/case_study.pdf" alt="Redundant Reasoning Example" style="max-width: 50%;"></center>
+        <center><iframe src="./static/images/case_study.pdf" alt="Redundant Reasoning Example" style="max-width: 50%;"></iframe></center>
         <p class="figure-caption">
           <strong>Redundant Reasoning Example.</strong> The model derives the correct answer in 500 tokens but generates an additional 452 redundant tokens of double-checking—this is typical of LRMs under standard sampling.
         </p>
@@ -584,7 +584,7 @@
           Using a cumulative log-probability score $\Phi$ to track high-confidence reasoning paths, we find that increasing exploration width leads to <strong>consistent response length reduction AND accuracy improvement</strong>. In contrast, paths selected by next-token probability ($\phi$) suffer rapid accuracy degradation (length collapse).
         </p>
         <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;">
-          <center><img src="./static/images/sort_or_not.pdf" alt="Φ vs φ Performance" style="max-width: 50%;"></center>
+          <center><iframe src="./static/images/sort_or_not.pdf" alt="Φ vs φ Performance" style="max-width: 50%;"></iframe></center>
         </div>
       </div>
       
@@ -595,7 +595,7 @@
           The termination token ($$) consistently ranks <strong>1st</strong> in high-confidence paths (selected by $\Phi$) when it appears, meaning the model is highly confident in stopping. For next-token selected paths, the termination token's rank increases with exploration—showing uncertainty. Greedy/random sampling misses these short, high-confidence chains.
         </p>
         <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;">
-          <center><img src="./static/images/eot_rank_ratio.pdf" alt="Confident Termination" style="max-width: 50%;"></center>
+          <center><iframe src="./static/images/eot_rank_ratio.pdf" alt="Confident Termination" style="max-width: 50%;"></iframe></center>
         </div>
 
         <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;"> 
@@ -619,10 +619,10 @@
           As exploration width increases, LRMs converge to <strong>higher accuracy with shorter responses</strong>, with token efficiency (accuracy/length) rising sharply. This convergence is universal across models (DS-1.5B, DeepScaleR) and datasets (MATH-500, AMC23), proving the model's inherent efficient reasoning capability.
         </p>
         <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;">
-            <center><img src="./static/images/SAGE_dif_BW.pdf" alt="Capability Convergence" style="max-width: 80%;"></center>
+            <center><iframe src="./static/images/SAGE_dif_BW.pdf" alt="Capability Convergence" style="max-width: 80%;"></center>
         </div>
         <div class="figure-container" style="margin-top: 1rem; margin-bottom: 0;">
-          <center><img src="./static/images/token_efficiency.pdf" alt="Capability Convergence" style="max-width: 50%;"></center>
+          <center><iframe src="./static/images/token_efficiency.pdf" alt="Capability Convergence" style="max-width: 50%;"></center>
         </div>
       </div>
       
@@ -694,7 +694,7 @@
       </ul>
       
       <div class="figure-container">
-        <center><img src="./static/images/SAGE_perform.pdf" alt="SAGE Inference Scaling" style="max-width: 80%;"></center>
+        <center><iframe src="./static/images/SAGE_perform.pdf" alt="SAGE Inference Scaling" style="max-width: 80%;"></center>
         <p class="figure-caption">
           <strong>SAGE Inference Scaling on MATH-500 & AMC23.</strong> SAGE consistently outperforms Degrade-SAGE across step budgets, with larger gains on harder datasets (AMC23) and stronger models (DeepScaleR).
         </p>
@@ -762,7 +762,7 @@
       </ul>
       
       <div class="figure-container">
-        <center><img src="./static/images/sage_rl_dynamics.png" alt="SAGE-RL Training Dynamics" style="max-width: 90%;"></center>
+        <center><iframe src="./static/images/sage_rl_dynamics.png" alt="SAGE-RL Training Dynamics" style="max-width: 90%;"></center>
         <p class="figure-caption">
           <strong>SAGE-RL Performance Scaling with Problem Difficulty.</strong> SAGE-RL achieves larger accuracy gains on harder benchmarks (AIME 2025, OlympiadBench) compared to easier ones (MATH-500), demonstrating its effectiveness on challenging reasoning tasks.
         </p>
@@ -788,7 +788,7 @@
       </p>
       
       <div class="figure-container">
-        <center><img src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
+        <center><iframe src="./static/images/ablation_sampling_ratio.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
         <p class="figure-caption">
           <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
         </p>
@@ -877,7 +877,7 @@
         </p>
       </div>
       <div class="column is-4 has-text-right">
-        <img src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
+        <iframe src="./static/images/cmu_logo.png" alt="Beihang University Logo" style="height: 80px;">
       </div>
     </div>
   </div>
