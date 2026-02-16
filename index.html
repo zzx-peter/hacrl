@@ -826,18 +826,18 @@
       </div>
       <div class="figure-container">
         <center><img src="./static/images/ab_table.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
-        <p class="figure-caption">
+        <!-- <p class="figure-caption">
           <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
-        </p>
+        </p> -->
       </div>
     <p>
     Through experiments, we investigated the impact of different hyperparameter combinations on SAGE-RL performance and obtained the following key findings:
     </p>
     <p>
-    When the number of rollouts per group \( r \) increases from 1 to 2, the model performance improvement is limited with minimal impact on policy updates, as rollouts with similar reasoning trajectories cannot provide additional valid information.
+    When the number of rollouts per group  $r$  increases from 1 to 2, the model performance improvement is limited with minimal impact on policy updates, as rollouts with similar reasoning trajectories cannot provide additional valid information.
     </p>
     <p>
-    When the exploration width \( m \) increases from 1 to 2, the model achieves significant improvements in both performance and efficiency. A limited \( m \) causes SAGE-RL's optimization behavior to approach standard GRPO, confirming the critical role of exploration width in activating the model's efficient reasoning capability.
+    When the exploration width $m$ increases from 1 to 2, the model achieves significant improvements in both performance and efficiency. A limited $m$ causes SAGE-RL's optimization behavior to approach standard GRPO, confirming the critical role of exploration width in activating the model's efficient reasoning capability.
     </p>
     <p>
     Among different hyperparameter combinations, SAGE (2,2)-GRPO demonstrates the optimal overall performance, representing a favorable balance between performance and exploration efficiency.
