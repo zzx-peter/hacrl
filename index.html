@@ -806,65 +806,43 @@
   </div>
 </section>
 
-<!-- ==================== ABALATION STUDIES ==================== -->
+<!-- ==================== HYPERPARAMETERS SENSITIVITY ANALYSIS ==================== -->
 <section class="section section-white">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Hyperparameters Sensitivity Analysis</h2>
-    <h4 class="subsection-title">Impact on Computational Cost </h4>
-    <div class="content has-text-justified">
-        <!-- 我们测试了在不同的探索宽度下SAGE的运行时延以及SAGE-RL tuned models的近似运行时延。 -->
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title">Hyperparameters Sensitivity Analysis</h2>
+      
+      <div class="content has-text-justified">
         <p>
-            We tested the running latency of SAGE and the approximate running latency of SAGE-RL tuned models under different exploration widths.
+          We analyze how different hyperparameters affect SAGE-RL's performance, efficiency, and computational cost to identify optimal configurations.
         </p>
-          
+        
+        <!-- Impact on Computational Cost -->
+        <h3 class="title is-4 subsection-title">Impact on Computational Cost</h3>
+        <p>
+          We tested the running latency of SAGE and the approximate running latency of SAGE-RL tuned models under different exploration widths.
+        </p>
+        
         <div class="figure-container">
-        <center><img src="./static/images/computation.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
-        <!-- <p class="figure-caption">
-            <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
-        </p> -->
+          <center><img src="./static/images/computation.png" alt="Computational Cost Analysis" style="max-width: 80%;"></center>
+          <p class="figure-caption">
+            <strong>Computational Cost Analysis.</strong> Inference time grows slowly when exploration width $m \leq 2$, but accelerates rapidly beyond this threshold, confirming $m=2$ as the optimal balance between performance and efficiency.
+          </p>
         </div>
-    
+        
         <p>
-            Once the exploration width exceeds 2, the growth rate of inference time accelerates further. Therefore, we primarily set exploration width $m$ = 2, which represents the transition
-            point between the slow-growth and fast-growth regions, to achieve a balanced trade-off between efficiency and performance.
+          Once the exploration width exceeds 2, the growth rate of inference time accelerates further. Therefore, we primarily set exploration width $m = 2$, which represents the transition point between the slow-growth and fast-growth regions, to achieve a balanced trade-off between efficiency and performance.
         </p>
-    </div>
-
-
-    <h4 class="subsection-title">Impact on SAGE-RL Performance</h4>
-    <div class="content has-text-justified">
-      <p>
-        Through experiments, we investigated the impact of different hyperparameter combinations on SAGE-RL performance and obtained the following key findings:
-      </p>
-      
-    <!-- Ablation 1: Optimal SAGE Sampling Ratio -->
-      <div class="figure-container">
-        <center><img src="./static/images/ab_dynamic.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
-        <!-- <p class="figure-caption">
-          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
-        </p> -->
+        
+        <!-- Additional Subsections (Optional) -->
+        <!-- Add more subsections here if needed, such as:
+        <h3 class="title is-4 subsection-title">Impact on Performance</h3>
+        <p>
+          Analysis of how hyperparameters affect model accuracy...
+        </p>
+        -->
       </div>
-      <div class="figure-container">
-        <center><img src="./static/images/ab_table.png" alt="SAGE Sampling Ratio Ablation" style="max-width: 80%;"></center>
-        <!-- <p class="figure-caption">
-          <strong>Ablation on SAGE Sampling Ratio (G=8).</strong> $r=2$ (25% SAGE samples) achieves the highest token efficiency, balancing efficient reasoning patterns with exploration.
-        </p> -->
-      </div>
-
-    <p>
-    When the number of rollouts per group  $r$  increases from 1 to 2, the model performance improvement is limited with minimal impact on policy updates, as rollouts with similar reasoning trajectories cannot provide additional valid information.
-    </p>
-    <p>
-    When the exploration width $m$ increases from 1 to 2, the model achieves significant improvements in both performance and efficiency. A limited $m$ causes SAGE-RL's optimization behavior to approach standard GRPO, confirming the critical role of exploration width in activating the model's efficient reasoning capability.
-    </p>
-    <p>
-    Among different hyperparameter combinations, SAGE (2,2)-GRPO demonstrates the optimal overall performance, representing a favorable balance between performance and exploration efficiency.
-    </p>
-      
-
     </div>
-  </div>
-</section>
+  </section>
 
 <!-- ==================== CONCLUSION ==================== -->
 <section class="section section-gray">
