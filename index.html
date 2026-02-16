@@ -677,9 +677,9 @@
       </p>
       <!-- 关键问题在于 \mathbf{y}_{<i} 中的 < 字符。在 HTML 中，< 是一个特殊字符，用于开始 HTML 标签，浏览器会尝试将其解析为 HTML 标签的开始，而不是数学公式的一部分。 -->
       <div class="formula-box"> 
-        <p style="font-size: 1.1rem; margin: 0;"> 
-            $$\Phi(\mathbf{y}_{\le k})=\frac{1}{k} \sum_{i=1}^{k} \log \pi_\theta \bigl( y_i \mid \mathbf{y}_{\&lt;i}, \mathbf{x} \bigr)$$ 
-        </p> 
+            <p style="font-size: 1.1rem; margin: 0;"> 
+                $$\Phi(\mathbf{y}_{\le k})=\frac{1}{k} \sum_{i=1}^{k} \log \pi_\theta \bigl( y_i \mid \mathbf{y}_{\lt i}, \mathbf{x} \bigr)$$ 
+            </p> 
       </div>
       <p>
         Where $y_{\leq k}$ is the reasoning chain up to step $k$, $\phi$ is the next-token log-probability, and $\pi_\theta$ is the model's policy. This score captures the model's overall confidence in a reasoning path—critical for identifying high-quality, concise chains.
@@ -703,7 +703,7 @@
             Automatically terminates reasoning when a candidate sequence ends with $$—no manual tolerance parameters needed. High-confidence paths lead to confident termination, so the model's own signal dictates stopping.
           </p>
           <p style="text-align: center; margin-top: 1rem; font-size: 1rem;">
-            Add to $O$ if $r_{k}^{(j, k)}$ ends with $$
+            Add to $O$ if $r_{k}^{(j, k)}$ ends with the eot token
           </p>
         </div>
       </div>
