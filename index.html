@@ -555,7 +555,7 @@
       <div class="result-card" style="margin-top: 1.5rem;">
       <h4 class="subsection-title">Pass@1: Existing sampling strategies fail to enable timely termination of thinking.</h4>
       <p>
-        To quantify this redundancy, we define the <strong>RFCS</strong> metric: the step index of the first correct answer divided by the total number of reasoning steps. For over half of MATH-500 samples across all tested LRMs (DS-1.5B, DeepScaleR, Qwen3-8B), RFCS &lt; 1—meaning the model finds the correct answer early but continues reasoning unnecessarily.
+        To quantify the redundancy of reasoning chains, we define the <strong>RFCS</strong> metric: the step index of the first correct answer divided by the total number of reasoning steps. For over half of MATH-500 samples across all tested LRMs (DS-1.5B, DeepScaleR, Qwen3-8B), RFCS &lt; 1—meaning the model finds the correct answer early but continues reasoning unnecessarily.
       </p>
       
       <div class="figure-container">
@@ -577,7 +577,7 @@
 
       <div class="insight-box">
         <p style="margin: 0;">
-          In summary, the surprising performance of relatively shorter responses in pass@k reveals the inherent potential of the model for efficient reasoning. The pervasive redundancy of reasoning steps in pass@1 indicates that current sampling paradigms obscure this potential.
+          <strong>Key Takeaway :</strong> the surprising performance of relatively shorter responses in pass@k reveals the inherent potential of the model for efficient reasoning. The pervasive redundancy of reasoning steps in pass@1 indicates that current sampling paradigms obscure this potential.
         </p>
       </div>
 
@@ -658,7 +658,7 @@
       
       <div class="insight-box" style="margin-top: 2rem;">
         <p style="margin: 0; font-size: 1.15rem;">
-          <strong>Key Takeaway:</strong> LRMs have an innate ability to identify concise, correct reasoning chains—this capability is simply locked by current sampling paradigms that prioritize next-token probability over cumulative confidence.
+          <strong>Key Takeaway :</strong> LRMs have an innate ability to identify concise, correct reasoning chains—this capability is simply locked by current sampling paradigms that prioritize next-token probability over cumulative confidence.
         </p>
       </div>
     </div>
