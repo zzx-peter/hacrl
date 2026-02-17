@@ -535,7 +535,7 @@
 <!-- ==================== THE PROBLEM: REDUNDANT REASONING ==================== -->
 <section class="section section-gray">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">The Problem: Redundant Chain of Thought Reasoning</h2>
+    <h2 class="title is-3 section-title">Dilemmas of Reasoning Models under Current Sampling Paradigms</h2>
     
     <div class="content has-text-justified">
       <p>
@@ -543,7 +543,7 @@
       </p>
       
       <div class="result-card" style="margin-top: 1.5rem;">
-        <h4>Key Observations on Redundant Reasoning</h4>
+        <h4>Pass@k: Scaling CoT length does not lead to correct answers.</h4>
         <ul style="margin-left: 1.5rem; line-height: 1.8;">
           <li>Longer CoTs do not correlate with correctness: On AIME 2025, DeepSeek-R1 produces responses <strong>5× longer</strong> than Claude 3.7 Sonnet with comparable accuracy.</li>
           <li>Shorter CoTs often outperform longer ones: QwQ-32B's shortest responses on AIME/HMMT achieve <strong>+2% accuracy</strong> with <strong>31% fewer tokens</strong> than random samples.</li>
@@ -552,7 +552,8 @@
       </div>
       
       <!-- RFCS Metric -->
-      <h4 class="subsection-title">Ratio of the First Correct Step (RFCS)</h4>
+      <div class="result-card" style="margin-top: 1.5rem;">
+      <h4 class="subsection-title">RPass@1: Existing sampling strategies fail to enable timely termination of thinking.</h4>
       <p>
         To quantify this redundancy, we define the <strong>RFCS</strong> metric: the step index of the first correct answer divided by the total number of reasoning steps. For over half of MATH-500 samples across all tested LRMs (DS-1.5B, DeepScaleR, Qwen3-8B), RFCS &lt; 1—meaning the model finds the correct answer early but continues reasoning unnecessarily.
       </p>
@@ -577,6 +578,9 @@
           Current sampling paradigms (pass@1) obscure the LRM's inherent ability to recognize when to stop thinking. The model <em>knows</em> the optimal stopping point—it just can't act on it under standard inference.
         </p>
       </div>
+      </div>
+
+
     </div>
   </div>
 </section>
