@@ -1,1 +1,1 @@
-This is the page for the Sage-RL project.
+This is the page for the HACRL project.
