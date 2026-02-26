@@ -50,7 +50,7 @@
     .hero .hero-body { padding-top: 2rem; padding-bottom: 0.8rem; overflow: visible !important; }
     .hero * { overflow: visible !important; }
     .hero .container, .hero .columns, .hero .column { overflow: visible !important; max-height: none !important; }
-    .hero .title.is-1 { color: var(--sage-red); font-weight: 400; font-family: 'Google Sans', 'Times New Roman', serif; }
+    .hero .title.is-1 { color: var(--sage-red); font-weight: 400; font-family: Georgia, 'Times New Roman', serif; }
     .hero .publication-authors a { color: #374151 !important; }
     .hero .publication-authors a:hover { color: var(--sage-red) !important; text-decoration: underline; }
     .hero .publication-authors span { color: #4b5563; }
@@ -67,7 +67,11 @@
       color: #1f2937;
     }
 
-    h2.section-title, h3.section-title, h4.subsection-title, .title.section-title {
+    /* Section titles */
+    h2.section-title,
+    h3.section-title,
+    h4.subsection-title,
+    .title.section-title {
       color: var(--primary) !important;
       font-weight: 600;
       font-family: 'Google Sans', sans-serif;
@@ -81,6 +85,7 @@
       margin-bottom: 1rem;
     }
     
+    /* Body text */
     .content p, .content li {
       font-family: 'Noto Sans', sans-serif;
       font-size: 1rem;
@@ -117,6 +122,8 @@
       padding: 1.5rem;
       border: 1px solid var(--border-light);
     }
+    .math-box.rl { border-top: 3px solid #dc2626; }
+    .math-box.ml { border-top: 3px solid var(--primary); }
     .math-box h4 { font-weight: 600; margin-bottom: 1rem; color: var(--text-dark); }
     
     .figure-container {
@@ -129,6 +136,37 @@
     .figure-container img { border-radius: 4px; }
     .figure-caption { font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem; text-align: center; }
     
+    /* Equal height for analysis figures */
+    .analysis-columns {
+      display: flex;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+    .analysis-columns .analysis-col {
+      flex: 1;
+      display: flex;
+    }
+    .analysis-columns .figure-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+    .analysis-columns .figure-container .img-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .analysis-columns .figure-container img {
+      max-width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+    }
+    @media (max-width: 768px) {
+      .analysis-columns { flex-direction: column; }
+    }
+    
     .result-card {
       background: #fff;
       border-radius: 8px;
@@ -138,6 +176,80 @@
     }
     .result-card h4 { color: var(--text-dark); font-weight: 600; margin-bottom: 1rem; }
     
+    .highlight-stat {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .highlight-stat.sage { background: var(--sage-blue); }
+    
+    .algorithm-box {
+      background: #1f2937;
+      color: #e5e7eb;
+      border-radius: 6px;
+      padding: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+    }
+    .algorithm-box .comment { color: #9ca3af; }
+    .algorithm-box .keyword { color: #f472b6; }
+    .algorithm-box .function { color: #60a5fa; }
+    
+    table.comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    table.comparison-table th {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    table.comparison-table th * { color: #fff !important; }
+    table.comparison-table th .katex, table.comparison-table th .katex * { color: #fff !important; }
+    table.comparison-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-light); }
+    table.comparison-table tr:last-child td { border-bottom: none; }
+    table.comparison-table tr:hover td { background: var(--bg-gray); }
+    
+    pre code { display: block; padding: 1rem; background: #1f2937; color: #e5e7eb; border-radius: 6px; overflow-x: auto; }
+    .bibtex-box { 
+      background: #374151;
+      border: 1px solid #4b5563;
+      border-radius: 8px; 
+      padding: 1.5rem;
+    }
+    .bibtex-box pre {
+      margin: 0;
+      background: transparent;
+    }
+    .bibtex-box code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e5e7eb;
+      background: transparent;
+      padding: 0;
+    }
+    
+    footer.footer { background: #1f2937; color: #9ca3af; padding: 2rem; overflow: hidden; }
+    footer.footer .columns { margin: 0; }
+    footer.footer .container { overflow: hidden; }
+    footer a { color: #93c5fd; }
+    footer a:hover { color: #bfdbfe; }
+    
+    .emoji-icon { margin-right: 0.5rem; }
+    .section { padding: 3rem 1.5rem; }
+    
     .formula-box {
       background: transparent;
       border: none;
@@ -146,27 +258,169 @@
       text-align: center;
     }
     
+    
     .conclusion-box {
       background: #fff;
       border: 1px solid var(--border-light);
       border-radius: 8px;
       padding: 2rem;
     }
+    .conclusion-box p {
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .conclusion-box p:last-child {
+      margin-bottom: 0;
+    }
     
-    .bibtex-box { 
-      background: #374151;
-      border: 1px solid #4b5563;
-      border-radius: 8px; 
-      padding: 1.5rem;
+    /* ==================== MOBILE RESPONSIVE STYLES ==================== */
+    
+    /* Tablets and smaller */
+    @media (max-width: 1024px) {
+      .hero .title.is-1 { font-size: 2.2rem; }
     }
-    .bibtex-box code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: #e5e7eb;
+    
+    /* Mobile devices */
+    @media (max-width: 768px) {
+      /* Hero Section */
+      .hero .hero-body { padding-top: 1.2rem; padding-bottom: 0.6rem; }
+      .hero .title.is-1 { 
+        font-size: 1.5rem; 
+        white-space: normal !important; 
+        line-height: 1.3;
+      }
+      
+      /* Authors - make them wrap nicely */
+      .publication-authors { font-size: 0.9rem !important; }
+      .publication-authors .author-block { 
+        display: inline; 
+        white-space: nowrap;
+      }
+      .is-size-6.publication-authors { font-size: 0.8rem !important; }
+      .is-size-6.publication-authors .author-block { margin-left: 0.3em !important; }
+      
+      /* Section padding */
+      .section { padding: 2rem 1rem; }
+      
+      /* Titles */
+      h2.title.is-3, .title.is-3.section-title { font-size: 1.4rem; }
+      h4.subsection-title { font-size: 1.1rem; }
+      
+      /* Math comparison boxes */
+      .math-comparison { gap: 1rem; }
+      .math-box { padding: 1rem; }
+      .math-box p { font-size: 0.95rem; }
+      
+      /* Formula boxes - handle overflow */
+      .formula-box { 
+        overflow-x: auto; 
+        padding: 0.5rem;
+      }
+      .formula-box p { font-size: 0.9rem; }
+      
+      /* Insight boxes */
+      .insight-box { padding: 1rem 1.25rem; }
+      .insight-box p { font-size: 1rem; }
+      
+      /* Result cards */
+      .result-card { padding: 1.25rem; }
+      .result-card h4 { font-size: 1.1rem; }
+      
+      /* Figure captions */
+      .figure-caption { font-size: 0.8rem; }
+      
+      /* Tables - make scrollable */
+      .comparison-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      table.comparison-table { 
+        min-width: 500px; 
+        font-size: 0.85rem;
+      }
+      table.comparison-table th, 
+      table.comparison-table td { 
+        padding: 0.5rem 0.75rem; 
+      }
+      
+      /* Conclusion box */
+      .conclusion-box { padding: 1.25rem; }
+      
+      /* BibTeX */
+      .bibtex-box { padding: 1rem; }
+      .bibtex-box code { font-size: 0.7rem; }
+      
+      /* Publication links buttons */
+      .publication-links .button { 
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+      }
+      
+      /* Footer */
+      footer.footer { padding: 1.5rem 1rem; }
+      footer.footer img { height: 60px !important; }
+      footer p { font-size: 0.85rem; }
+      
+      /* TL;DR text */
+      .hero .hero-body p[style*="Castoro"] { font-size: 0.95rem !important; }
     }
-
-    footer.footer { background: #1f2937; color: #9ca3af; padding: 2rem; }
-    footer a { color: #93c5fd; }
+    
+    /* Small phones */
+    @media (max-width: 480px) {
+      .hero .title.is-1 { font-size: 1.25rem; }
+      .publication-authors { font-size: 0.8rem !important; }
+      
+      h2.title.is-3, .title.is-3.section-title { font-size: 1.25rem; }
+      
+      .content p, .content li { font-size: 0.9rem; }
+      
+      .math-box h4 { font-size: 0.95rem; }
+      .math-box p { font-size: 0.85rem; }
+      
+      .result-card { padding: 1rem; }
+      .result-card h4 { font-size: 1rem; }
+      
+      /* Extra small formulas */
+      .formula-box p { font-size: 0.85rem; }
+      
+      /* Theorem boxes */
+      .result-card[style*="border-left"] { padding: 1rem; }
+      .result-card[style*="border-left"] h4 { font-size: 1rem; }
+      .result-card[style*="border-left"] div[style*="text-align: center"] { font-size: 0.9rem !important; }
+    }
+    
+    /* Ensure images never overflow */
+    img { max-width: 100%; height: auto; }
+    
+    /* KaTeX formula overflow handling */
+    .katex-display { overflow-x: auto; overflow-y: hidden; }
+    
+    /* Global overflow prevention */
+    .container { overflow-x: hidden; }
+    .content { word-wrap: break-word; overflow-wrap: break-word; }
+    
+    /* Table wrapper for mobile scrolling */
+    .comparison-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Algorithm box mobile */
+    @media (max-width: 768px) {
+      .algorithm-box { 
+        font-size: 0.75rem; 
+        padding: 1rem;
+      }
+    }
+    
+    /* Result card theorem boxes mobile adjustments */
+    @media (max-width: 768px) {
+      .result-card div[style*="text-align: center"] {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
   </style>
 </head>
 <body>
@@ -259,13 +513,13 @@
 <!--defination of heterogeneous agent collaborative reinforcement learning-->
 <section class="section section-gray">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">The Novel Problem: Heterogeneous Agent Collaborative Reinforcement Learning</h2>
+    <h2 class="title is-3 section-title">Heterogeneous Agent Collaborative Reinforcement Learning (HACRL)</h2>
     <div class="figure-container" style="margin: 0;">
       <!-- <center>
         <img src="./static/images/HACPO_MARL_KD.png" alt="HACRL vs MARL vs KD" style="max-width: 100%;">
       </center> -->
       <center>
-        <img src="./static/images/HACPO_MARL_KD_1.png" alt="HACRL vs MARL vs KD" style="max-width: 60%;">
+        <img src="./static/images/HACPO_MARL_KD_1.png" alt="HACRL vs MARL vs KD" style="max-width: 80%;">
       </center>
       <p class="figure-caption">
         <strong>Figure 2.</strong> The significant differences among Multi-Agent RL, Knowledge Distillation, and the proposed HACRL. HACRL targets independent execution with collaborative optimization.
