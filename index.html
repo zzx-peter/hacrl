@@ -513,13 +513,13 @@
 <!--defination of heterogeneous agent collaborative reinforcement learning-->
 <section class="section section-gray">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Heterogeneous Agent Collaborative Reinforcement Learning (HACRL)</h2>
+    <h2 class="title is-3 section-title">Heterogeneous Agent Collaborative Reinforcement Learning</h2>
     <div class="figure-container" style="margin: 0;">
       <!-- <center>
         <img src="./static/images/HACPO_MARL_KD.png" alt="HACRL vs MARL vs KD" style="max-width: 100%;">
       </center> -->
       <center>
-        <img src="./static/images/HACPO_MARL_KD_1.png" alt="HACRL vs MARL vs KD" style="max-width: 50%;">
+        <img src="./static/images/HACPO_MARL_KD_1.png" alt="HACRL vs MARL vs KD" style="max-width: 65%;">
       </center>
       <p class="figure-caption">
         <strong>Figure 2.</strong> The significant differences among Multi-Agent RL, Knowledge Distillation, and the proposed HACRL. HACRL targets independent execution with collaborative optimization.
@@ -567,7 +567,7 @@
         To solve the HACRL problem, we propose Heterogeneous Agent Collaborative Policy Optimization (HACPO), which introduces four tailored modifications to bridge capability and distribution discrepancies between heterogeneous agents.
       </p>
 
-      <h4 class="subsection-title">1. Agent-Capability-Aware Advantage Estimation</h4>
+      <h4 class="subsection-title">1.Agent-Capability-Aware Advantage Estimation</h4>
       <p>
         We propose a capability-aware estimator that assign distinct inter-group advantage baseline for each agent based on their relative performance.
       </p>
@@ -581,7 +581,7 @@
         </p>
       </div>
 
-      <h4 class="subsection-title">2. Model Capabilities Discrepancy Coefficient</h4>
+      <h4 class="subsection-title">2.Model Capabilities Discrepancy Coefficient</h4>
       <p>
         To encourage learning from stronger agents while being conservative with weaker ones, we use the capability ratio to modulate the effective advantage.
       </p>
@@ -589,7 +589,7 @@
         $$\tilde{A}^{(k)}_{t,i} = \begin{cases} A^{(k)}_{t,i} & y^{(k)}_{t,i} \in D^{(k)}_t \\ \omega^{(j,k)}_t A^{(j)}_{t,i} & y^{(j)}_{t,i} \in D^{(j)}_t, j \neq k \end{cases}$$
       </div>
 
-      <h4 class="subsection-title">3. Exponential Importance Sampling</h4>
+      <h4 class="subsection-title">3.Exponential Importance Sampling</h4>
       <p>
         To correct for distributional mismatches without being overly aggressive, we introduce a non-gradient exponential reweighting to the importance sampling ratio.
       </p>
@@ -600,7 +600,7 @@
         </p>
       </div>
 
-      <h4 class="subsection-title">4. Stepwise Clipping</h4>
+      <h4 class="subsection-title">4.Stepwise Clipping</h4>
       <p>
         Cross-agent importance sampling ratios fluctuate irregularly both across steps and within a step. We first apply an asymmetric clipping bounds for cross-agent responses to ensure the cross-agent responses only be downweighted, but never upweighted. Then, we apply a stepwise clipping strategy to prevent cross-agent rollouts from dominating late-stage updates within a batch, thereby improving training stability.
       </p>
