@@ -490,11 +490,11 @@
     
     <div class="figure-container" style="margin: 0;">
       <center>
-        <img src="./static/images/main.png" alt="Workflow of HACPO" style="max-width: 100%;">
+        <img src="./static/images/main_figure.png" alt="Workflow of HACPO" style="max-width: 100%;">
       </center>
-      <p class="figure-caption">
+      <!-- <p class="figure-caption">
         <strong>Figure 1.</strong> In HACPO, shared rollouts from multiple heterogeneous agents are leveraged for collaborative training. Built upon vanilla RL Optimization, HACPO introduces four algorithmic innovations to mitigate capability and policy distribution discrepancy.
-      </p>
+      </p> -->
     </div>
     
     <div class="content has-text-justified" style="margin-top: 2rem;">
@@ -563,10 +563,17 @@
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Heterogeneous Agent Collaborative Policy Optimization (HACPO)</h2>
     <div class="content has-text-justified">
+      <div class="figure-container" style="margin: 0;">
+        <center>
+          <img src="./static/images/main.png" alt="Workflow of HACPO" style="max-width: 100%;">
+        </center>
+        <p class="figure-caption">
+          <strong>Figure 1.</strong> In HACPO, shared rollouts from multiple heterogeneous agents are leveraged for collaborative training. Built upon vanilla RL Optimization, HACPO introduces four algorithmic innovations to mitigate capability and policy distribution discrepancy.
+        </p>
+      </div>
       <p>
         To solve the HACRL problem, we propose Heterogeneous Agent Collaborative Policy Optimization (HACPO), which introduces four tailored modifications to bridge capability and distribution discrepancies between heterogeneous agents.
       </p>
-
       <h4 class="subsection-title">1.Agent-Capability-Aware Advantage Estimation</h4>
       <p>
         We propose a capability-aware estimator that assign distinct inter-group advantage baseline for each agent based on their relative performance.
