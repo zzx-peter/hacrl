@@ -500,14 +500,13 @@
     <div class="content has-text-justified" style="margin-top: 2rem;">
       <h2 class="title is-3 section-title">Abstract</h2>
       <p>
-        In scenarios where multiple agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts, they repeatedly generate trajectories and yield verifiable rewards, while these costly intermediate results are only utilized for self-training. We formalize this setting as Heterogeneous Agent Collaborative Reinforcement Learning (<strong>HACRL</strong>). 
+        <strong>[Background]</strong> We formulate a novel promble as Heterogeneous Agent Collaborative Reinforcement Learning (<strong>HACRL</strong>): In scenarios where multiple heterogeneous agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts, they repeatedly generate trajectories and yield verifiable rewards, while these costly intermediate results are only utilized for self-training.
       </p>
       <p>
-        To break through this wasteful practice, we introduce Heterogeneous Agent Collaborative Policy Optimization (<strong>HACPO</strong>) to achieve this goal. It is a novel collaborative multi-agent RL training paradigm that enables rollout sharing,  maximizing rollout utilization and facilitating mutual knowledge transfer among heterogeneous agents. <strong>HACPO is foundmentally different from on-policy distillation, which is a typical "teacher-to-student" training paradigm and within homogeneous agents, whereas HACPO is a mutual learning paradigm among heterogeneous agents.</strong>
-        To effectively bridge the discrepancies in capability and policy distribution, we introduce four tailored modifications and rigorously prove the unbiasedness of these improvements in advantage estimation and the validity of the optimization direction through theoretical analysis.
+        <strong>[Algorithm]</strong> We introduce Heterogeneous Agent Collaborative Policy Optimization (<strong>HACPO</strong>) to break through this wasteful practice. It is a novel collaborative multi-agent RL training paradigm that enables rollout sharing,  maximizing rollout utilization and facilitating mutual knowledge transfer among heterogeneous agents. To effectively bridge the discrepancies in capability and policy distribution, we introduce four tailored modifications and rigorously prove the unbiasedness of these improvements in advantage estimation and the validity of the optimization direction through theoretical analysis. <strong>HACPO is foundmentally different from on-policy distillation, which is a typical "teacher-to-student" training paradigm and within homogeneous agents, whereas HACPO is a mutual learning paradigm among heterogeneous agents.</strong>
       </p>
       <p>
-        Experimental results demonstrate that HACPO consistently achieves superior accuracy across various heterogeneous model combinations and datasets. 
+        <strong>[Performance]</strong> We evaluate HACPO across three types of heterogeneity and seven challenging mathematical reasoning benchmarks, demonstrating consistent performance improvements for all participating agents.
         This work points to a promising new direction for efficient collaborative learning among multi-agent systems.
       </p>
     </div>
