@@ -498,15 +498,22 @@
     </div>
     
     <div class="content has-text-justified" style="margin-top: 2rem;">
-      <h2 class="title is-3 section-title">Abstract</h2>
+      <h2 class="title is-3 section-title">Introduction</h2>
       <p>
-        <strong>[Background]</strong> We formulate a novel promble as Heterogeneous Agent Collaborative Reinforcement Learning (<strong>HACRL</strong>): In scenarios where multiple heterogeneous agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts, they repeatedly generate trajectories and yield verifiable rewards, while these costly intermediate results are only utilized for self-training.
+        <strong>[Background]</strong> In scenarios where multiple heterogeneous agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts, they repeatedly generate trajectories and yield verifiable rewards, while these costly intermediate results are only utilized for self-training.
+      <p>
+        <strong>[Problem Defination]</strong> We formulate the novel promble as Heterogeneous Agent Collaborative Reinforcement Learning (<strong>HACRL</strong>). HACRL focuses on independent execution with collaborative optimization: agents share verified rollouts during training, yet operate independently at inference time
+        which differs from LLM-based multi-agent reinforcement learning, which trains agents to coordinate and jointly solve tasks through interaction as a system. HACRL is also foundmentally different from on-policy distillation, which is a typical "teacher-to-student" training paradigm and within homogeneous agents, whereas HACRL is a mutual learning paradigm among heterogeneous agents.
       </p>
       <p>
-        <strong>[Algorithm]</strong> We introduce Heterogeneous Agent Collaborative Policy Optimization (<strong>HACPO</strong>) to break through this wasteful practice. It is a novel collaborative multi-agent RL training paradigm that enables rollout sharing,  maximizing rollout utilization and facilitating mutual knowledge transfer among heterogeneous agents. To effectively bridge the discrepancies in capability and policy distribution, we introduce four tailored modifications and rigorously prove the unbiasedness of these improvements in advantage estimation and the validity of the optimization direction through theoretical analysis. <strong>HACPO is foundmentally different from on-policy distillation, which is a typical "teacher-to-student" training paradigm and within homogeneous agents, whereas HACPO is a mutual learning paradigm among heterogeneous agents.</strong>
+        <strong>[Algorithm]</strong> We introduce Heterogeneous Agent Collaborative Policy Optimization (<strong>HACPO</strong>) to break through this wasteful practice. It is a novel collaborative multi-agent RL training paradigm that enables rollout sharing,  maximizing rollout utilization and facilitating mutual knowledge transfer among heterogeneous agents. To effectively bridge the discrepancies in capability and policy distribution, we introduce four tailored modifications and rigorously prove the unbiasedness of these improvements in advantage estimation and the validity of the optimization direction through theoretical analysis:<br> 
+        <strong>(1)</strong> Agent-Capability-Aware Advantage Estimation<br>
+        <strong>(2)</strong> Model Capabilities Discrepancy Coefficient<br>
+        <strong>(3)</strong> Exponential Importance Sampling<br>
+        <strong>(4)</strong> Stepwise Clipping
       </p>
       <p>
-        <strong>[Performance]</strong> We evaluate HACPO across three types of heterogeneity and seven challenging mathematical reasoning benchmarks, demonstrating consistent performance improvements for all participating agents.
+        <strong>[Performance]</strong> We evaluate HACPO across three types of heterogeneity and seven challenging mathematical reasoning benchmarks, demonstrating consistent performance improvements for all participating agents. Notably, HACPO outperforms the standard GSPO by an average of <strong>3.3%</strong>, while using only <strong>half</strong>> of the rollout cost. This reduction in rollout cost is achieved without sacrificing accuracy, highlighting HACPO's ability to both lower computational expenses and enhance performance.
         This work points to a promising new direction for efficient collaborative learning among multi-agent systems.
       </p>
     </div>
@@ -575,11 +582,12 @@
         </p>
       </div>
       <p>
-        To solve the HACRL problem, we propose Heterogeneous Agent Collaborative Policy Optimization (HACPO), which introduces four tailored modifications to bridge capability and distribution discrepancies between heterogeneous agents.
+        To solve the HACRL problem, we propose Heterogeneous Agent Collaborative Policy Optimization (HACPO), which introduces four tailored modifications to bridge capability and distribution discrepancies between heterogeneous agents. Theoretically, we prove that HACPO is effective because learning from cross-agent rollouts induces an optimization
+        direction consistent with standard on-policy learning.
       </p>
       <h4 class="subsection-title">1.Agent-Capability-Aware Advantage Estimation</h4>
       <p>
-        We propose a capability-aware estimator that assign distinct inter-group advantage baseline for each agent based on their relative performance.
+        We propose a capability-aware estimator that assign distinct inter-group advantage baseline for each agent based on their relative performance. Intuitively, the advantage of a response should be higher if it is generated by a stronger agent, and lower if it is generated by a weaker agent. Theoretically, we prove that this estimator is unbiased.
       </p>
       <div class="math-box">
         In training step $t$, the advantage of the $i$-th response for agent $k$ is:
@@ -593,7 +601,7 @@
 
       <h4 class="subsection-title">2.Model Capabilities Discrepancy Coefficient</h4>
       <p>
-        To encourage learning from stronger agents while being conservative with weaker ones, we use the capability ratio to modulate the effective advantage.
+        To encourage learning from stronger agents while being conservative with weaker ones, we use the capability ratio to modulate the effective advantage. The capability ratio $\omega_t^{(k,j)}$ plays two complementary roles: <strong>(i) Baseline Calibration</strong> — it rescales rewards when estimating the capability-aware baseline to align reward statistics across heterogeneous agents; <strong>(ii) Gradient Modulation</strong> — it serves as a learning-rate-like factor that amplifies gradients from stronger agents and attenuates those from weaker ones. The modulated advantage is:
       </p>
       <div class="math-box">
         $$\tilde{A}^{(k)}_{t,i} = \begin{cases} A^{(k)}_{t,i} & y^{(k)}_{t,i} \in D^{(k)}_t \\ \omega^{(j,k)}_t A^{(j)}_{t,i} & y^{(j)}_{t,i} \in D^{(j)}_t, j \neq k \end{cases}$$
@@ -601,7 +609,10 @@
 
       <h4 class="subsection-title">3.Exponential Importance Sampling</h4>
       <p>
-        To correct for distributional mismatches without being overly aggressive, we introduce a non-gradient exponential reweighting to the importance sampling ratio.
+        Importance sampling is commonly used to correct distributional mismatches between samples generated by different policies. Following GSPO, we adopt a sequence-level importance ratio and extend it to the heterogeneous multi-agent setting. For combinations of heterogeneous agents with incompatible tokenizers, we detokenize the response into text and retokenize it using the target agent's tokenizer. Through sequence-level normalization, the slight length discrepancies arising from re-tokenization become negligible.
+      </p>
+      <p>
+        In heterogeneous settings, inter-agent policy discrepancies can be much larger than on-policy updates, making direct use of this ratio overly aggressive. To mitigate this issue, we introduce a non-gradient exponential reweighting to the importance sampling ratio. This design biases agent $k$ toward learning from agents whose output distributions are more aligned with its own, while reducing the impact of large cross-agent distribution shifts.
       </p>
       <div class="math-box">
         $$\tilde{s}^{(k,j)}_{t,i} = s^{(k,j)}_{t,i} \cdot (\text{sg}[s^{(k,j)}_{t,i}])^\alpha$$
