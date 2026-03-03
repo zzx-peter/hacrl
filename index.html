@@ -502,15 +502,19 @@
       <p>
         <strong>[Background]</strong> In scenarios where multiple heterogeneous agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts, they repeatedly generate trajectories and yield verifiable rewards, while these costly intermediate results are only utilized for self-training.
       <p>
-        <strong>[Defination]</strong> We formulate a novel paradigm as Heterogeneous Agent Collaborative Reinforcement Learning (<strong>HACRL</strong>) to break through this wasteful practice. HACRL focuses on independent execution with collaborative optimization: agents share verified rollouts during training, yet operate independently at inference time
-        which differs from LLM-based multi-agent reinforcement learning, which trains agents to coordinate and jointly solve tasks through interaction as a system. HACRL is also foundmentally different from on-policy distillation, which is a typical "teacher-to-student" training paradigm and within homogeneous agents, whereas HACRL is a mutual learning paradigm among heterogeneous agents.
+        <strong>[Defination]</strong> We introduce a novel paradigm, termed <strong>Heterogeneous Agent Collaborative Reinforcement Learning (HACRL)</strong>, to overcome the inefficiencies of isolated on-policy optimization. HACRL emphasizes independent execution with collaborative optimization: agents share verified rollouts during training to enhance one another, while operating independently at inference time.
+        HACRL differs fundamentally from existing paradigms: <br>
+        (1) <strong>LLM-based Multi-Agent Reinforcement Learning (MARL).</strong>
+        MARL trains agents to coordinate and jointly solve tasks through interaction within a coupled multi-agent system. In contrast, HACRL does not require coordinated execution. In many practical scenarios, only a single agent is deployed at inference time; however, we still desire that this agent benefits from knowledge acquired from other agents during training. <br>
+        (2) <strong>On-/Off-Policy Distillation.</strong>
+        Distillation typically follows a one-directional “teacher-to-student” paradigm, often among homogeneous agents. HACRL instead enables bidirectional <strong>mutual learning</strong> among <strong>heterogeneous agents</strong>, where each agent simultaneously acts as both a knowledge provider and a learner.
       </p>
       <p>
         <strong>[Algorithm]</strong> We introduce Heterogeneous Agent Collaborative Policy Optimization (<strong>HACPO</strong>) to break through this wasteful practice. It is a novel collaborative multi-agent RL training paradigm that enables rollout sharing,  maximizing rollout utilization and facilitating mutual knowledge transfer among heterogeneous agents. To effectively bridge the discrepancies in capability and policy distribution, we introduce four tailored modifications and rigorously prove the unbiasedness of these improvements in advantage estimation and the validity of the optimization direction through theoretical analysis:<br> 
-        <strong>(1)</strong> Agent-Capability-Aware Advantage Estimation<br>
-        <strong>(2)</strong> Model Capabilities Discrepancy Coefficient<br>
-        <strong>(3)</strong> Exponential Importance Sampling<br>
-        <strong>(4)</strong> Stepwise Clipping
+        <strong>(1) Agent-Capability-Aware Advantage Estimation </strong> <br>
+        <strong>(2) Model Capabilities Discrepancy Coefficient</strong> <br>
+        <strong>(3) Exponential Importance Sampling</strong> <br>
+        <strong>(4) Stepwise Clipping</strong>
       </p>
       <p>
         <strong>[Performance]</strong> We evaluate HACPO across three types of heterogeneity and seven challenging mathematical reasoning benchmarks, demonstrating consistent performance improvements for all participating agents. Notably, HACPO outperforms the standard GSPO by an average of <strong>3.3%</strong>, while using only <strong>half</strong> of the rollout cost. This reduction in rollout cost is achieved without sacrificing accuracy, highlighting HACPO's ability to both lower computational expenses and enhance performance.
