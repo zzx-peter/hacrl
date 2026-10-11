@@ -748,12 +748,6 @@
         </details>
         <p class="result-note">The main paper reports these three pairings; three additional two-agent combinations are reported in the appendix.</p>
       </div>
-      <div class="result-card has-text-centered">
-        <br>
-        <img src="./static/images/HACPO vs GSPO.png" alt="Figure 3: Training curves of GSPO and HACPO" style="max-width: 100%; margin-bottom: 1rem;">
-        <p class="figure-caption"><strong>Figure 3.</strong> Training curves of GSPO and HACPO. HACPO demonstrates faster convergence and higher final performance compared to single-agent baselines.</p>
-      </div>
-
       <h4 class="subsection-title" id="three-agent">Three-Agent Collaboration Across Model Families</h4>
       <p>
         We jointly train <strong>Qwen3-1.7B-Base, Llama3.2-1B-Instruct, and Gemma3-1B-Instruct</strong>. GSPO×3 triples the single-agent rollout budget to match the number of training rollouts available to each HACPO agent through the shared pool. All three models improve their average scores over GSPO×3, by <strong>1.6, 1.8, and 1.9 percentage points</strong>, respectively.
