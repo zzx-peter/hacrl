@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="In scenarios where multiple agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts. They repeatedly generate trajectories and yield verifiable rewards, In scenarios where multiple agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts, they repeatedly generate trajectories and yield verifiable rewards, while these costly intermediate results are only utilized for self-training.
-        To break through this wasteful practice, we introduce HACPO (Heterogeneous Agent Collaborative Policy Optimization) to achieve this goal. It is a novel collaborative multi-agent RL training paradigm that enables rollout sharing,  maximizing rollout utilization and facilitating mutual knowledge transfer among heterogeneous agents.
-        To effectively bridge the discrepancies in capability and policy distribution, we introduce four tailored modifications and rigorously prove the unbiasedness of these improvements in advantage estimation and the validity of the optimization direction through theoretical analysis.
-        Experimental results demonstrate that HACPO consistently achieves superior accuracy across various heterogeneous model combinations and datasets. 
-        This work points to a promising new direction for efficient collaborative learning among multi-agent systems.">
-  <meta name="keywords" content="LLM, Reasoning, Multi-Agent Reinforcement Learning, Heterogeneous Agents, Collaborative Optimization, Rollout Sharing">
+        content="HACRL enables heterogeneous reasoning models to mutually improve through training-time rollout sharing while remaining independently deployable. HACPO improves accuracy by 3.6 percentage points over GSPO with double rollouts at half the rollout cost, with experiments spanning six model pairs and a three-agent portfolio.">
+  <meta name="keywords" content="HACRL, HACPO, LLM, Reasoning, RLVR, Heterogeneous Agents, Reciprocal Rollout Sharing, Mutual Learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Heterogeneous Agent Collaborative Reinforcement Learning</title>
 
@@ -16,7 +12,6 @@
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
@@ -431,43 +426,54 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">Heterogeneous Agent Collaborative Reinforcement Learning</h1>
+          <p class="publication-venue">Accepted at NeurIPS 2026</p>
           
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><a href="mailto:22376220@buaa.edu.cn">Zhixia Zhang</a><sup>1*</sup></span><span class="author-block">, </span>
-            <span class="author-block">Zixuan Huang<sup>1 2*</sup></span><span class="author-block">, </span>
-            <span class="author-block">Xin Xia<sup>2</sup></span><span class="author-block">, </span>
-            <span class="author-block">Deqing Wang<sup>1</sup></span><span class="author-block">, </span>
-            <span class="author-block">Fuzhen Zhuang<sup>1</sup></span><span class="author-block">, </span>
-            <span class="author-block">Shuai Ma<sup>1</sup></span><span class="author-block">, </span>
-            <span class="author-block">Ning Ding<sup>3</sup></span><span class="author-block">, </span>
-            <span class="author-block">Yaodong Yang<sup>4</sup></span><span class="author-block">, </span>
-            <span class="author-block">Jianxin Li<sup>1</sup></span><span class="author-block">, </span>
-            <span class="author-block"><a href="mailto:yikunb@buaa.edu.cn">Yikun Ban</a><sup>1†</sup></span>
+            <span class="author-block author-name"><a href="mailto:zhixiaz@buaa.edu.cn">Zhixia Zhang</a><sup>1*</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Zixuan Huang<sup>1,2*</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Gongxun Li<sup>1</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Huaiyang Wang<sup>1</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Chengyi Yuan<sup>5</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Xin Xia<sup>2</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Deqing Wang<sup>1</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Fuzhen Zhuang<sup>1</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Shuai Ma<sup>1</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Ning Ding<sup>3</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Yaodong Yang<sup>4</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name">Jianxin Li<sup>1</sup></span><span class="author-block author-name">, </span>
+            <span class="author-block author-name"><a href="mailto:yikunb@buaa.edu.cn">Yikun Ban</a><sup>1†</sup></span>
           </div>
           <div class="is-size-6 publication-authors" style="margin-top: 0.4rem;">
             <span class="author-block"><sup>1</sup>Beihang University</span><span class="author-block"> &nbsp;</span>
             <span class="author-block"><sup>2</sup>Bytedance China</span><span class="author-block"> &nbsp;</span>
             <span class="author-block"><sup>3</sup>Tsinghua University</span><span class="author-block"> &nbsp;</span>
-            <span class="author-block"><sup>4</sup>Peking University</span><br>
+            <span class="author-block"><sup>4</sup>Peking University</span><span class="author-block"> &nbsp;</span>
+            <span class="author-block"><sup>5</sup>Apple</span><br>
             <span class="author-block" style="margin-left: 0.8em;"><sup>*</sup>Equal Contribution</span>
-            <span class="author-block" style="margin-left: 0.8em;"><sup>†</sup>Corresponding Authors</span>
+            <span class="author-block" style="margin-left: 0.8em;"><sup>†</sup>Corresponding Author</span>
           </div>
 
           <div class="has-text-centered" style="margin-top: 1.2rem;">
             <span class="link-block">
-              <a href="https://arxiv.org/abs/2603.02604" target="_blank" class="external-link button is-normal is-rounded">
+              <a href="./static/pdf/HACRL.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded">
+                <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                <span>Camera-ready PDF</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://arxiv.org/abs/2603.02604" target="_blank" rel="noopener" class="external-link button is-normal is-rounded">
                 <span class="icon"><i class="ai ai-arxiv"></i></span>
                 <span>arXiv</span>
               </a>
             </span>
             <span class="link-block">
-              <a href="https://huggingface.co/papers/2603.02604" target="_blank" class="external-link button is-normal is-rounded">
+              <a href="https://huggingface.co/papers/2603.02604" target="_blank" rel="noopener" class="external-link button is-normal is-rounded">
                 <span class="icon">🤗</span>
                 <span>HuggingFace</span>
               </a>
             </span>
             <span class="link-block">
-              <a href="https://github.com/zzx-peter/HACRL-code" target="_blank" class="external-link button is-normal is-rounded">
+              <a href="https://github.com/zzx-peter/HACRL-code" target="_blank" rel="noopener" class="external-link button is-normal is-rounded">
                 <span class="icon"><i class="fab fa-github"></i></span>
                 <span>Code</span>
               </a>
@@ -476,9 +482,17 @@
 
           <div style="margin-top: 1.2rem; text-align: center;">
             <p style="font-family: 'Castoro', Georgia, serif; font-size: 1.05rem; color: #374151; max-width: 800px; margin: 0 auto;">
-              <strong>TL;DR</strong>&nbsp; HACPO is a novel collaborative reinforcement learning framework that enables heterogeneous agents to share rollouts.
+              <strong>TL;DR</strong>&nbsp; Heterogeneous models improve together through reciprocal rollout sharing during training. Each model runs independently at inference time.
             </p>
           </div>
+          <nav class="section-nav" aria-label="Page sections">
+            <a href="#motivation">Motivation</a>
+            <a href="#results">Main results</a>
+            <a href="#three-agent">Three agents</a>
+            <a href="#distillation">Distillation comparisons</a>
+            <a href="#weak-to-strong">Weak-to-strong transfer</a>
+            <a href="#seed-results">Five seeds</a>
+          </nav>
         </div>
       </div>
     </div>
@@ -499,11 +513,15 @@
     </div>
     
     <div class="content has-text-justified" style="margin-top: 2rem;">
-      <h2 class="title is-3 section-title">Introduction</h2>
+      <h2 class="title is-3 section-title" id="motivation">Introduction</h2>
+      <p>
+        <strong>[Practical Setting]</strong> A reasoning platform may maintain a small model for latency-sensitive requests and a larger model for requests requiring higher accuracy. Separate client deployments may also require different model families to fit their hardware and software interfaces. These models serve a <strong>shared task distribution</strong>, but face different latency, hardware, cost, and answer-quality requirements. HACRL aims to improve every model in this heterogeneous portfolio. Each inference instance invokes a single model, without communication with or access to its training partners.
+      </p>
       <p>
         <strong>[Background]</strong> In scenarios where multiple heterogeneous agents are to be optimized for the same task, vanilla Reinforcement Learning (RL) paradigms constrain each agent to execute tasks independently and update based solely on its own rollouts, they repeatedly generate trajectories and yield verifiable rewards, while these costly intermediate results are only utilized for self-training.
+      </p>
       <p>
-        <strong>[Defination]</strong> We introduce a novel paradigm, termed <strong>Heterogeneous Agent Collaborative Reinforcement Learning (HACRL)</strong>, to overcome the inefficiencies of isolated on-policy optimization. HACRL emphasizes independent execution with collaborative optimization: agents share verified rollouts during training to enhance one another, while operating independently at inference time.
+        <strong>[Definition]</strong> We introduce a novel paradigm, termed <strong>Heterogeneous Agent Collaborative Reinforcement Learning (HACRL)</strong>, to overcome the inefficiencies of isolated on-policy optimization. HACRL emphasizes independent execution with collaborative optimization: agents share verified rollouts during training to enhance one another, while operating independently at inference time.
         HACRL differs fundamentally from existing paradigms: <br>
         (1) <strong>LLM-based Multi-Agent Reinforcement Learning (MARL).</strong>
         MARL trains agents to coordinate and jointly solve tasks through interaction within a coupled multi-agent system. In contrast, HACRL does not require coordinated execution. In many practical scenarios, only a single agent is deployed at inference time; however, we still desire that this agent benefits from knowledge acquired from other agents during training. <br>
@@ -511,15 +529,14 @@
         Distillation typically follows a one-directional “teacher-to-student” paradigm, often among homogeneous agents. HACRL instead enables bidirectional <strong>mutual learning</strong> among <strong>heterogeneous agents</strong>, where each agent simultaneously acts as both a knowledge provider and a learner.
       </p>
       <p>
-        <strong>[Algorithm]</strong> We introduce Heterogeneous Agent Collaborative Policy Optimization (<strong>HACPO</strong>) to break through this wasteful practice. It is a novel collaborative multi-agent RL training paradigm that enables rollout sharing,  maximizing rollout utilization and facilitating mutual knowledge transfer among heterogeneous agents. To effectively bridge the discrepancies in capability and policy distribution, we introduce four tailored modifications and rigorously prove the unbiasedness of these improvements in advantage estimation and the validity of the optimization direction through theoretical analysis:<br> 
+        <strong>[Algorithm]</strong> We introduce Heterogeneous Agent Collaborative Policy Optimization (<strong>HACPO</strong>) to solve the HACRL problem. It enables rollout sharing to improve sample utilization and mutual knowledge transfer among heterogeneous agents. Four tailored mechanisms address capability discrepancies and policy distribution shifts, supported by theoretical analysis:<br>
         <strong>(1) Agent-Capability-Aware Advantage Estimation </strong> <br>
         <strong>(2) Model Capabilities Discrepancy Coefficient</strong> <br>
         <strong>(3) Exponential Importance Sampling</strong> <br>
         <strong>(4) Stepwise Clipping</strong>
       </p>
       <p>
-        <strong>[Performance]</strong> We evaluate HACPO across three types of heterogeneity and seven challenging mathematical reasoning benchmarks, demonstrating consistent performance improvements for all participating agents. Notably, HACPO outperforms the standard GSPO by an average of <strong>3.3%</strong>, while using only <strong>half</strong> of the rollout cost. This reduction in rollout cost is achieved without sacrificing accuracy, highlighting HACPO's ability to both lower computational expenses and enhance performance.
-        This work points to a promising new direction for efficient collaborative learning among multi-agent systems.
+        <strong>[Performance]</strong> We evaluate HACPO across three types of heterogeneity, six two-agent combinations, and seven mathematical reasoning benchmarks. In the three representative pairings below, HACPO improves mean accuracy by <strong>3.6 percentage points over GSPO×2</strong>, while using only <strong>half the rollout cost</strong>. A new three-agent experiment spans Qwen, Llama, and Gemma, with all three models improving on average. Distillation comparisons and five-seed evaluations provide further evidence for the benefits of mutual learning.
       </p>
     </div>
   </div>
@@ -587,12 +604,11 @@
         </p>
       </div>
       <p>
-        To solve the HACRL problem, we propose Heterogeneous Agent Collaborative Policy Optimization (HACPO), which introduces four tailored modifications to bridge capability and distribution discrepancies between heterogeneous agents. Theoretically, we prove that HACPO is effective because learning from cross-agent rollouts induces an optimization
-        direction consistent with standard on-policy learning.
+        To solve the HACRL problem, we propose Heterogeneous Agent Collaborative Policy Optimization (HACPO), which introduces four tailored modifications to bridge capability and distribution discrepancies between heterogeneous agents. The paper provides theoretical analysis of capability-aware baseline calibration and learning from cross-agent rollouts.
       </p>
       <h4 class="subsection-title">1.Agent-Capability-Aware Advantage Estimation</h4>
       <p>
-        We propose a capability-aware estimator that assign distinct inter-group advantage baseline for each agent based on their relative performance. Intuitively, the advantage of a response should be higher if it is generated by a stronger agent, and lower if it is generated by a weaker agent. Theoretically, we prove that this estimator is unbiased.
+        We propose a capability-aware estimator that calibrates a separate advantage baseline for each learning agent. Cross-agent rewards are reweighted according to relative capability, allowing all responses to contribute while preserving agent-specific calibration.
       </p>
       <div class="math-box">
         In training step $t$, the advantage of the $i$-th response for agent $k$ is:
@@ -600,16 +616,16 @@
         <p class="is-size-6 mt-2">
           The baseline $\hat{\mu}^{(k)}_t$ is computed by:
           $$\hat{\mu}^{(k)}_t = \frac{1}{nG} \sum_{j=1}^n \sum_{i=1}^G \omega^{(k,j)}_t R(y^{(j)}_{t,i})$$
-          where $\omega^{(k,j)}_t = \hat{P}^{(k)}_t / \hat{P}^{(j)}_t$ is the capability ratio ($\hat{P}^{(k)}_t$ is the smoothed accuracy of agent $k$ at step $t$).
+          where $\omega^{(k,j)}_t = P^{(k)}_t / P^{(j)}_t$ is the capability ratio ($P^{(k)}_t$ is agent $k$'s mean verifiable reward over the current training batch).
         </p>
       </div>
 
       <h4 class="subsection-title">2.Model Capabilities Discrepancy Coefficient</h4>
       <p>
-        To encourage learning from stronger agents while being conservative with weaker ones, we use the capability ratio to modulate the effective advantage. The capability ratio $\omega_t^{(k,j)}$ plays two complementary roles: <strong>(i) Baseline Calibration</strong> — it rescales rewards when estimating the capability-aware baseline to align reward statistics across heterogeneous agents; <strong>(ii) Gradient Modulation</strong> — it serves as a learning-rate-like factor that amplifies gradients from stronger agents and attenuates those from weaker ones. The modulated advantage is:
+        To encourage learning from stronger agents while being conservative with weaker ones, we use capability ratios in two complementary roles: <strong>(i) Baseline Calibration</strong> — $\omega_t^{(k,j)}$ rescales cross-agent rewards when estimating agent $k$'s baseline; <strong>(ii) Gradient Modulation</strong> — $\omega_t^{(j,k)}$ amplifies learning signals from stronger partners and attenuates those from weaker partners. The modulated advantage is:
       </p>
       <div class="math-box">
-        $$\tilde{A}^{(k)}_{t,i} = \begin{cases} A^{(k)}_{t,i} & y^{(k)}_{t,i} \in D^{(k)}_t \\ \omega^{(j,k)}_t A^{(j)}_{t,i} & y^{(j)}_{t,i} \in D^{(j)}_t, j \neq k \end{cases}$$
+        $$\tilde{A}^{(k)}_{t,i}(y^{(j)}_{t,i}) = \begin{cases} A^{(k)}_{t,i}(y^{(j)}_{t,i}) & j = k \\ \omega^{(j,k)}_t A^{(k)}_{t,i}(y^{(j)}_{t,i}) & j \neq k \end{cases}$$
       </div>
 
       <h4 class="subsection-title">3.Exponential Importance Sampling</h4>
@@ -620,9 +636,9 @@
         In heterogeneous settings, inter-agent policy discrepancies can be much larger than on-policy updates, making direct use of this ratio overly aggressive. To mitigate this issue, we introduce a non-gradient exponential reweighting to the importance sampling ratio. This design biases agent $k$ toward learning from agents whose output distributions are more aligned with its own, while reducing the impact of large cross-agent distribution shifts.
       </p>
       <div class="math-box">
-        $$\tilde{s}^{(k,j)}_{t,i} = s^{(k,j)}_{t,i} \cdot (\text{sg}[s^{(k,j)}_{t,i}])^\alpha$$
+        $$\tilde{s}^{(k,j)}_{t,i} = s^{(k,j)}_{t,i} \cdot (\text{sg}[s^{(k,j)}_{t,i}])^\alpha, \quad j \neq k,\; s^{(k,j)}_{t,i} &lt; 1$$
         <p class="is-size-6 mt-2">
-          where $\alpha \geq 0$ controls the degree of conservativeness.
+          where $\text{sg}$ denotes the stop-gradient operator and $\alpha \geq 0$ controls the degree of conservativeness.
         </p>
       </div>
 
@@ -631,8 +647,8 @@
         Cross-agent importance sampling ratios fluctuate irregularly both across steps and within a step. We first apply an asymmetric clipping bounds for cross-agent responses to ensure the cross-agent responses only be downweighted, but never upweighted. Then, we apply a stepwise clipping strategy to prevent cross-agent rollouts from dominating late-stage updates within a batch, thereby improving training stability.
       </p>
       <div class="math-box">
-        $$\text{clip}(s^{(k,j)}_{t,i}) = \text{clip}(s^{(k,j)}_{t,i}, 1 - \delta + k \cdot \delta_{step}, 1.0)$$
-        $k$ denote the number of parameter updates performed so far within the current step, and $\delta_{\mathrm{step}}$ denote the per-update tightening factor.
+        $$\text{clip}(s^{(k,j)}_{t,i}) = \text{clip}(s^{(k,j)}_{t,i}, 1 - \delta + m \cdot \delta_{step}, 1.0)$$
+        $m$ denotes the number of parameter updates performed so far within the current step, and $\delta_{\mathrm{step}}$ denotes the per-update tightening factor.
       </div>
     </div>
   </div>
@@ -641,16 +657,16 @@
 <!--Experimental Results: 1.main results 2.ablation studies-->
 <section class="section section-gray">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Experimental Results</h2>
+    <h2 class="title is-3 section-title" id="results">Experimental Results</h2>
     
     <div class="content has-text-justified">
       <h4>Experimental Setup & Baselines</h4>
       <p>
-        We evaluate HACPO on 7.5k high-quality math questions from the MATH dataset and test on seven challenging benchmarks. To rigorously validate the effectiveness of our collaborative paradigm, we compare HACPO against three distinct types of baselines:
+        We train on 7.5k math questions from the MATH dataset and evaluate on MATH500, MATH, GSM8K, AIME2025, AMC23, Minerva, and Olympiad. We study six two-agent combinations and one three-agent combination. The main RLVR comparisons use three types of baselines:
       </p>
       <ul>
         <li><strong>Standard Single-Agent Baselines (GRPO, GSPO):</strong> Establish benchmarks for isolated training performance.</li>
-        <li><strong>Resource-Equivalent Baseline (GSPO×2):</strong> A single-agent setting with double rollouts and updates. This rules out the impact of increased data volume, verifying that gains come from collaboration rather than just more compute.</li>
+        <li><strong>Data-Equivalent Baseline (GSPO×2):</strong> A single-agent setting with double rollouts and updates per step, matching the training data and policy updates available to each HACPO agent through rollout sharing.</li>
         <li><strong>Naive Collaborative Baseline (Naive):</strong> A multi-agent setting with simple rollout sharing but lacking our specific algorithmic innovations (Capability-Aware Estimation, Discrepancy Coefficient, etc.).</li>
       </ul>
 
@@ -659,17 +675,220 @@
         HACPO demonstrates consistent and superior performance improvements across three distinct heterogeneity settings:
       </p>
       <ul>
-        <li><strong>Heterogeneous State (Qwen3-4B + Qwen3-4B-Instruct):</strong> Even when agents differ only by optimization state, HACPO enables the stronger agent (Instruct) to benefit from the weaker one's complementary exploration signals (alternative reasoning paths and informative errors).</li>
-        <li><strong>Heterogeneous Size (Qwen3-1.7B-Base + Qwen3-4B-Base):</strong> Both models improve significantly. The smaller model serves as a distinct explorer, facilitating bidirectional knowledge transfer that boosts the larger model's performance beyond self-training limits.</li>
+        <li><strong>Heterogeneous State (Qwen3-4B + Qwen3-4B-Instruct):</strong> Both agents benefit from shared rollouts, including the stronger Instruct model.</li>
+        <li><strong>Heterogeneous Size (Qwen3-1.7B-Base + Qwen3-4B-Base):</strong> Both models improve on average. The rollout analysis below provides evidence of complementary verified solutions from the smaller model.</li>
         <li><strong>Heterogeneous Model (Qwen3-4B-Base + Llama3.2-3B-Instruct):</strong> Despite substantial differences in architecture, tokenizers, and training objectives, HACPO successfully extracts transferable knowledge from cross-model rollouts, improving both agents.</li>
       </ul>
 
+      <div class="result-card">
+        <p><strong>Higher accuracy with half the rollout cost.</strong> HACPO improves every model's average score in these three representative pairings, with a mean gain of <strong>3.6 percentage points over GSPO×2</strong>.</p>
+      <div class="comparison-table-wrapper" role="region" aria-label="Mean accuracy across seven benchmarks (%). Gains are percentage-point differences." tabindex="0">
+        <table class="comparison-table results-table" id="main-summary">
+<caption>Mean accuracy across seven benchmarks (%). Gains are percentage-point differences.</caption>
+<thead><tr><th scope="col">Model / heterogeneity</th><th scope="col">GSPO×2</th><th scope="col">HACPO</th><th scope="col">Gain (pp)</th></tr></thead>
+<tbody>
+<tr class="hacpo-row"><th scope="row">Qwen3-4B<span class="model-setting">State</span></th><td>69.1</td><td>75.5</td><td>+6.4</td></tr>
+<tr class="hacpo-row"><th scope="row">Qwen3-4B-Instruct<span class="model-setting">State</span></th><td>79.9</td><td>81.8</td><td>+1.9</td></tr>
+<tr class="hacpo-row"><th scope="row">Qwen3-1.7B-Base<span class="model-setting">Size</span></th><td>46.5</td><td>49.3</td><td>+2.8</td></tr>
+<tr class="hacpo-row"><th scope="row">Qwen3-4B-Base<span class="model-setting">Size</span></th><td>57.5</td><td>60.1</td><td>+2.6</td></tr>
+<tr class="hacpo-row"><th scope="row">Qwen3-4B-Base<span class="model-setting">Model</span></th><td>57.5</td><td>59.7</td><td>+2.2</td></tr>
+<tr class="hacpo-row"><th scope="row">Llama3.2-3B-Instruct<span class="model-setting">Model</span></th><td>33.4</td><td>39.0</td><td>+5.6</td></tr>
+</tbody>
+</table>
+      </div>
+        <details class="result-details">
+          <summary>View all main benchmark results and baselines</summary>
+      <div class="comparison-table-wrapper" role="region" aria-label="Main results from the current manuscript. Accuracy and AVG are in percent." tabindex="0">
+        <table class="comparison-table results-table" id="main-full">
+          <caption>Main results from the current manuscript. Accuracy and AVG are in percent.</caption>
+          <thead><tr><th scope="col">Model / method</th><th scope="col">MATH500</th><th scope="col">MATH</th><th scope="col">GSM8K</th><th scope="col">AIME2025</th><th scope="col">AMC23</th><th scope="col">Minerva</th><th scope="col">Olympiad</th><th scope="col">AVG</th></tr></thead>
+          <tbody>
+            <tr class="table-group"><th colspan="9" scope="colgroup">Qwen3-4B and Qwen3-4B-Instruct (Heterogeneous State)</th></tr>
+            <tr><th scope="row">4B</th><td>80.2</td><td>83.6</td><td>90.7</td><td>33.5</td><td>65.0</td><td>39.0</td><td>52.4</td><td>63.5</td></tr>
+            <tr><th scope="row">4B (GRPO)</th><td>88.0</td><td>88.9</td><td>91.8</td><td>58.2</td><td>77.5</td><td>38.6</td><td>59.2</td><td>71.7</td></tr>
+            <tr><th scope="row">4B (GSPO)</th><td>85.4</td><td>87.0</td><td>92.5</td><td>48.5</td><td>67.5</td><td>41.2</td><td>56.4</td><td>68.4</td></tr>
+            <tr><th scope="row">4B (GSPO×2)</th><td>87.6</td><td>87.5</td><td>92.3</td><td>52.2</td><td>67.5</td><td>39.0</td><td>57.9</td><td>69.1</td></tr>
+            <tr><th scope="row">4B (Naive)</th><td>72.8</td><td>73.7</td><td>89.1</td><td>37.8</td><td>60.0</td><td>35.3</td><td>39.4</td><td>58.3</td></tr>
+            <tr class="hacpo-row"><th scope="row">4B(HACPO)</th><td>91.0</td><td>90.5</td><td>93.3</td><td>62.2</td><td>85.0</td><td>42.3</td><td>64.3</td><td>75.5</td></tr>
+            <tr><th scope="row">4B-Instruct</th><td>93.8</td><td>93.7</td><td>93.6</td><td>69.6</td><td>85.0</td><td>44.1</td><td>72.2</td><td>78.9</td></tr>
+            <tr><th scope="row">4B-Instruct (GRPO)</th><td>93.0</td><td>93.3</td><td>93.3</td><td>67.6</td><td>87.5</td><td>43.0</td><td>72.0</td><td>78.5</td></tr>
+            <tr><th scope="row">4B-Instruct (GSPO)</th><td>93.8</td><td>94.0</td><td>93.9</td><td>72.0</td><td>90.0</td><td>43.0</td><td>72.6</td><td>79.9</td></tr>
+            <tr><th scope="row">4B-Instruct (GSPO×2)</th><td>93.2</td><td>93.9</td><td>94.2</td><td>74.0</td><td>90.0</td><td>43.0</td><td>71.1</td><td>79.9</td></tr>
+            <tr><th scope="row">4B-Instruct(Naive)</th><td>84.4</td><td>84.5</td><td>93.6</td><td>54.7</td><td>72.5</td><td>39.0</td><td>55.2</td><td>69.1</td></tr>
+            <tr class="hacpo-row"><th scope="row">4B-Instruct(HACPO)</th><td>94.8</td><td>94.3</td><td>94.6</td><td>75.7</td><td>95.0</td><td>45.2</td><td>73.2</td><td>81.8</td></tr>
+            <tr class="table-group"><th colspan="9" scope="colgroup">Qwen3-1.7B-Base and Qwen3-4B-Base  (Heterogeneous Size)</th></tr>
+            <tr><th scope="row">1.7B-Base</th><td>50.0</td><td>48.3</td><td>61.6</td><td>3.3</td><td>30.0</td><td>20.6</td><td>22.9</td><td>33.8</td></tr>
+            <tr><th scope="row">1.7B-Base (GRPO)</th><td>68.2</td><td>65.2</td><td>82.4</td><td>16.0</td><td>37.5</td><td>27.2</td><td>29.8</td><td>46.6</td></tr>
+            <tr><th scope="row">1.7B-Base (GSPO)</th><td>64.8</td><td>64.1</td><td>82.6</td><td>14.8</td><td>45.0</td><td>27.2</td><td>28.7</td><td>46.7</td></tr>
+            <tr><th scope="row">1.7B-Base (GSPO×2)</th><td>66.4</td><td>65.0</td><td>82.9</td><td>17.7</td><td>37.5</td><td>26.5</td><td>29.3</td><td>46.5</td></tr>
+            <tr><th scope="row">1.7B-Base (Naive)</th><td>60.8</td><td>60.1</td><td>79.8</td><td>14.7</td><td>32.5</td><td>23.5</td><td>26.3</td><td>42.5</td></tr>
+            <tr class="hacpo-row"><th scope="row">1.7B-Base(HACPO)</th><td>69.0</td><td>67.4</td><td>82.2</td><td>22.5</td><td>45.0</td><td>27.9</td><td>31.4</td><td>49.3</td></tr>
+            <tr><th scope="row">4B-Base</th><td>61.0</td><td>67.6</td><td>44.5</td><td>10.0</td><td>40.0</td><td>30.8</td><td>34.7</td><td>41.2</td></tr>
+            <tr><th scope="row">4B-Base (GRPO)</th><td>79.6</td><td>78.8</td><td>88.5</td><td>30.7</td><td>47.5</td><td>34.9</td><td>45.4</td><td>57.9</td></tr>
+            <tr><th scope="row">4B-Base (GSPO)</th><td>78.2</td><td>78.7</td><td>87.7</td><td>25.0</td><td>52.5</td><td>36.8</td><td>46.0</td><td>57.8</td></tr>
+            <tr><th scope="row">4B-Base (GSPO×2)</th><td>75.6</td><td>79.4</td><td>87.3</td><td>20.8</td><td>55.0</td><td>38.2</td><td>46.3</td><td>57.5</td></tr>
+            <tr><th scope="row">4B-Base (Naive)</th><td>70.8</td><td>71.2</td><td>89.5</td><td>19.6</td><td>47.5</td><td>34.2</td><td>35.4</td><td>52.6</td></tr>
+            <tr class="hacpo-row"><th scope="row">4B-Base (HACPO)</th><td>80.8</td><td>80.1</td><td>90.3</td><td>26.7</td><td>57.5</td><td>38.6</td><td>46.7</td><td>60.1</td></tr>
+            <tr class="table-group"><th colspan="9" scope="colgroup">Qwen3-4B-Base and Llama3.2-3B-Instruct  (Heterogeneous Model)</th></tr>
+            <tr><th scope="row">Qwen3</th><td>61.0</td><td>67.6</td><td>44.5</td><td>10.0</td><td>40.0</td><td>30.8</td><td>34.7</td><td>41.2</td></tr>
+            <tr><th scope="row">Qwen3 (GRPO)</th><td>79.6</td><td>78.8</td><td>88.5</td><td>30.7</td><td>47.5</td><td>34.9</td><td>45.4</td><td>57.9</td></tr>
+            <tr><th scope="row">Qwen3 (GSPO)</th><td>78.2</td><td>78.7</td><td>87.7</td><td>25.0</td><td>52.5</td><td>36.8</td><td>46.0</td><td>57.8</td></tr>
+            <tr><th scope="row">Qwen3 (GSPO×2)</th><td>75.6</td><td>79.4</td><td>87.3</td><td>20.8</td><td>55.0</td><td>38.2</td><td>46.3</td><td>57.5</td></tr>
+            <tr><th scope="row">Qwen3 (Naive)</th><td>73.4</td><td>71.2</td><td>89.5</td><td>14.3</td><td>55.0</td><td>34.2</td><td>35.4</td><td>52.6</td></tr>
+            <tr class="hacpo-row"><th scope="row">Qwen3 (HACPO)</th><td>78.6</td><td>78.3</td><td>92.1</td><td>26.8</td><td>60.0</td><td>37.9</td><td>44.2</td><td>59.7</td></tr>
+            <tr><th scope="row">Llama3.2</th><td>26.7</td><td>44.1</td><td>78.8</td><td>0.0</td><td>20.0</td><td>16.9</td><td>15.8</td><td>28.9</td></tr>
+            <tr><th scope="row">Llama3.2 (GRPO)</th><td>50.2</td><td>50.7</td><td>81.4</td><td>0.0</td><td>25.0</td><td>19.9</td><td>17.4</td><td>34.9</td></tr>
+            <tr><th scope="row">Llama3.2 (GSPO)</th><td>51.2</td><td>50.1</td><td>81.2</td><td>5.4</td><td>22.5</td><td>18.4</td><td>17.0</td><td>35.1</td></tr>
+            <tr><th scope="row">Llama3.2 (GSPO×2)</th><td>48.8</td><td>49.8</td><td>82.9</td><td>0.0</td><td>17.5</td><td>18.8</td><td>15.9</td><td>33.4</td></tr>
+            <tr><th scope="row">Llama3.2 (Naive)</th><td>40.6</td><td>40.7</td><td>73.4</td><td>0.0</td><td>22.5</td><td>17.7</td><td>10.7</td><td>29.4</td></tr>
+            <tr class="hacpo-row"><th scope="row">Llama3.2 (HACPO)</th><td>56.6</td><td>54.8</td><td>82.6</td><td>5.4</td><td>35.0</td><td>17.6</td><td>20.8</td><td>39.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+        </details>
+        <p class="result-note">The main paper reports these three pairings; three additional two-agent combinations are reported in the appendix.</p>
+      </div>
       <div class="result-card has-text-centered">
-        <img src="./static/images/main_table.png" alt="Table 1: Main results across three heterogeneity settings" style="max-width: 100%; margin-bottom: 1rem;">
-        <p class="figure-caption"><strong>Table 1.</strong> Main results across three heterogeneity settings. We compare our method against Standard Single-Agent Baselines (GRPO, GSPO), a Resource-Equivalent Baseline (GSPO×2) and a Naive multi-agent rollout share baseline(Naive).</p>
         <br>
         <img src="./static/images/HACPO vs GSPO.png" alt="Figure 3: Training curves of GSPO and HACPO" style="max-width: 100%; margin-bottom: 1rem;">
         <p class="figure-caption"><strong>Figure 3.</strong> Training curves of GSPO and HACPO. HACPO demonstrates faster convergence and higher final performance compared to single-agent baselines.</p>
+      </div>
+
+      <h4 class="subsection-title" id="three-agent">Three-Agent Collaboration Across Model Families</h4>
+      <p>
+        We jointly train <strong>Qwen3-1.7B-Base, Llama3.2-1B-Instruct, and Gemma3-1B-Instruct</strong>. GSPO×3 triples the single-agent rollout budget to match the number of training rollouts available to each HACPO agent through the shared pool. All three models improve their average scores over GSPO×3, by <strong>1.6, 1.8, and 1.9 percentage points</strong>, respectively.
+      </p>
+      <div class="result-card">
+      <div class="comparison-table-wrapper" role="region" aria-label="Three-agent experiment: mean accuracy across seven benchmarks (%). Gains are relative to GSPO×3." tabindex="0">
+        <table class="comparison-table results-table" id="three-summary">
+<caption>Three-agent experiment: mean accuracy across seven benchmarks (%). Gains are relative to GSPO×3.</caption>
+<thead><tr><th scope="col">Model</th><th scope="col">GSPO×3</th><th scope="col">HACPO</th><th scope="col">Gain (pp)</th></tr></thead>
+<tbody>
+<tr class="hacpo-row"><th scope="row">Qwen3-1.7B-Base</th><td>47.1</td><td>48.7</td><td>+1.6</td></tr>
+<tr class="hacpo-row"><th scope="row">Llama3.2-1B-Instruct</th><td>22.0</td><td>23.8</td><td>+1.8</td></tr>
+<tr class="hacpo-row"><th scope="row">Gemma3-1B-Instruct</th><td>28.7</td><td>30.6</td><td>+1.9</td></tr>
+</tbody>
+</table>
+      </div>
+        <details class="result-details">
+          <summary>View the seven-benchmark three-agent results</summary>
+      <div class="comparison-table-wrapper" role="region" aria-label="Three-agent collaboration: all benchmark accuracies and AVG are in percent." tabindex="0">
+        <table class="comparison-table results-table" id="three-full">
+          <caption>Three-agent collaboration: all benchmark accuracies and AVG are in percent.</caption>
+          <thead><tr><th scope="col">Model / method</th><th scope="col">MATH500</th><th scope="col">MATH</th><th scope="col">GSM8K</th><th scope="col">AIME2025</th><th scope="col">AMC23</th><th scope="col">Minerva</th><th scope="col">Olympiad</th><th scope="col">AVG</th></tr></thead>
+          <tbody>
+            <tr class="table-group"><th colspan="9" scope="colgroup">Qwen3-1.7B-Base</th></tr>
+            <tr><th scope="row">GSPO</th><td>64.8</td><td>64.1</td><td>82.6</td><td>14.8</td><td>45.0</td><td>27.2</td><td>28.7</td><td>46.7</td></tr>
+            <tr><th scope="row">GSPO×3</th><td>66.4</td><td>66.8</td><td>83.3</td><td>13.3</td><td>40.0</td><td>30.2</td><td>29.6</td><td>47.1</td></tr>
+            <tr class="hacpo-row"><th scope="row">HACPO</th><td>69.0</td><td>68.8</td><td>82.4</td><td>17.7</td><td>42.5</td><td>28.7</td><td>31.7</td><td>48.7</td></tr>
+            <tr class="table-group"><th colspan="9" scope="colgroup">Llama3.2-1B-Instruct</th></tr>
+            <tr><th scope="row">GSPO</th><td>35.6</td><td>34.6</td><td>52.3</td><td>2.1</td><td>12.5</td><td>6.6</td><td>8.8</td><td>21.8</td></tr>
+            <tr><th scope="row">GSPO×3</th><td>34.0</td><td>35.4</td><td>52.0</td><td>0.0</td><td>17.5</td><td>7.7</td><td>7.7</td><td>22.0</td></tr>
+            <tr class="hacpo-row"><th scope="row">HACPO</th><td>34.0</td><td>36.3</td><td>56.3</td><td>3.3</td><td>20.0</td><td>8.1</td><td>8.8</td><td>23.8</td></tr>
+            <tr class="table-group"><th colspan="9" scope="colgroup">Gemma3-1B-Instruct</th></tr>
+            <tr><th scope="row">GSPO</th><td>45.2</td><td>45.1</td><td>61.6</td><td>3.3</td><td>22.5</td><td>5.2</td><td>15.0</td><td>28.3</td></tr>
+            <tr><th scope="row">GSPO×3</th><td>47.2</td><td>45.0</td><td>62.3</td><td>3.3</td><td>22.5</td><td>4.0</td><td>16.7</td><td>28.7</td></tr>
+            <tr class="hacpo-row"><th scope="row">HACPO</th><td>49.6</td><td>46.3</td><td>62.6</td><td>6.7</td><td>27.5</td><td>5.9</td><td>15.8</td><td>30.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+        </details>
+        <p class="result-note">Gains vary across individual benchmarks; all three models benefit on average.</p>
+      </div>
+
+      <h4 class="subsection-title" id="distillation">Mutual Learning and Distillation</h4>
+      <p>
+        On-policy distillation (OPD) and OPD+GRPO update only Qwen3-1.7B-Base using a frozen Qwen3-4B-Base teacher. HACPO (Frozen Strong) also freezes the 4B partner. Full HACPO updates both models, allowing both policies and their shared rollouts to evolve during training.
+      </p>
+      <div class="result-card">
+      <div class="comparison-table-wrapper" role="region" aria-label="Qwen3-1.7B-Base mean accuracy across seven benchmarks, with Qwen3-4B-Base as the stronger partner." tabindex="0">
+        <table class="comparison-table results-table" id="distill-summary">
+          <caption>Qwen3-1.7B-Base mean accuracy across seven benchmarks, with Qwen3-4B-Base as the stronger partner.</caption>
+          <thead><tr><th scope="col">Method</th><th scope="col">Models updated</th><th scope="col">1.7B AVG (%)</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">OPD</th><td>1.7B only</td><td>40.6</td></tr>
+            <tr><th scope="row">OPD+GRPO</th><td>1.7B only</td><td>40.8</td></tr>
+            <tr><th scope="row">HACPO (Frozen Strong)</th><td>1.7B only</td><td>45.2</td></tr>
+            <tr class="hacpo-row"><th scope="row">HACPO</th><td>Both models</td><td>49.3</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <p>Full HACPO reaches <strong>49.3%</strong>, compared with <strong>45.2%</strong> for its frozen-strong variant. These results support the benefit of joint optimization beyond one-way transfer from a fixed base-model teacher in this setting.</p>
+      </div>
+
+      <h4 class="subsection-title">Joint Training vs. Train-then-Distill</h4>
+      <p>
+        We also test a sequential strategy: first train Qwen3-4B-Base with GSPO×2, freeze it, and then distill Qwen3-1.7B-Base with OPD+GRPO. The final portfolio contains the trained 4B teacher and the distilled 1.7B model. HACPO improves both models' average scores over this strategy.
+      </p>
+      <div class="result-card">
+      <div class="comparison-table-wrapper" role="region" aria-label="Mean accuracy across seven benchmarks (%). Gains are relative to sequential Train-then-Distill." tabindex="0">
+        <table class="comparison-table results-table" id="sequential-summary">
+          <caption>Mean accuracy across seven benchmarks (%). Gains are relative to sequential Train-then-Distill.</caption>
+          <thead><tr><th scope="col">Model</th><th scope="col">Train-then-Distill</th><th scope="col">HACPO</th><th scope="col">Gain (pp)</th></tr></thead>
+          <tbody>
+            <tr class="hacpo-row"><th scope="row">Qwen3-1.7B-Base</th><td>46.0</td><td>49.3</td><td>+3.3</td></tr>
+            <tr class="hacpo-row"><th scope="row">Qwen3-4B-Base</th><td>57.5</td><td>60.1</td><td>+2.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comparison-table-wrapper" role="region" aria-label="Measured end-to-end training time under the same hardware configuration." tabindex="0">
+        <table class="comparison-table results-table" id="runtime-summary">
+          <caption>Measured end-to-end training time under the same hardware configuration.</caption>
+          <thead><tr><th scope="col">Training strategy</th><th scope="col">Time to obtain both models</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Train-then-Distill</th><td>6h 26m (4h 01m training + 2h 25m distillation)</td></tr>
+            <tr class="hacpo-row"><th scope="row">HACPO</th><td>5h 31m</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <p>HACPO obtains the complete two-model portfolio <strong>55 minutes faster</strong>, reducing training time by <strong>14.2%</strong> in this comparison.</p>
+        <p class="result-note">The implementation loads, runs, and offloads models sequentially during rollout generation and optimization, allowing collaboration without keeping all models resident in GPU memory simultaneously.</p>
+      </div>
+
+      <h4 class="subsection-title" id="weak-to-strong">How Can a Weaker Model Help a Stronger One?</h4>
+      <div class="insight-box">
+        <p>On <strong>627 of 7,424 problems (8.4%)</strong>, Qwen3-1.7B-Base has a higher sampled success rate than Qwen3-4B-Base. Here, sampled success rate is the fraction of a model's collected rollouts for a given problem that pass verification.</p>
+        <p>We also observe problems where the 4B model samples no correct rollout while the 1.7B model samples at least one, supplying verified solutions absent from its stronger partner's own rollouts. Together with the 4B model's performance gains, this supports the value of complementary solutions from a weaker model.</p>
+      </div>
+
+      <h4 class="subsection-title" id="seed-results">Robustness Across Five Random Seeds</h4>
+      <p>
+        We reevaluate the Qwen3-1.7B-Base/Qwen3-4B-Base pair on <strong>MATH500</strong> using seeds <strong>0, 1, 42, 1337, and 3407</strong>. The evaluation response-length limit is <strong>8192 tokens</strong>, matching the main results; the training limit remains 4096 tokens. HACPO outperforms both GSPO and GSPO×2 in every seed-matched run for both models.
+      </p>
+      <div class="result-card">
+      <div class="comparison-table-wrapper" role="region" aria-label="MATH500 accuracy across five seeds. SD uses the n−1 denominator." tabindex="0">
+        <table class="comparison-table results-table" id="seed-summary">
+          <caption>MATH500 accuracy across five seeds. SD uses the n−1 denominator.</caption>
+          <thead><tr><th scope="col">Model / method</th><th scope="col">Mean ± sample SD (%)</th></tr></thead>
+          <tbody>
+            <tr class="hacpo-row"><th scope="row">Qwen3-1.7B-Base / HACPO</th><td>68.06 ± 0.71</td></tr>
+            <tr><th scope="row">Qwen3-1.7B-Base / GSPO</th><td>64.48 ± 0.33</td></tr>
+            <tr><th scope="row">Qwen3-1.7B-Base / GSPO×2</th><td>65.22 ± 0.70</td></tr>
+            <tr class="hacpo-row"><th scope="row">Qwen3-4B-Base / HACPO</th><td>79.90 ± 0.74</td></tr>
+            <tr><th scope="row">Qwen3-4B-Base / GSPO</th><td>77.04 ± 0.67</td></tr>
+            <tr><th scope="row">Qwen3-4B-Base / GSPO×2</th><td>77.02 ± 0.85</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <details class="result-details">
+          <summary>View the corrected results for each seed</summary>
+      <div class="comparison-table-wrapper" role="region" aria-label="Reevaluated MATH500 accuracy (%), with an 8192-token evaluation limit." tabindex="0">
+        <table class="comparison-table results-table" id="seed-full">
+          <caption>Reevaluated MATH500 accuracy (%), with an 8192-token evaluation limit.</caption>
+          <thead><tr><th scope="col">Model / method</th><th scope="col">Seed 0</th><th scope="col">Seed 1</th><th scope="col">Seed 42</th><th scope="col">Seed 1337</th><th scope="col">Seed 3407</th><th scope="col">Mean ± SD</th></tr></thead>
+          <tbody>
+            <tr class="hacpo-row"><th scope="row">Qwen3-1.7B-Base / HACPO</th><td>68.0</td><td>68.2</td><td>69.0</td><td>68.1</td><td>67.0</td><td>68.06 ± 0.71</td></tr>
+            <tr><th scope="row">Qwen3-1.7B-Base / GSPO</th><td>64.7</td><td>64.0</td><td>64.8</td><td>64.6</td><td>64.3</td><td>64.48 ± 0.33</td></tr>
+            <tr><th scope="row">Qwen3-1.7B-Base / GSPO×2</th><td>64.8</td><td>65.1</td><td>66.4</td><td>65.2</td><td>64.6</td><td>65.22 ± 0.70</td></tr>
+            <tr class="hacpo-row"><th scope="row">Qwen3-4B-Base / HACPO</th><td>78.8</td><td>80.3</td><td>80.8</td><td>79.7</td><td>79.9</td><td>79.90 ± 0.74</td></tr>
+            <tr><th scope="row">Qwen3-4B-Base / GSPO</th><td>76.5</td><td>76.9</td><td>78.2</td><td>76.8</td><td>76.8</td><td>77.04 ± 0.67</td></tr>
+            <tr><th scope="row">Qwen3-4B-Base / GSPO×2</th><td>76.9</td><td>77.4</td><td>75.6</td><td>77.7</td><td>77.5</td><td>77.02 ± 0.85</td></tr>
+          </tbody>
+        </table>
+      </div>
+        </details>
+        <p>The mean gains over GSPO×2 are <strong>2.84 percentage points for 1.7B</strong> and <strong>2.88 for 4B</strong>.</p>
+        <p class="result-note">Main results, the three-agent and distillation comparisons, these seed evaluations, and the advantage-estimator and capability-coefficient ablations use an 8192-token evaluation limit. Other ablations retain their actual 4096-token limit.</p>
       </div>
 
       <h4>Ablation Studies</h4>
@@ -729,7 +948,7 @@
     <div class="bibtex-box">
       <pre><code>@misc{zhang2026heterogeneousagentcollaborativereinforcement,
   title={Heterogeneous Agent Collaborative Reinforcement Learning},
-  author={Zhixia Zhang and Zixuan Huang and Xin Xia and Deqing Wang and Fuzhen Zhuang and Shuai Ma and Ning Ding and Yaodong Yang and Jianxin Li and Yikun Ban},
+  author={Zhixia Zhang and Zixuan Huang and Gongxun Li and Huaiyang Wang and Chengyi Yuan and Xin Xia and Deqing Wang and Fuzhen Zhuang and Shuai Ma and Ning Ding and Yaodong Yang and Jianxin Li and Yikun Ban},
   year={2026},
   eprint={2603.02604},
   archivePrefix={arXiv},
@@ -745,7 +964,7 @@
     <div class="columns">
       <div class="column is-8">
         <p style="margin-bottom: 0;">
-          &copy; 2026 Anonymous Institution. All rights reserved.
+          &copy; 2026 HACRL authors. All rights reserved.
         </p>
       </div>
     </div>

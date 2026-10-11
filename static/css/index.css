@@ -156,3 +156,140 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+/* Manuscript updates: author information, section links, and result tables. */
+.publication-venue {
+  color: #ab1727;
+  font-weight: 600;
+  margin: -0.5rem auto 1rem;
+}
+
+.publication-authors .author-name,
+.publication-authors .author-name a {
+  font-weight: 700;
+}
+
+.section-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.section-nav a {
+  color: #4b5563;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.section-nav a:hover {
+  color: #ab1727;
+}
+
+[id] {
+  scroll-margin-top: 1rem;
+}
+
+table.results-table caption {
+  padding: 0 0 0.75rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+  text-align: left;
+  line-height: 1.6;
+}
+
+table.comparison-table.results-table tbody th {
+  background: transparent;
+  color: #1f2937 !important;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+table.results-table td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+table.results-table .hacpo-row {
+  background: #f3f4f6;
+}
+
+table.results-table .table-group th {
+  background: #e5e7eb !important;
+  font-weight: 700 !important;
+}
+
+table.results-table tbody tr:hover th {
+  background: #f9fafb;
+}
+
+#main-full, #three-full {
+  min-width: 1000px;
+}
+
+#main-full td, #main-full th,
+#three-full td, #three-full th,
+#seed-full td, #seed-full th {
+  padding: 0.6rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+#distill-summary td:nth-child(2),
+#runtime-summary td {
+  text-align: left;
+  white-space: normal;
+}
+
+.result-details {
+  margin: 1.25rem 0;
+}
+
+.result-details summary {
+  cursor: pointer;
+  color: #374151;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.result-details summary:hover {
+  color: #ab1727;
+}
+
+.result-details summary:focus-visible,
+.section-nav a:focus-visible,
+.comparison-table-wrapper:focus-visible {
+  outline: 2px solid #ab1727;
+  outline-offset: 4px;
+}
+
+.content .result-note {
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+table.comparison-table.results-table tbody th .model-setting {
+  display: block;
+  color: #6b7280 !important;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .section-nav { font-size: 0.8rem; gap: 0.5rem 1rem; }
+  .publication-venue { font-size: 0.9rem; }
+  .content .result-note, table.results-table caption { font-size: 0.8rem; }
+  table.results-table caption { max-width: calc(100vw - 4.25rem); }
+  #main-summary, #three-summary, #distill-summary,
+  #sequential-summary, #runtime-summary, #seed-summary { min-width: 0; }
+  table.results-table:not(#main-full):not(#three-full):not(#seed-full) th,
+  table.results-table:not(#main-full):not(#three-full):not(#seed-full) td {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.8rem;
+  }
+  table.comparison-table.results-table tbody th .model-setting { font-size: 0.7rem; }
+}
