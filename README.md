@@ -2,7 +2,7 @@
 
 Static project website for **Heterogeneous Agent Collaborative Reinforcement Learning**, accepted at NeurIPS 2026.
 
-The page includes the current author list, practical motivation, corrected main results, three-agent collaboration, distillation and train-then-distill comparisons, weak-to-strong rollout analysis, and reevaluated five-seed results. Expandable tables provide the full main, three-agent, and seed results.
+The page includes the current author list, practical motivation, main results, three-agent collaboration, distillation and train-then-distill comparisons, weak-to-strong rollout analysis, and five-seed results. Expandable tables provide the full main and three-agent results; one table reports the final five-seed results.
 
 - `index.html`: project page and manuscript results.
 - `static/pdf/HACRL.pdf`: current camera-ready manuscript.

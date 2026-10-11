@@ -841,29 +841,13 @@
 
       <h4 class="subsection-title" id="seed-results">Robustness Across Five Random Seeds</h4>
       <p>
-        We reevaluate the Qwen3-1.7B-Base/Qwen3-4B-Base pair on <strong>MATH500</strong> using seeds <strong>0, 1, 42, 1337, and 3407</strong>. The evaluation response-length limit is <strong>8192 tokens</strong>, matching the main results; the training limit remains 4096 tokens. HACPO outperforms both GSPO and GSPO×2 in every seed-matched run for both models.
+        We evaluate the Qwen3-1.7B-Base/Qwen3-4B-Base pair on <strong>MATH500</strong> using seeds <strong>0, 1, 42, 1337, and 3407</strong>. The evaluation response-length limit is <strong>8192 tokens</strong>, matching the main results; the training limit is 4096 tokens. HACPO outperforms both GSPO and GSPO×2 in every seed-matched run for both models.
       </p>
       <div class="result-card">
-      <div class="comparison-table-wrapper" role="region" aria-label="MATH500 accuracy across five seeds. SD uses the n−1 denominator." tabindex="0">
-        <table class="comparison-table results-table" id="seed-summary">
-          <caption>MATH500 accuracy across five seeds. SD uses the n−1 denominator.</caption>
-          <thead><tr><th scope="col">Model / method</th><th scope="col">Mean ± sample SD (%)</th></tr></thead>
-          <tbody>
-            <tr class="hacpo-row"><th scope="row">Qwen3-1.7B-Base / HACPO</th><td>68.06 ± 0.71</td></tr>
-            <tr><th scope="row">Qwen3-1.7B-Base / GSPO</th><td>64.48 ± 0.33</td></tr>
-            <tr><th scope="row">Qwen3-1.7B-Base / GSPO×2</th><td>65.22 ± 0.70</td></tr>
-            <tr class="hacpo-row"><th scope="row">Qwen3-4B-Base / HACPO</th><td>79.90 ± 0.74</td></tr>
-            <tr><th scope="row">Qwen3-4B-Base / GSPO</th><td>77.04 ± 0.67</td></tr>
-            <tr><th scope="row">Qwen3-4B-Base / GSPO×2</th><td>77.02 ± 0.85</td></tr>
-          </tbody>
-        </table>
-      </div>
-        <details class="result-details">
-          <summary>View the corrected results for each seed</summary>
-      <div class="comparison-table-wrapper" role="region" aria-label="Reevaluated MATH500 accuracy (%), with an 8192-token evaluation limit." tabindex="0">
+      <div class="comparison-table-wrapper" role="region" aria-label="MATH500 accuracy across five random seeds (%). SD uses the n−1 denominator." tabindex="0">
         <table class="comparison-table results-table" id="seed-full">
-          <caption>Reevaluated MATH500 accuracy (%), with an 8192-token evaluation limit.</caption>
-          <thead><tr><th scope="col">Model / method</th><th scope="col">Seed 0</th><th scope="col">Seed 1</th><th scope="col">Seed 42</th><th scope="col">Seed 1337</th><th scope="col">Seed 3407</th><th scope="col">Mean ± SD</th></tr></thead>
+          <caption>MATH500 accuracy across five random seeds (%). SD uses the n−1 denominator.</caption>
+          <thead><tr><th scope="col">Model / method</th><th scope="col">Seed 0</th><th scope="col">Seed 1</th><th scope="col">Seed 42</th><th scope="col">Seed 1337</th><th scope="col">Seed 3407</th><th scope="col">Mean ± sample SD</th></tr></thead>
           <tbody>
             <tr class="hacpo-row"><th scope="row">Qwen3-1.7B-Base / HACPO</th><td>68.0</td><td>68.2</td><td>69.0</td><td>68.1</td><td>67.0</td><td>68.06 ± 0.71</td></tr>
             <tr><th scope="row">Qwen3-1.7B-Base / GSPO</th><td>64.7</td><td>64.0</td><td>64.8</td><td>64.6</td><td>64.3</td><td>64.48 ± 0.33</td></tr>
@@ -874,9 +858,7 @@
           </tbody>
         </table>
       </div>
-        </details>
         <p>The mean gains over GSPO×2 are <strong>2.84 percentage points for 1.7B</strong> and <strong>2.88 for 4B</strong>.</p>
-        <p class="result-note">Main results, the three-agent and distillation comparisons, these seed evaluations, and the advantage-estimator and capability-coefficient ablations use an 8192-token evaluation limit. Other ablations retain their actual 4096-token limit.</p>
       </div>
 
       <h4>Ablation Studies</h4>
